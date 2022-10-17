@@ -16,11 +16,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class StringContentUtilsImpl implements StringContentUtils {
 
-	private static final Logger LOG = LoggerFactory.getLogger(StringContentUtilsImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(StringContentUtilsImpl.class);
 
 	@Override
 	public String getContent(String fileName) throws Exception {
-		LOG.info("fileName : {}", fileName);
+		LOGGER.info("fileName : {}", fileName);
 		InputStream in = getClass().getClassLoader().getResourceAsStream("data/files/".concat(fileName));
 
 		if(Objects.nonNull(in)) {
@@ -31,7 +31,7 @@ public class StringContentUtilsImpl implements StringContentUtils {
 				while((c = reader.read()) != -1) {
 					sb.append((char)c);
 				}
-				LOG.info("Read successful !");
+				LOGGER.info("Read successful !");
 				return sb.toString();
 			} catch (Exception e) {
 				throw new BadStringOperationException("Error encountered");
