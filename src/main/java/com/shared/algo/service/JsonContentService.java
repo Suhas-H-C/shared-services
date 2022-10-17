@@ -1,6 +1,8 @@
 package com.shared.algo.service;
 
+import java.util.Collection;
+
 public interface JsonContentService {
 
-	Object fetchJsonData(Class<?> clazz, String path) throws Exception;
+	Collection<?> fetchJsonData(Class<?> clazz, String path) throws Exception;
 }

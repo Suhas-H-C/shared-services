@@ -51,7 +51,7 @@ public class FileController {
 		@ApiResponse(responseCode = "401", description = "Unauthorized"),
 		@ApiResponse(responseCode = "403", description = "Forbidden"),
 		@ApiResponse(responseCode = "500", description = "Internal Server Error")})
-	@GetMapping(value = "/fetch-content")
+	@GetMapping(value = "/fetch-json")
 	public ResponseEntity<GenericResponse<?>> getJson(@RequestParam(name = "stringPath", required = true) String stringPath){
 		try {
 			return new ResponseEntity<>
