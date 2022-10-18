@@ -1,6 +1,6 @@
 package com.shared.algo.service;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +16,7 @@ class StringContentUtilsServiceImplTest {
     @Test
     @DisplayName("testGetContent_IllegalArgumentException")
     void testGetContent() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             stringContentUtilsImpl.getContent("demo");
         });
     }
