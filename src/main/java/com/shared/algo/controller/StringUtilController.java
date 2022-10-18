@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shared.algo.model.IpData;
-import com.shared.algo.service.StringContentUtils;
+import com.shared.algo.service.StringContentUtilsService;
 import com.shared.algo.utils.GenericResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 public final class StringUtilController {
 
 	@Autowired
-	private StringContentUtils stringContentUtils;
+	private StringContentUtilsService stringContentUtils;
 	
 	@Operation(method = "GET", description = "Retreives the string from file", tags = "file")
 	@ApiResponses({@ApiResponse(responseCode = "200", description = "Success"),

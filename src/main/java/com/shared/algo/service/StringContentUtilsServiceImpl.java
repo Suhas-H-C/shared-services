@@ -21,9 +21,9 @@ import com.shared.algo.annotations.Headers;
 import com.shared.algo.model.IpData;
 
 @Service
-public class StringContentUtilsImpl implements StringContentUtils {
+public class StringContentUtilsServiceImpl implements StringContentUtilsService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(StringContentUtilsImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(StringContentUtilsServiceImpl.class);
 
 	@Override
 	public String getContent(String fileName) throws Exception {

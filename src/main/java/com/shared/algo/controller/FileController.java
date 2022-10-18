@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shared.algo.model.IpData;
 import com.shared.algo.service.CsvService;
 import com.shared.algo.service.JsonContentService;
-import com.shared.algo.service.StringContentUtils;
+import com.shared.algo.service.StringContentUtilsService;
 import com.shared.algo.utils.GenericResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,7 +31,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 public class FileController {
 
 	@Autowired
-	private StringContentUtils stringContentUtils;
+	private StringContentUtilsService stringContentUtils;
 
 	@Autowired
 	private JsonContentService jsonContentService;
