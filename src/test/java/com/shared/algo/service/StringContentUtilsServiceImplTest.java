@@ -10,19 +10,19 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class StringContentUtilsServiceImplTest {
 
-	@InjectMocks
-	private StringContentUtilsServiceImpl stringContentUtilsImpl;
-	
-	@Test
-	@DisplayName("testGetContent_IllegalArgumentException")
-	void testGetContent() {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			stringContentUtilsImpl.getContent("demo");
-		});
-	}
+    @InjectMocks
+    private StringContentUtilsServiceImpl stringContentUtilsImpl;
 
-	@Test
-	void testGetFields() {
-	}
+    @Test
+    @DisplayName("testGetContent_IllegalArgumentException")
+    void testGetContent() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            stringContentUtilsImpl.getContent("demo");
+        });
+    }
+
+    @Test
+    void testGetFields() {
+    }
 
 }
