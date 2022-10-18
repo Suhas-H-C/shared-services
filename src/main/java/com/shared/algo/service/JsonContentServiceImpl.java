@@ -19,6 +19,7 @@ public class JsonContentServiceImpl implements JsonContentService {
 	
 	@Override
 	public Collection<?> fetchJsonData(Class<?> clazz, String path) throws Exception {
+		
 		TypeReference<List<IpData>> data = new TypeReference<List<IpData>>() {};
 		InputStream in = 
 				TypeReference.class.getResourceAsStream("/data/json/" + path + ".json");
