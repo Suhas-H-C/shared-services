@@ -1,5 +1,7 @@
 package com.shared.algo.service;
 
+import static java.util.Objects.nonNull;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,8 +21,6 @@ import org.springframework.stereotype.Service;
 
 import com.shared.algo.annotations.Headers;
 import com.shared.algo.model.IpData;
-
-import static java.util.Objects.nonNull;
 
 @Service
 public class StringContentUtilsServiceImpl implements StringContentUtilsService {
