@@ -1,5 +1,7 @@
 package com.shared.algo.controller;
 
+import static com.shared.algo.utils.SharedAlgosResponseBuilder.wrapWithGenericResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +13,6 @@ import com.shared.algo.utils.GenericResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
-import static com.shared.algo.utils.SharedAlgosResponseBuilder.*;
 
 @RestController
 @RequestMapping(value = "/health")

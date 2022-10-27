@@ -1,10 +1,11 @@
 package com.shared.algo.utils;
 
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singleton;
+import static java.util.Collections.singletonList;
+
 import java.time.LocalDateTime;
 import java.util.Collection;
-
-import static java.util.Collections.*;
-
 import java.util.Objects;
 import java.util.UUID;
 
