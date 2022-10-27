@@ -3,8 +3,12 @@ package com.shared.algo.service;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 import javax.management.BadStringOperationException;
@@ -13,10 +17,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-@Service
-public class StringContentUtilsImpl implements StringContentUtils {
+import com.shared.algo.annotations.Headers;
+import com.shared.algo.model.IpData;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(StringContentUtilsImpl.class);
+@Service
+public class StringContentUtilsServiceImpl implements StringContentUtilsService {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(StringContentUtilsServiceImpl.class);
 
 	@Override
 	public String getContent(String fileName) throws Exception {
@@ -39,5 +46,20 @@ public class StringContentUtilsImpl implements StringContentUtils {
 		}else {
 			throw new IllegalArgumentException("Please check the file name");
 		}
+	}
+
+	@Override
+	public Collection<?> getFields(Object obj) throws Exception {
+		List<String> list = new ArrayList<>();
+		
+		if(obj instanceof IpData) {
+			IpData data = (IpData) obj;
+			Field[] fields =  data.getClass().getDeclaredFields();
+			for (Field field : fields) {
+				list.add(field.getAnnotation(Headers.class).header());
+			}
+			return list;
+		}
+		return list;
 	}
 }
