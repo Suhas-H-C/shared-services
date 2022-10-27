@@ -1,5 +1,7 @@
 package com.shared.algo.service;
 
+import static java.util.Objects.nonNull;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,31 +32,31 @@ public class StringContentUtilsServiceImpl implements StringContentUtilsService 
 		LOGGER.info("fileName : {}", fileName);
 		InputStream in = getClass().getClassLoader().getResourceAsStream("data/files/".concat(fileName));
 
-		if(Objects.nonNull(in)) {
+		if (nonNull(in)) {
 			StringBuilder sb = new StringBuilder();
 
-			try (BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(in), Charset.forName(StandardCharsets.UTF_8.name())))){
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(in),
+					Charset.forName(StandardCharsets.UTF_8.name())))) {
 				int c;
-				while((c = reader.read()) != -1) {
-					sb.append((char)c);
+				while ((c = reader.read()) != -1) {
+					sb.append((char) c);
 				}
 				LOGGER.info("Read successful !");
 				return sb.toString();
 			} catch (Exception e) {
 				throw new BadStringOperationException("Error encountered");
 			}
-		}else {
+		} else {
 			throw new IllegalArgumentException("Please check the file name");
 		}
 	}
 
 	@Override
-	public Collection<?> getFields(Object obj) throws Exception {
+	public Collection<?> getFields(Object obj) {
 		List<String> list = new ArrayList<>();
-		
-		if(obj instanceof IpData) {
-			IpData data = (IpData) obj;
-			Field[] fields =  data.getClass().getDeclaredFields();
+
+		if (obj instanceof IpData data) {
+			Field[] fields = data.getClass().getDeclaredFields();
 			for (Field field : fields) {
 				list.add(field.getAnnotation(Headers.class).header());
 			}

@@ -15,19 +15,18 @@ import com.shared.algo.model.IpData;
 @Service
 public class JsonContentServiceImpl implements JsonContentService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(JsonContentServiceImpl.class);
-	
-	@Override
-	public Collection<?> fetchJsonData(Class<?> clazz, String path) throws Exception {
-		
-		TypeReference<List<IpData>> data = new TypeReference<List<IpData>>() {};
-		InputStream in = 
-				TypeReference.class.getResourceAsStream("/data/json/" + path + ".json");
-		
-		ObjectMapper objectMapper = new ObjectMapper();
-		List<IpData> value = objectMapper.readValue(in, data);
-		LOGGER.info("Data size : {}", value.size());
-		return value;
-	}
+    private static final Logger LOGGER = LoggerFactory.getLogger(JsonContentServiceImpl.class);
+
+    @Override
+    public Collection<?> fetchJsonData(Class<?> clazz, String path) throws Exception {
+        TypeReference<List<IpData>> data = new TypeReference<>() {
+        };
+        InputStream in = TypeReference.class.getResourceAsStream("/data/json/" + path + ".json");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<IpData> value = objectMapper.readValue(in, data);
+        LOGGER.info("Data size : {}", value.size());
+        return value;
+    }
 
 }
