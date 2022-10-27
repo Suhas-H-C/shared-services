@@ -44,7 +44,7 @@ public class StringContentUtilsServiceImpl implements StringContentUtilsService 
 				LOGGER.info("Read successful !");
 				return sb.toString();
 			} catch (Exception e) {
-				throw new BadStringOperationException("Error encountered");
+				throw new BadStringOperationException("Error encountered while reading the file");
 			}
 		} else {
 			throw new IllegalArgumentException("Please check the file name");
