@@ -1,8 +1,11 @@
 package com.shared.algo.controller;
 
+import static com.shared.algo.enums.ContentStatus.DISPOSITION;
 import static com.shared.algo.utils.SharedAlgosResponseBuilder.wrapWithGenericResponse;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -16,10 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.shared.algo.enums.ContentStatus.DISPOSITION;
+import com.shared.algo.exception.BadRequestException;
 import com.shared.algo.model.IpData;
 import com.shared.algo.service.CsvService;
 import com.shared.algo.service.JsonContentService;
+import com.shared.algo.service.PDFService;
 import com.shared.algo.service.StringContentUtilsService;
 import com.shared.algo.service.XlsxService;
 import com.shared.algo.utils.GenericResponse;
@@ -40,6 +44,8 @@ public class FileController {
 	private CsvService csvService;
 	@Autowired
 	private XlsxService xlsxService;
+	@Autowired
+	private PDFService pdfService;
 
 	@Operation(method = "GET", description = "Retrieves the string from file", tags = "file")
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Success"),
@@ -142,6 +148,24 @@ public class FileController {
 							xlsxService.write((List<?>) jsonContentService.fetchJsonData(IpData.class, "ipData"))));
 		} catch (Exception e) {
 			return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@Operation(method = "GET", description = "Produces PDF file", tags = "xlsx-file")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Success"),
+			@ApiResponse(responseCode = "400", description = "Bad Request"),
+			@ApiResponse(responseCode = "401", description = "Unauthorized"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
+			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
+	@GetMapping(value = "/produce-pdf", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public void getPDF(@RequestParam(value = "fileName", required = true, defaultValue = "sample") String fileName,
+			HttpServletResponse response) {
+		try {
+			response.setContentType("application/pdf");
+			response.setHeader(DISPOSITION.getKey(), DISPOSITION.getContent().concat(fileName).concat(".pdf"));
+			pdfService.write(response);
+		} catch (Exception e) {
+			throw new BadRequestException(e.getMessage());
 		}
 	}
 }
