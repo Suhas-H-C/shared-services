@@ -30,6 +30,7 @@ public class PDFServiceImpl implements PDFService {
 
 			Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 			titleFont.setSize(18);
+			
 			Paragraph titleText = new Paragraph(PDF_TITLE.getValue(), titleFont);
 			titleText.setAlignment(Paragraph.ALIGN_CENTER);
 
