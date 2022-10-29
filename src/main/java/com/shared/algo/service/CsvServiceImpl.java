@@ -15,6 +15,7 @@ import java.util.Objects;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,8 +28,8 @@ import com.shared.algo.model.IpData;
 public class CsvServiceImpl implements CsvService {
 
     @Override
-    public Collection<?> retrieveData(MultipartFile multipartFile) throws Exception {
-        List<Object> ipDatas = new ArrayList<>();
+    public Collection<?> retrieveData(MultipartFile multipartFile, Class<?> clazz) throws Exception {
+        List<Object> response = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(multipartFile.getInputStream()))) {
             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT);
@@ -38,22 +39,24 @@ public class CsvServiceImpl implements CsvService {
                 if (csvRecord.getRecordNumber() == 1) {
                     continue;
                 } else {
-                    IpData data = new IpData();
-
-                    data.setId(Integer.parseInt(csvRecord.get(0)));
-                    data.setFirst_name(csvRecord.get(1));
-                    data.setLast_name(csvRecord.get(2));
-                    data.setEmail(csvRecord.get(3));
-                    data.setGender(csvRecord.get(4));
-                    data.setIp_address(csvRecord.get(5));
-
-                    ipDatas.add(data);
+                	if(clazz.isInstance(new IpData())) {
+                		IpData data = BeanUtils.instantiateClass(IpData.class);
+                        data.setId(Integer.parseInt(csvRecord.get(0)));
+                        data.setFirst_name(csvRecord.get(1));
+                        data.setLast_name(csvRecord.get(2));
+                        data.setEmail(csvRecord.get(3));
+                        data.setGender(csvRecord.get(4));
+                        data.setIp_address(csvRecord.get(5));
+                        
+                        response.add(data);
+                	}
+                    
                 }
             }
 
             csvParser.close();
             reader.close();
-            return ipDatas;
+            return response;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
@@ -89,6 +92,8 @@ public class CsvServiceImpl implements CsvService {
                     byteArrayInputStream = new ByteArrayInputStream(outPutStream.toByteArray());
                     outPutStream.close();
                     return byteArrayInputStream;
+                }else {
+                	throw new BadRequestException("Class type not supported");
                 }
             } else {
                 throw new BadRequestException("Data is null/empty");
@@ -96,6 +101,5 @@ public class CsvServiceImpl implements CsvService {
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
-        return null;
     }
 }

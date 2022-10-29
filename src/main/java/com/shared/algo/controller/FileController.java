@@ -81,7 +81,7 @@ public class FileController {
     public ResponseEntity<GenericResponse<?>> readCSV(@RequestParam(name = "file", required = true) MultipartFile multipartFile) {
         try {
             return new ResponseEntity<>
-                    (wrapWithGenericResponse(csvService.retrieveData(multipartFile)), HttpStatus.OK);
+                    (wrapWithGenericResponse(csvService.retrieveData(multipartFile, IpData.class)), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
