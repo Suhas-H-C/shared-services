@@ -3,7 +3,7 @@ package com.shared.algo.enums;
 public enum FileConstants {
 
 	
-	SHEET_NAME("sheet1");
+	SHEET_NAME("sheet1"),PDF_TITLE("Shared-Algos");
 	
 	
 	String value;
