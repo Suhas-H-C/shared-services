@@ -9,7 +9,7 @@ import com.shared.algo.exception.BadRequestException;
 import com.shared.algo.utils.GenericResponse;
 
 @RestControllerAdvice
-public class SharedAlgoExceptionHandler {
+public final class SharedAlgoExceptionHandler {
 
 	@ExceptionHandler(BadRequestException.class)
 	public GenericResponse<?> handleBadRequestException(BadRequestException badRequestException) {

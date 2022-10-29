@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping(value = "/health")
-public class HealthCheckController {
+public final class HealthCheckController {
 
 	@Operation(method = "GET", description = "Health Check", tags = "health")
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Success"),

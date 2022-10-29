@@ -1,20 +1,20 @@
 package com.shared.algo.model;
 
-import com.shared.algo.annotations.Headers;
+import com.shared.algo.annotations.FiledHeaderConfig;
 
 public class IpData {
 
-	@Headers(header = "Id")
+	@FiledHeaderConfig(header = "Id")
 	private int id;
-	@Headers(header = "First Name")
+	@FiledHeaderConfig(header = "First Name")
 	private String first_name;
-	@Headers(header = "Last Name")
+	@FiledHeaderConfig(header = "Last Name")
 	private String last_name;
-	@Headers(header = "Email Id")
+	@FiledHeaderConfig(header = "Email Id")
 	private String email;
-	@Headers(header = "Gender")
+	@FiledHeaderConfig(header = "Gender")
 	private String gender;
-	@Headers(header = "Ip Address")
+	@FiledHeaderConfig(header = "Ip Address")
 	private String ip_address;
 
 	public int getId() {

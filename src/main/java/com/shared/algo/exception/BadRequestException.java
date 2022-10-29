@@ -1,6 +1,6 @@
 package com.shared.algo.exception;
 
-public class BadRequestException extends RuntimeException {
+public final class BadRequestException extends RuntimeException {
 
 	/**
 	 *

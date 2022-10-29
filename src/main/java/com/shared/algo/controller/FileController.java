@@ -34,7 +34,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping(value = "/file")
-public class FileController {
+public final class FileController {
 
 	@Autowired
 	private StringContentUtilsService stringContentUtils;

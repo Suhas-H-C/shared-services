@@ -19,13 +19,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.shared.algo.annotations.Headers;
+import com.shared.algo.annotations.FiledHeaderConfig;
 import com.shared.algo.enums.Messages;
 import com.shared.algo.exception.BadRequestException;
 import com.shared.algo.model.IpData;
 
 @Service
-public class XlsxServiceImpl implements XlsxService {
+public final class XlsxServiceImpl implements XlsxService {
 
 	@Override
 	public Collection<?> read(MultipartFile multipartFile, Class<?> clazz) throws Exception {
@@ -77,7 +77,7 @@ public class XlsxServiceImpl implements XlsxService {
 				if (data.get(0) instanceof IpData ipDataInstance) {
 					Field[] fields = ipDataInstance.getClass().getDeclaredFields();
 					for (Field field : fields) {
-						Headers headers = field.getAnnotation(Headers.class);
+						FiledHeaderConfig headers = field.getAnnotation(FiledHeaderConfig.class);
 						fileHeaders.add(headers.header());
 					}
 					Row headerRow = sheet.createRow(0);
