@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import static com.shared.algo.enums.Messages.TYPE_NOT_FOUND;
+import com.shared.algo.exception.BadRequestException;
 import com.shared.algo.model.IpData;
 
 @Service
@@ -30,7 +32,7 @@ public class JsonContentServiceImpl implements JsonContentService {
 			LOGGER.info("Processing completed");
 			return Collections.singleton(jsonResponse);
 		}
-		return null;
+		throw new BadRequestException(TYPE_NOT_FOUND.getMessage());
 	}
 
 	private static final Object processJsonRequest(TypeReference<?> typeReference, String path) throws Exception {
