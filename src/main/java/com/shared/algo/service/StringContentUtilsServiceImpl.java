@@ -17,13 +17,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.shared.algo.annotations.Headers;
+import com.shared.algo.annotations.FiledHeaderConfig;
 import static com.shared.algo.enums.Messages.*;
 import com.shared.algo.exception.BadRequestException;
 import com.shared.algo.model.IpData;
 
 @Service
-public class StringContentUtilsServiceImpl implements StringContentUtilsService {
+public final class StringContentUtilsServiceImpl implements StringContentUtilsService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(StringContentUtilsServiceImpl.class);
 
@@ -57,7 +57,7 @@ public class StringContentUtilsServiceImpl implements StringContentUtilsService 
 		if (obj instanceof IpData data) {
 			Field[] fields = data.getClass().getDeclaredFields();
 			for (Field field : fields) {
-				list.add(field.getAnnotation(Headers.class).header());
+				list.add(field.getAnnotation(FiledHeaderConfig.class).header());
 			}
 			return list;
 		}

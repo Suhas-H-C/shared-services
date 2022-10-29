@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SharedAlgoApplicationContext implements ApplicationContextAware {
+public final class SharedAlgoApplicationContext implements ApplicationContextAware {
 
 	static ApplicationContext applicationContext;
 	String applicationId;

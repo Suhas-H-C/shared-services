@@ -23,12 +23,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.csvreader.CsvWriter;
-import com.shared.algo.annotations.Headers;
+import com.shared.algo.annotations.FiledHeaderConfig;
 import com.shared.algo.exception.BadRequestException;
 import com.shared.algo.model.IpData;
 
 @Service
-public class CsvServiceImpl implements CsvService {
+public final class CsvServiceImpl implements CsvService {
 
 	@Override
 	public Collection<?> retrieveData(MultipartFile multipartFile, Class<?> clazz) throws Exception {
@@ -75,7 +75,7 @@ public class CsvServiceImpl implements CsvService {
 				if (data.get(0) instanceof IpData ipDataCasted) {
 					Field[] fields = ipDataCasted.getClass().getDeclaredFields();
 					for (Field field : fields) {
-						Headers annotation = field.getAnnotation(Headers.class);
+						FiledHeaderConfig annotation = field.getAnnotation(FiledHeaderConfig.class);
 						csvWriter.write(annotation.header());
 					}
 					csvWriter.endRecord();

@@ -14,7 +14,7 @@ import com.lowagie.text.pdf.PdfWriter;
 import static com.shared.algo.enums.FileConstants.PDF_TITLE;
 
 @Service
-public class PDFServiceImpl implements PDFService {
+public final class PDFServiceImpl implements PDFService {
 
 	@Autowired
 	private StringContentUtilsService stringContentUtilsService;
