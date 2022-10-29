@@ -17,30 +17,19 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private PasswordEncoder encoder;
+	@Autowired
+	private PasswordEncoder encoder;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf()
-                .disable()
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();
-    }
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.csrf().disable().authorizeRequests().anyRequest().authenticated().and().httpBasic();
+	}
 
-    @Bean
-    @Override
-    protected UserDetailsService userDetailsService() {
-        UserDetails user = User.builder()
-                .username("suhas")
-                .password(encoder.encode("suhas"))
-                .roles("ADMIN")
-                .build();
+	@Bean
+	@Override
+	protected UserDetailsService userDetailsService() {
+		UserDetails user = User.builder().username("suhas").password(encoder.encode("suhas")).roles("ADMIN").build();
 
-        return new InMemoryUserDetailsManager(user);
-    }
+		return new InMemoryUserDetailsManager(user);
+	}
 }

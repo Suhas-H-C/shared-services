@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface CsvService {
 
-    Collection<?> retrieveData(MultipartFile multipartFile, Class<?> clazz) throws Exception;
+	Collection<?> retrieveData(MultipartFile multipartFile, Class<?> clazz) throws Exception;
 
-    ByteArrayInputStream getCSV(List<?> data);
+	ByteArrayInputStream getCSV(List<?> data);
 }

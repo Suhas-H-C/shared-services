@@ -31,79 +31,81 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RequestMapping(value = "/file")
 public class FileController {
 
-    @Autowired
-    private StringContentUtilsService stringContentUtils;
-    @Autowired
-    private JsonContentService jsonContentService;
-    @Autowired
-    private CsvService csvService;
+	@Autowired
+	private StringContentUtilsService stringContentUtils;
+	@Autowired
+	private JsonContentService jsonContentService;
+	@Autowired
+	private CsvService csvService;
 
-    @Operation(method = "GET", description = "Retrieves the string from file", tags = "file")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "Success"),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized"),
-            @ApiResponse(responseCode = "403", description = "Forbidden"),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error")})
-    @GetMapping(value = "/fetch-content")
-    public ResponseEntity<GenericResponse<?>> getContent(@RequestParam(name = "fileName", required = true) String fileName) {
-        try {
-            return new ResponseEntity<>
-                    (wrapWithGenericResponse(stringContentUtils.getContent(fileName)), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
-        }
-    }
+	@Operation(method = "GET", description = "Retrieves the string from file", tags = "file")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Success"),
+			@ApiResponse(responseCode = "400", description = "Bad Request"),
+			@ApiResponse(responseCode = "401", description = "Unauthorized"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
+			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
+	@GetMapping(value = "/fetch-content")
+	public ResponseEntity<GenericResponse<?>> getContent(
+			@RequestParam(name = "fileName", required = true) String fileName) {
+		try {
+			return new ResponseEntity<>(wrapWithGenericResponse(stringContentUtils.getContent(fileName)),
+					HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+		}
+	}
 
+	@Operation(method = "GET", description = "Retrieves the json from file", tags = "file")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Success"),
+			@ApiResponse(responseCode = "400", description = "Bad Request"),
+			@ApiResponse(responseCode = "401", description = "Unauthorized"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
+			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
+	@GetMapping(value = "/fetch-json")
+	public ResponseEntity<GenericResponse<?>> getJson(
+			@RequestParam(name = "stringPath", required = true) String stringPath) {
+		try {
+			return new ResponseEntity<>(
+					wrapWithGenericResponse(jsonContentService.fetchJsonData(IpData.class, stringPath)), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+		}
+	}
 
-    @Operation(method = "GET", description = "Retrieves the json from file", tags = "file")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "Success"),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized"),
-            @ApiResponse(responseCode = "403", description = "Forbidden"),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error")})
-    @GetMapping(value = "/fetch-json")
-    public ResponseEntity<GenericResponse<?>> getJson(@RequestParam(name = "stringPath", required = true) String stringPath) {
-        try {
-            return new ResponseEntity<>
-                    (wrapWithGenericResponse(jsonContentService.fetchJsonData(IpData.class, stringPath)), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
-        }
-    }
+	@Operation(method = "POST", description = "Retrieves the data from CSV file", tags = "file")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Success"),
+			@ApiResponse(responseCode = "400", description = "Bad Request"),
+			@ApiResponse(responseCode = "401", description = "Unauthorized"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
+			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
+	@PostMapping(value = "/read-csv", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<GenericResponse<?>> readCSV(
+			@RequestParam(name = "file", required = true) MultipartFile multipartFile) {
+		try {
+			return new ResponseEntity<>(wrapWithGenericResponse(csvService.retrieveData(multipartFile, IpData.class)),
+					HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+		}
+	}
 
-
-    @Operation(method = "POST", description = "Retrieves the data from CSV file", tags = "file")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "Success"),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized"),
-            @ApiResponse(responseCode = "403", description = "Forbidden"),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error")})
-    @PostMapping(value = "/read-csv", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<GenericResponse<?>> readCSV(@RequestParam(name = "file", required = true) MultipartFile multipartFile) {
-        try {
-            return new ResponseEntity<>
-                    (wrapWithGenericResponse(csvService.retrieveData(multipartFile, IpData.class)), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-
-    @Operation(method = "GET", description = "Produces CSV file", tags = "file")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "Success"),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized"),
-            @ApiResponse(responseCode = "403", description = "Forbidden"),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error")})
-    @GetMapping(value = "/produce-csv", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> getCSV(@RequestParam(value = "fileName", required = true, defaultValue = "data") String fileName) {
-        try {
-            return ResponseEntity.ok()
-                    .header(DISPOSITION.getKey(), DISPOSITION.getContent().concat(fileName).concat(".csv"))
-                    .body(new InputStreamResource(csvService.getCSV((List<?>) jsonContentService.fetchJsonData(IpData.class, "ipData"))));
-        } catch (Exception e) {
-            return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
-        }
-    }
+	@Operation(method = "GET", description = "Produces CSV file", tags = "file")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Success"),
+			@ApiResponse(responseCode = "400", description = "Bad Request"),
+			@ApiResponse(responseCode = "401", description = "Unauthorized"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
+			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
+	@GetMapping(value = "/produce-csv", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<?> getCSV(
+			@RequestParam(value = "fileName", required = true, defaultValue = "data") String fileName) {
+		try {
+			return ResponseEntity.ok()
+					.header(DISPOSITION.getKey(), DISPOSITION.getContent().concat(fileName).concat(".csv"))
+					.body(new InputStreamResource(
+							csvService.getCSV((List<?>) jsonContentService.fetchJsonData(IpData.class, "ipData"))));
+		} catch (Exception e) {
+			return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+		}
+	}
 
 }
