@@ -117,13 +117,13 @@ public class FileController {
 		}
 	}
 
-	@Operation(method = "GET", description = "Reads Excel file", tags = "xlsx-file")
+	@Operation(method = "POST", description = "Reads Excel file", tags = "xlsx-file")
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Success"),
 			@ApiResponse(responseCode = "400", description = "Bad Request"),
 			@ApiResponse(responseCode = "401", description = "Unauthorized"),
 			@ApiResponse(responseCode = "403", description = "Forbidden"),
 			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
-	@GetMapping(value = "/read-xlsx", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/read-xlsx", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> readExcel(@RequestParam(value = "file", required = true) MultipartFile multipartFile) {
 		try {
 			return new ResponseEntity<>(wrapWithGenericResponse(xlsxService.read(multipartFile, IpData.class)),
