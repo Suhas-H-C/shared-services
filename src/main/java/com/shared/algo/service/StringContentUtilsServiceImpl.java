@@ -13,13 +13,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-import javax.management.BadStringOperationException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.shared.algo.annotations.Headers;
+import static com.shared.algo.enums.Messages.*;
+import com.shared.algo.exception.BadRequestException;
 import com.shared.algo.model.IpData;
 
 @Service
@@ -41,13 +41,12 @@ public class StringContentUtilsServiceImpl implements StringContentUtilsService 
 				while ((c = reader.read()) != -1) {
 					sb.append((char) c);
 				}
-				LOGGER.info("Read successful !");
 				return sb.toString();
 			} catch (Exception e) {
-				throw new BadStringOperationException("Error encountered while reading the file");
+				throw new BadRequestException(FILE_READING_FAILED.getMessage());
 			}
 		} else {
-			throw new IllegalArgumentException("Please check the file name");
+			throw new IllegalArgumentException(INVALID_FILE_NAME.getMessage());
 		}
 	}
 

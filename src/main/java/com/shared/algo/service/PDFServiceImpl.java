@@ -2,6 +2,7 @@ package com.shared.algo.service;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lowagie.text.Document;
@@ -14,6 +15,9 @@ import com.lowagie.text.pdf.PdfWriter;
 @Service
 public class PDFServiceImpl implements PDFService {
 
+	@Autowired
+	private StringContentUtilsService stringContentUtilsService;
+	
 	@Override
 	public void write(HttpServletResponse response) throws Exception {
 		Document document = new Document(PageSize.A4);
@@ -30,7 +34,7 @@ public class PDFServiceImpl implements PDFService {
 			
 			Font titleBody = FontFactory.getFont(FontFactory.COURIER);
 			titleBody.setSize(10);
-			Paragraph bodyText = new Paragraph("This is a library sort of service that provides solutions with handling files and others",
+			Paragraph bodyText = new Paragraph(stringContentUtilsService.getContent("PDFContent.txt"),
 					titleBody);
 			bodyText.setAlignment(Paragraph.ALIGN_LEFT);
 			
