@@ -42,6 +42,7 @@ public class CsvServiceImpl implements CsvService {
 				if (csvRecord.getRecordNumber() == 1) {
 					continue;
 				} else {
+					// for object IpData
 					if (clazz.isInstance(new IpData())) {
 						IpData data = BeanUtils.instantiateClass(IpData.class);
 						data.setId(Integer.parseInt(csvRecord.get(0)));
@@ -50,7 +51,6 @@ public class CsvServiceImpl implements CsvService {
 						data.setEmail(csvRecord.get(3));
 						data.setGender(csvRecord.get(4));
 						data.setIp_address(csvRecord.get(5));
-
 						response.add(data);
 					}
 
