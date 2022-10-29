@@ -6,9 +6,8 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public interface CsvService {
+public interface XlsxService {
 
-	Collection<?> retrieveData(MultipartFile multipartFile, Class<?> clazz) throws Exception;
-
-	ByteArrayInputStream getCSV(List<?> data);
+	Collection<?> read(MultipartFile multipartFile, Class<?> clazz) throws Exception;
+	ByteArrayInputStream write(List<?> data) throws Exception;
 }

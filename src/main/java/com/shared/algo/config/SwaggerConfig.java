@@ -11,10 +11,7 @@ public class SwaggerConfig {
 
 	@Bean
 	public OpenAPI api() {
-		return new OpenAPI().
-				info(new Info().
-						title("Shared-Algo-Application").
-						version("0.0.1SNAPSHOT").
-						description("This is the API documentation for shared-algorithms application"));
+		return new OpenAPI().info(new Info().title("Shared-Algo-Application").version("0.0.1SNAPSHOT")
+				.description("This is the API documentation for shared-algorithms application"));
 	}
 }
