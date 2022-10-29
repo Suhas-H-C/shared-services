@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.shared.algo.enums.ContentStatus.DISPOSITION;;
+import static com.shared.algo.enums.ContentStatus.DISPOSITION;
 import com.shared.algo.model.IpData;
 import com.shared.algo.service.CsvService;
 import com.shared.algo.service.JsonContentService;
