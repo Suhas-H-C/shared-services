@@ -151,7 +151,7 @@ public class FileController {
 		}
 	}
 
-	@Operation(method = "GET", description = "Produces PDF file", tags = "xlsx-file")
+	@Operation(method = "GET", description = "Produces PDF file", tags = "pdf-file")
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Success"),
 			@ApiResponse(responseCode = "400", description = "Bad Request"),
 			@ApiResponse(responseCode = "401", description = "Unauthorized"),
