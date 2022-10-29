@@ -34,7 +34,7 @@ public class PDFServiceImpl implements PDFService {
 			titleText.setAlignment(Paragraph.ALIGN_CENTER);
 
 			Font titleBody = FontFactory.getFont(FontFactory.COURIER);
-			titleBody.setSize(10);
+			titleBody.setSize(14);
 			Paragraph bodyText = new Paragraph(stringContentUtilsService.getContent("PDFContent.txt"), titleBody);
 			bodyText.setAlignment(Paragraph.ALIGN_LEFT);
 
