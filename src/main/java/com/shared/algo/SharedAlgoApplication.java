@@ -13,20 +13,20 @@ import com.shared.algo.config.SharedAlgoApplicationContext;
 @SpringBootApplication
 public class SharedAlgoApplication implements CommandLineRunner {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(SharedAlgoApplication.class);
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SharedAlgoApplication.class);
+	@Autowired
+	private ApplicationContext applicationContext;
 
-    @Autowired
-    private ApplicationContext applicationContext;
+	public static void main(String[] args) {
+		SpringApplication.run(SharedAlgoApplication.class, args);
+	}
 
-    public static void main(String[] args) {
-        SpringApplication.run(SharedAlgoApplication.class, args);
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
-        SharedAlgoApplicationContext sharedAlgoApplicationConfig = applicationContext.getBean(SharedAlgoApplicationContext.class);
-        LOGGER.info("{}", sharedAlgoApplicationConfig.getApplicationId());
-    }
+	@Override
+	public void run(String... args) throws Exception {
+		SharedAlgoApplicationContext sharedAlgoApplicationConfig = applicationContext
+				.getBean(SharedAlgoApplicationContext.class);
+		LOGGER.info("{}", sharedAlgoApplicationConfig.getApplicationId());
+	}
 
 }
