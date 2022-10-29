@@ -144,5 +144,4 @@ public class FileController {
 			return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
 		}
 	}
-
 }

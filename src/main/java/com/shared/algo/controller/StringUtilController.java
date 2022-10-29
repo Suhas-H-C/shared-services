@@ -21,23 +21,22 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RequestMapping(value = "/str")
 public final class StringUtilController {
 
-    @Autowired
-    private StringContentUtilsService stringContentUtils;
+	@Autowired
+	private StringContentUtilsService stringContentUtils;
 
-    @Operation(method = "GET", description = "Retrieves the string from file", tags = "file")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "Success"),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized"),
-            @ApiResponse(responseCode = "403", description = "Forbidden"),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error")})
-    @GetMapping(value = "/fetch-fields")
-    public ResponseEntity<GenericResponse<?>> getFields() {
-        try {
-            IpData ipData = new IpData();
-            return new ResponseEntity<>
-                    (wrapWithGenericResponse(stringContentUtils.getFields(ipData)), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
-        }
-    }
+	@Operation(method = "GET", description = "Retrieves the string from file", tags = "file")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Success"),
+			@ApiResponse(responseCode = "400", description = "Bad Request"),
+			@ApiResponse(responseCode = "401", description = "Unauthorized"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
+			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
+	@GetMapping(value = "/fetch-fields")
+	public ResponseEntity<GenericResponse<?>> getFields() {
+		try {
+			IpData ipData = new IpData();
+			return new ResponseEntity<>(wrapWithGenericResponse(stringContentUtils.getFields(ipData)), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+		}
+	}
 }

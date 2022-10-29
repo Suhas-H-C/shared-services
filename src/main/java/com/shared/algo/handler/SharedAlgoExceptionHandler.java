@@ -11,8 +11,8 @@ import com.shared.algo.utils.GenericResponse;
 @RestControllerAdvice
 public class SharedAlgoExceptionHandler {
 
-    @ExceptionHandler(BadRequestException.class)
-    public GenericResponse<?> handleBadRequestException(BadRequestException badRequestException) {
-        return wrapWithErrorResponse(badRequestException);
-    }
+	@ExceptionHandler(BadRequestException.class)
+	public GenericResponse<?> handleBadRequestException(BadRequestException badRequestException) {
+		return wrapWithErrorResponse(badRequestException);
+	}
 }
