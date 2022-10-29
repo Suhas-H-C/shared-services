@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import static com.shared.algo.enums.ContentStatus.DISPOSITION;
 import com.shared.algo.model.IpData;
 import com.shared.algo.service.CsvService;
 import com.shared.algo.service.JsonContentService;
@@ -81,7 +82,7 @@ public class FileController {
     public ResponseEntity<GenericResponse<?>> readCSV(@RequestParam(name = "file", required = true) MultipartFile multipartFile) {
         try {
             return new ResponseEntity<>
-                    (wrapWithGenericResponse(csvService.retrieveData(multipartFile)), HttpStatus.OK);
+                    (wrapWithGenericResponse(csvService.retrieveData(multipartFile, IpData.class)), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
@@ -95,10 +96,10 @@ public class FileController {
             @ApiResponse(responseCode = "403", description = "Forbidden"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")})
     @GetMapping(value = "/produce-csv", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> getCSV() {
+    public ResponseEntity<?> getCSV(@RequestParam(value = "fileName", required = true, defaultValue = "data") String fileName) {
         try {
             return ResponseEntity.ok()
-                    .header("Content-Disposition", "attachment; filename=data.csv")
+                    .header(DISPOSITION.getKey(), DISPOSITION.getContent().concat(fileName).concat(".csv"))
                     .body(new InputStreamResource(csvService.getCSV((List<?>) jsonContentService.fetchJsonData(IpData.class, "ipData"))));
         } catch (Exception e) {
             return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
