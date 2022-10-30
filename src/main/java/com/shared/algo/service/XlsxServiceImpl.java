@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shared.algo.annotations.FiledHeaderConfig;
 import com.shared.algo.enums.Messages;
 import com.shared.algo.exception.BadRequestException;
+import com.shared.algo.exception.ClassTypeNotSupportedException;
 import com.shared.algo.model.IpData;
 
 @Service
@@ -97,7 +98,7 @@ public final class XlsxServiceImpl implements XlsxService {
 						valueRow.createCell(5).setCellValue(ipData.getIp_address());
 					}
 				} else {
-					throw new BadRequestException(Messages.TYPE_NOT_FOUND.getMessage());
+					throw new ClassTypeNotSupportedException(Messages.TYPE_NOT_FOUND.getMessage());
 				}
 
 				workBook.write(byteArrayOutputStream);

@@ -1,8 +1,10 @@
 package com.shared.algo.model;
 
+import java.io.Serializable;
+
 import com.shared.algo.annotations.FiledHeaderConfig;
 
-public class IpData {
+public class IpData implements Serializable{
 
 	@FiledHeaderConfig(header = "Id")
 	private int id;
