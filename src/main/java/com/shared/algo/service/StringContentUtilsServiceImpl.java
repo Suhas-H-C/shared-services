@@ -46,7 +46,7 @@ public final class StringContentUtilsServiceImpl implements StringContentUtilsSe
 				throw new BadRequestException(FILE_READING_FAILED.getMessage());
 			}
 		} else {
-			throw new IllegalArgumentException(INVALID_FILE_NAME.getMessage());
+			throw new NullPointerException(INVALID_FILE_NAME.getMessage());
 		}
 	}
 
