@@ -49,11 +49,11 @@ public final class CsvServiceImpl implements CsvService {
 						IpData data = BeanUtils.instantiateClass(IpData.class);
 
 						data.setId(Integer.valueOf(nullChecker(csvRecord, 0)));
-						data.setFirst_name((String) nullChecker(csvRecord, 0));
-						data.setLast_name((String) nullChecker(csvRecord, 0));
-						data.setEmail((String) nullChecker(csvRecord, 0));
-						data.setGender((String) nullChecker(csvRecord, 0));
-						data.setIp_address((String) nullChecker(csvRecord, 0));
+						data.setFirst_name((String) nullChecker(csvRecord, 1));
+						data.setLast_name((String) nullChecker(csvRecord, 2));
+						data.setEmail((String) nullChecker(csvRecord, 3));
+						data.setGender((String) nullChecker(csvRecord, 4));
+						data.setIp_address((String) nullChecker(csvRecord, 5));
 						response.add(data);
 					} else {
 						throw new ClassTypeNotSupportedException(TYPE_NOT_FOUND.getMessage());
