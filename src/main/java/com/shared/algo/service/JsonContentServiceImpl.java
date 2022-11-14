@@ -1,8 +1,8 @@
 package com.shared.algo.service;
 
+import static com.shared.algo.enums.Messages.TYPE_NOT_FOUND;
+
 import java.io.InputStream;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import static com.shared.algo.enums.Messages.TYPE_NOT_FOUND;
 import com.shared.algo.exception.BadRequestException;
 import com.shared.algo.model.IpData;
 
@@ -23,14 +22,14 @@ public class JsonContentServiceImpl implements JsonContentService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JsonContentServiceImpl.class);
 
 	@Override
-	public Collection<?> fetchJsonData(Class<?> clazz, String path) throws Exception {
-		
-		if(clazz.isInstance(new IpData()) && Objects.nonNull(path)) {
+	public List<?> fetchJsonData(Class<?> clazz, String path) throws Exception {
+
+		if (clazz.isInstance(new IpData()) && Objects.nonNull(path)) {
 			TypeReference<List<IpData>> data = new TypeReference<>() {
 			};
 			Object jsonResponse = processJsonRequest(data, path);
 			LOGGER.info("Processing completed");
-			return Collections.singleton(jsonResponse);
+			return List.of(jsonResponse);
 		}
 		throw new BadRequestException(TYPE_NOT_FOUND.getMessage());
 	}

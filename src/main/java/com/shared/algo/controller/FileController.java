@@ -112,7 +112,7 @@ public final class FileController {
 			return ResponseEntity.ok()
 					.header(DISPOSITION.getKey(), DISPOSITION.getContent().concat(fileName).concat(".csv"))
 					.body(new InputStreamResource(
-							csvService.getCSV((List<?>) jsonContentService.fetchJsonData(IpData.class, "ipData"))));
+							csvService.getCSV(jsonContentService.fetchJsonData(IpData.class, "ipData"), IpData.class)));
 		} catch (Exception e) {
 			return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
 		}

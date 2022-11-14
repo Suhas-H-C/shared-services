@@ -33,8 +33,7 @@ public final class StringUtilController {
 	@GetMapping(value = "/fetch-fields")
 	public ResponseEntity<GenericResponse<?>> getFields() {
 		try {
-			IpData ipData = new IpData();
-			return new ResponseEntity<>(wrapWithGenericResponse(stringContentUtils.getFields(ipData)), HttpStatus.OK);
+			return new ResponseEntity<>(wrapWithGenericResponse(stringContentUtils.getFields(new IpData().getClass())), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
 		}

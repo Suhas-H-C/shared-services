@@ -49,13 +49,13 @@ public final class CsvServiceImpl implements CsvService {
 						IpData data = BeanUtils.instantiateClass(IpData.class);
 
 						data.setId(Integer.valueOf(nullChecker(csvRecord, 0)));
-						data.setFirst_name((String) nullChecker(csvRecord, 0));
-						data.setLast_name((String) nullChecker(csvRecord, 0));
-						data.setEmail((String) nullChecker(csvRecord, 0));
-						data.setGender((String) nullChecker(csvRecord, 0));
-						data.setIp_address((String) nullChecker(csvRecord, 0));
+						data.setFirst_name((String) nullChecker(csvRecord, 1));
+						data.setLast_name((String) nullChecker(csvRecord, 2));
+						data.setEmail((String) nullChecker(csvRecord, 3));
+						data.setGender((String) nullChecker(csvRecord, 4));
+						data.setIp_address((String) nullChecker(csvRecord, 5));
 						response.add(data);
-					}else {
+					} else {
 						throw new ClassTypeNotSupportedException(TYPE_NOT_FOUND.getMessage());
 					}
 
@@ -70,28 +70,24 @@ public final class CsvServiceImpl implements CsvService {
 	}
 
 	@Override
-	public ByteArrayInputStream getCSV(List<?> data) {
+	public ByteArrayInputStream getCSV(List<?> data, Class<?> clazz) {
 		ByteArrayInputStream byteArrayInputStream;
 		try (ByteArrayOutputStream outPutStream = new ByteArrayOutputStream();) {
 			CsvWriter csvWriter = new CsvWriter(new BufferedOutputStream(outPutStream), ',', StandardCharsets.UTF_8);
-
 			if (nonNull(data) && !data.isEmpty()) {
-				if (data.get(0) instanceof IpData ipDataCasted) {
-					Field[] fields = ipDataCasted.getClass().getDeclaredFields();
-					for (Field field : fields) {
-						FiledHeaderConfig annotation = field.getAnnotation(FiledHeaderConfig.class);
-						csvWriter.write(annotation.header());
+				if (data.get(0).getClass().equals(clazz)) {
+					Field[] templateHeaders = clazz.getDeclaredFields();
+					for (Field field : templateHeaders) {
+						FiledHeaderConfig filedHeaderConfig = field.getAnnotation(FiledHeaderConfig.class);
+						csvWriter.write(filedHeaderConfig.header());
 					}
-					csvWriter.endRecord();
 
+					csvWriter.endRecord();
 					for (Object obj : data) {
-						IpData ipData = (IpData) obj;
-						csvWriter.write(String.valueOf(ipData.getId()));
-						csvWriter.write(ipData.getFirst_name());
-						csvWriter.write(ipData.getLast_name());
-						csvWriter.write(ipData.getEmail());
-						csvWriter.write(ipData.getGender());
-						csvWriter.write(ipData.getIp_address());
+						for (Field field : obj.getClass().getDeclaredFields()) {
+							Object value = nonNull(field.get(obj)) ? field.get(obj) : null;
+							csvWriter.write(nonNull(value) ? String.valueOf(value) : null);
+						}
 						csvWriter.endRecord();
 					}
 
@@ -100,7 +96,7 @@ public final class CsvServiceImpl implements CsvService {
 					outPutStream.close();
 					return byteArrayInputStream;
 				} else {
-					throw new ClassTypeNotSupportedException(TYPE_NOT_FOUND.getMessage());
+					throw new BadRequestException(TYPE_NOT_FOUND.getMessage());
 				}
 			} else {
 				throw new BadRequestException(NULL_DATA.getMessage());
