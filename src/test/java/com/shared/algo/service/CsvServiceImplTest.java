@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.shared.algo.model.IpData;
 
 @ExtendWith(MockitoExtension.class)
 class CsvServiceImplTest {
@@ -28,7 +27,7 @@ class CsvServiceImplTest {
 		InputStream in = TypeReference.class.getResourceAsStream("/data/files/MOCK_DATA_TEST.csv");
 
 		MockMultipartFile multipartFile = new MockMultipartFile("test", in);
-		Collection<?> data = csvServiceImpl.retrieveData(multipartFile, IpData.class);
+		Collection<?> data = csvServiceImpl.retrieveData(multipartFile, "ipdata");
 
 		assertFalse(data.isEmpty());
 		assertEquals(10, data.size());

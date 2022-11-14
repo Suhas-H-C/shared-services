@@ -1,7 +1,9 @@
 package com.shared.algo.service;
 
+import static com.shared.algo.enums.FileConstants.CONTENT_TYPE;
 import static com.shared.algo.enums.Messages.NULL_DATA;
 import static com.shared.algo.enums.Messages.TYPE_NOT_FOUND;
+import static java.util.Objects.nonNull;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -13,7 +15,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -25,39 +26,42 @@ import org.springframework.web.multipart.MultipartFile;
 import com.csvreader.CsvWriter;
 import com.shared.algo.annotations.FiledHeaderConfig;
 import com.shared.algo.exception.BadRequestException;
+import com.shared.algo.exception.ClassTypeNotSupportedException;
 import com.shared.algo.model.IpData;
 
 @Service
 public final class CsvServiceImpl implements CsvService {
 
 	@Override
-	public Collection<?> retrieveData(MultipartFile multipartFile, Class<?> clazz) throws Exception {
+	public Collection<?> retrieveData(MultipartFile multipartFile, String contentType) throws Exception {
 		List<Object> response = new ArrayList<>();
 
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(multipartFile.getInputStream()))) {
 			CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT);
 			List<CSVRecord> list = csvParser.getRecords();
 
+			csvParser.close();
 			for (CSVRecord csvRecord : list) {
 				if (csvRecord.getRecordNumber() == 1) {
 					continue;
 				} else {
-					// for object IpData
-					if (clazz.isInstance(new IpData())) {
+					if (checkContentType(contentType) instanceof IpData) {
 						IpData data = BeanUtils.instantiateClass(IpData.class);
-						data.setId(Integer.parseInt(csvRecord.get(0)));
-						data.setFirst_name(csvRecord.get(1));
-						data.setLast_name(csvRecord.get(2));
-						data.setEmail(csvRecord.get(3));
-						data.setGender(csvRecord.get(4));
-						data.setIp_address(csvRecord.get(5));
+
+						data.setId(Integer.valueOf(nullChecker(csvRecord, 0)));
+						data.setFirst_name((String) nullChecker(csvRecord, 0));
+						data.setLast_name((String) nullChecker(csvRecord, 0));
+						data.setEmail((String) nullChecker(csvRecord, 0));
+						data.setGender((String) nullChecker(csvRecord, 0));
+						data.setIp_address((String) nullChecker(csvRecord, 0));
 						response.add(data);
+					}else {
+						throw new ClassTypeNotSupportedException(TYPE_NOT_FOUND.getMessage());
 					}
 
 				}
 			}
 
-			csvParser.close();
 			reader.close();
 			return response;
 		} catch (Exception e) {
@@ -71,7 +75,7 @@ public final class CsvServiceImpl implements CsvService {
 		try (ByteArrayOutputStream outPutStream = new ByteArrayOutputStream();) {
 			CsvWriter csvWriter = new CsvWriter(new BufferedOutputStream(outPutStream), ',', StandardCharsets.UTF_8);
 
-			if (Objects.nonNull(data) && !data.isEmpty()) {
+			if (nonNull(data) && !data.isEmpty()) {
 				if (data.get(0) instanceof IpData ipDataCasted) {
 					Field[] fields = ipDataCasted.getClass().getDeclaredFields();
 					for (Field field : fields) {
@@ -96,13 +100,33 @@ public final class CsvServiceImpl implements CsvService {
 					outPutStream.close();
 					return byteArrayInputStream;
 				} else {
-					throw new BadRequestException(TYPE_NOT_FOUND.getMessage());
+					throw new ClassTypeNotSupportedException(TYPE_NOT_FOUND.getMessage());
 				}
 			} else {
 				throw new BadRequestException(NULL_DATA.getMessage());
 			}
 		} catch (Exception e) {
 			throw new BadRequestException(e.getMessage());
+		}
+	}
+
+	private Object checkContentType(String value) {
+		if (value.isEmpty() || value.isBlank()) {
+			throw new BadRequestException(NULL_DATA.getMessage());
+		} else {
+			if (CONTENT_TYPE.getValue().equalsIgnoreCase(value)) {
+				return new IpData();
+			} else {
+				throw new ClassTypeNotSupportedException(TYPE_NOT_FOUND.getMessage());
+			}
+		}
+	}
+
+	private String nullChecker(CSVRecord csvRecord, int index) {
+		if (nonNull(csvRecord.get(index))) {
+			return csvRecord.get(index);
+		} else {
+			return null;
 		}
 	}
 }

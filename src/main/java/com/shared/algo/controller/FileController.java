@@ -89,9 +89,10 @@ public final class FileController {
 			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
 	@PostMapping(value = "/read-csv", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GenericResponse<?>> readCSV(
-			@RequestParam(name = "file", required = true) MultipartFile multipartFile) {
+			@RequestParam(name = "file", required = true) MultipartFile multipartFile,
+			@RequestParam(name = "type", required = true) String contentType) {
 		try {
-			return new ResponseEntity<>(wrapWithGenericResponse(csvService.retrieveData(multipartFile, IpData.class)),
+			return new ResponseEntity<>(wrapWithGenericResponse(csvService.retrieveData(multipartFile, contentType)),
 					HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
