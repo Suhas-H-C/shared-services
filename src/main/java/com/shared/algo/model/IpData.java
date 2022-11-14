@@ -7,17 +7,17 @@ import com.shared.algo.annotations.FiledHeaderConfig;
 public class IpData implements Serializable{
 
 	@FiledHeaderConfig(header = "Id")
-	private int id;
+	public int id;
 	@FiledHeaderConfig(header = "First Name")
-	private String first_name;
+	public String first_name;
 	@FiledHeaderConfig(header = "Last Name")
-	private String last_name;
+	public String last_name;
 	@FiledHeaderConfig(header = "Email Id")
-	private String email;
+	public String email;
 	@FiledHeaderConfig(header = "Gender")
-	private String gender;
+	public String gender;
 	@FiledHeaderConfig(header = "Ip Address")
-	private String ip_address;
+	public String ip_address;
 
 	public int getId() {
 		return id;
@@ -68,7 +68,6 @@ public class IpData implements Serializable{
 	}
 
 	public IpData(int id, String first_name, String last_name, String email, String gender, String ip_address) {
-		super();
 		this.id = id;
 		this.first_name = first_name;
 		this.last_name = last_name;

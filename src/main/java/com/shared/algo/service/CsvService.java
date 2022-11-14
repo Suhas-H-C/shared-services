@@ -10,5 +10,5 @@ public interface CsvService {
 
 	Collection<?> retrieveData(MultipartFile multipartFile, String contentType) throws Exception;
 
-	ByteArrayInputStream getCSV(List<?> data);
+	ByteArrayInputStream getCSV(List<?> data, Class<?> clazz);
 }

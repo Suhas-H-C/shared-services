@@ -1,5 +1,7 @@
 package com.shared.algo.service;
 
+import static com.shared.algo.enums.Messages.FILE_READING_FAILED;
+import static com.shared.algo.enums.Messages.INVALID_FILE_NAME;
 import static java.util.Objects.nonNull;
 
 import java.io.BufferedReader;
@@ -18,9 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.shared.algo.annotations.FiledHeaderConfig;
-import static com.shared.algo.enums.Messages.*;
 import com.shared.algo.exception.BadRequestException;
-import com.shared.algo.model.IpData;
 
 @Service
 public final class StringContentUtilsServiceImpl implements StringContentUtilsService {
@@ -51,16 +51,18 @@ public final class StringContentUtilsServiceImpl implements StringContentUtilsSe
 	}
 
 	@Override
-	public Collection<?> getFields(Object obj) {
+	public Collection<?> getFields(Class<?> clazz) {
 		List<String> list = new ArrayList<>();
-
-		if (obj instanceof IpData data) {
-			Field[] fields = data.getClass().getDeclaredFields();
+		if (clazz.toString().contains("IpData")) {
+			Field[] fields = clazz.getDeclaredFields();
 			for (Field field : fields) {
-				list.add(field.getAnnotation(FiledHeaderConfig.class).header());
+				FiledHeaderConfig config = field.getAnnotation(FiledHeaderConfig.class);
+				System.out.println(config.header());
+				list.add(config.header());
 			}
 			return list;
+		} else {
+			return list;
 		}
-		return list;
 	}
 }

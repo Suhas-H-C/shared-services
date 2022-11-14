@@ -21,7 +21,7 @@ class StringContentUtilsServiceImplTest {
 	@Test
 	@DisplayName("testGetContent_IllegalArgumentException")
 	void testGetContent() {
-		assertThrows(IllegalArgumentException.class, () -> {
+		assertThrows(NullPointerException.class, () -> {
 			stringContentUtilsImpl.getContent("demo");
 		});
 	}
@@ -29,7 +29,7 @@ class StringContentUtilsServiceImplTest {
 	@Test
 	@DisplayName("testGetFields_False")
 	void testGetFields() {
-		Collection<?> feildData = stringContentUtilsImpl.getFields(new IpData());
+		Collection<?> feildData = stringContentUtilsImpl.getFields(new IpData().getClass());
 		assertFalse(feildData.isEmpty());
 	}
 
