@@ -9,6 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.shared.algo.service.ImgContentService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping(value = "/img")
 public class ImgContentController {
@@ -16,6 +20,12 @@ public class ImgContentController {
 	@Autowired
 	private ImgContentService imgContentService;
 
+	@Operation(method = "GET", description = "Extractes Image text contents", tags = "file")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Success"),
+			@ApiResponse(responseCode = "400", description = "Bad Request"),
+			@ApiResponse(responseCode = "401", description = "Unauthorized"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
+			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
 	@GetMapping(value = "/process")
 	public String processImage(@RequestParam(name = "file", required = true) MultipartFile image,
 			@RequestParam(name = "language", required = true) String lang) throws Exception {
