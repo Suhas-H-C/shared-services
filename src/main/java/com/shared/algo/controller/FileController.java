@@ -3,15 +3,18 @@ package com.shared.algo.controller;
 import static com.shared.algo.enums.ContentStatus.DISPOSITION;
 import static com.shared.algo.utils.SharedAlgosResponseBuilder.wrapWithGenericResponse;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,14 +27,17 @@ import com.shared.algo.model.IpData;
 import com.shared.algo.service.CsvService;
 import com.shared.algo.service.JsonContentService;
 import com.shared.algo.service.PDFService;
+import com.shared.algo.service.ReportService;
 import com.shared.algo.service.StringContentUtilsService;
 import com.shared.algo.service.XlsxService;
 import com.shared.algo.utils.GenericResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/file")
 public final class FileController {
@@ -46,6 +52,8 @@ public final class FileController {
 	private XlsxService xlsxService;
 	@Autowired
 	private PDFService pdfService;
+	@Autowired
+	private ReportService reportService;
 
 	@Operation(method = "GET", description = "Retrieves the string from file", tags = "file")
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Success"),
@@ -55,7 +63,7 @@ public final class FileController {
 			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
 	@GetMapping(value = "/fetch-content")
 	public ResponseEntity<GenericResponse<?>> getContent(
-			@RequestParam(name = "fileName", required = true) String fileName) {
+			@Parameter(allowEmptyValue = false, description = "contains file name") @RequestParam(name = "fileName", required = true) String fileName) {
 		try {
 			return new ResponseEntity<>(wrapWithGenericResponse(stringContentUtils.getContent(fileName)),
 					HttpStatus.OK);
@@ -165,6 +173,27 @@ public final class FileController {
 			response.setContentType("application/pdf");
 			response.setHeader(DISPOSITION.getKey(), DISPOSITION.getContent().concat(fileName).concat(".pdf"));
 			pdfService.write(response);
+		} catch (Exception e) {
+			throw new BadRequestException(e.getMessage());
+		}
+	}
+
+	@Operation(method = "GET", description = "Produces PDF file", tags = "pdf-file")
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Success"),
+			@ApiResponse(responseCode = "400", description = "Bad Request"),
+			@ApiResponse(responseCode = "401", description = "Unauthorized"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
+			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
+	@GetMapping(value = "/produce-report", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<InputStreamResource> getPDFReport(
+			@RequestParam(value = "title", required = true, defaultValue = "IpData Report") String title) {
+		try {
+			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
+					reportService.generatePdfReport((List<?>) jsonContentService.fetchJsonData(IpData.class, "ipData").get(0), title));
+			HttpHeaders headers = new HttpHeaders();
+			headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=report.pdf");
+			return ResponseEntity.status(HttpStatus.OK).headers(headers)
+					.body(new InputStreamResource(byteArrayInputStream));
 		} catch (Exception e) {
 			throw new BadRequestException(e.getMessage());
 		}
