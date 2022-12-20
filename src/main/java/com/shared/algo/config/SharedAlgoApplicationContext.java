@@ -8,16 +8,16 @@ import org.springframework.stereotype.Component;
 @Component
 public final class SharedAlgoApplicationContext implements ApplicationContextAware {
 
-	static ApplicationContext applicationContext;
-	String applicationId;
+    static ApplicationContext applicationContext;
+    String applicationId;
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		SharedAlgoApplicationContext.applicationContext = applicationContext;
-		applicationId = applicationContext.getId();
-	}
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        SharedAlgoApplicationContext.applicationContext = applicationContext;
+        applicationId = applicationContext.getId();
+    }
 
-	public String getApplicationId() {
-		return applicationId;
-	}
+    public String getApplicationId() {
+        return applicationId;
+    }
 }

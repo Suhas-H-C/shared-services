@@ -4,7 +4,7 @@ import java.util.Collection;
 
 public interface StringContentUtilsService {
 
-	Collection<?> getFields(Class<?> clazz);
+    Collection<?> getFields(Class<?> clazz);
 
-	String getContent(String fileName) throws Exception;
+    String getContent(String fileName) throws Exception;
 }
