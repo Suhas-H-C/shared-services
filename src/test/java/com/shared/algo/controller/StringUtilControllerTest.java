@@ -1,7 +1,7 @@
 package com.shared.algo.controller;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
@@ -37,6 +37,19 @@ class StringUtilControllerTest {
 		
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertTrue(response.getBody().getData().isEmpty());
+		reset(stringContentUtils);
+	}
+	
+	@Test
+	@DisplayName("Field Response BAD_REQUEST")
+	void fieldResponseBadRequest() {
+		when(stringContentUtils.getFields(any()))
+		.thenThrow(NullPointerException.class);
+		
+		ResponseEntity<GenericResponse<?>> response = stringUtilController.getFields();
+		
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+		assertNotNull(response.getBody());
 		reset(stringContentUtils);
 	}
 	
