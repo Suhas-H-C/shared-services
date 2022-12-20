@@ -42,7 +42,7 @@ class StringUtilControllerTest {
 	
 	@Test
 	@DisplayName("Field Response BAD_REQUEST")
-	void fieldResponseBadRequest() {
+	void fieldResponseBadRequest() throws Exception {
 		when(stringContentUtils.getFields(any()))
 		.thenThrow(NullPointerException.class);
 		
