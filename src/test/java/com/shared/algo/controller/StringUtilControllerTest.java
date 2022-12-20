@@ -26,7 +26,6 @@ class StringUtilControllerTest {
 	@Mock
 	private StringContentUtilsService stringContentUtils;
 	
-	
 	@Test
 	@DisplayName("Test field response")
 	void testFieldsResponse() {
