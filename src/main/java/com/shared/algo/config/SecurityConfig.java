@@ -22,7 +22,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().anyRequest().authenticated().and().httpBasic();
+		/*
+		 * commenting authentication to run cucumber scripts
+		 * 
+		 * http.csrf().disable().authorizeRequests()
+		 * .anyRequest().authenticated().and().httpBasic();
+		 */
+		
+		
+		http.authorizeRequests().anyRequest().permitAll()
+		.and()
+		.formLogin()
+		.and()
+		.httpBasic();
 	}
 
 	@Bean
