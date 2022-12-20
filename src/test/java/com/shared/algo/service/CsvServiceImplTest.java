@@ -18,19 +18,19 @@ import com.fasterxml.jackson.core.type.TypeReference;
 @ExtendWith(MockitoExtension.class)
 class CsvServiceImplTest {
 
-	@InjectMocks
-	private CsvServiceImpl csvServiceImpl;
+    @InjectMocks
+    private CsvServiceImpl csvServiceImpl;
 
-	@Test
-	@DisplayName("readCsvFileTest")
-	void readCsvFileTest() throws Exception {
-		InputStream in = TypeReference.class.getResourceAsStream("/data/files/MOCK_DATA_TEST.csv");
+    @Test
+    @DisplayName("readCsvFileTest")
+    void readCsvFileTest() throws Exception {
+        InputStream in = TypeReference.class.getResourceAsStream("/data/files/MOCK_DATA_TEST.csv");
 
-		MockMultipartFile multipartFile = new MockMultipartFile("test", in);
-		Collection<?> data = csvServiceImpl.retrieveData(multipartFile, "ipdata");
+        MockMultipartFile multipartFile = new MockMultipartFile("test", in);
+        Collection<?> data = csvServiceImpl.retrieveData(multipartFile, "ipdata");
 
-		assertFalse(data.isEmpty());
-		assertEquals(10, data.size());
-	}
+        assertFalse(data.isEmpty());
+        assertEquals(10, data.size());
+    }
 
 }
