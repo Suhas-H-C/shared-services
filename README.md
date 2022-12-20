@@ -1,7 +1,7 @@
-# algos-pss
+# shared-algo
 
-Applicaiton is a snapshot version for java algorithms and datastructures with swagger implementation.
+Application is a snapshot version for java algorithms and data structures with API documentation.
 
 Application can be viewed locally at:
 
-http://localhost:8443/
+http://localhost:8443/shared-algo/

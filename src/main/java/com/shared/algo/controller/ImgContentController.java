@@ -20,7 +20,7 @@ public class ImgContentController {
 	@Autowired
 	private ImgContentService imgContentService;
 
-	@Operation(method = "GET", description = "Extractes Image text contents", tags = "file")
+	@Operation(method = "GET", description = "Extracts Image text contents", tags = "file")
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Success"),
 			@ApiResponse(responseCode = "400", description = "Bad Request"),
 			@ApiResponse(responseCode = "401", description = "Unauthorized"),
