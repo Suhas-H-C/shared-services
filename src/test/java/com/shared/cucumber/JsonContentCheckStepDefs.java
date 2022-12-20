@@ -11,36 +11,32 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class ContentCheckStepDefs {
+public class JsonContentCheckStepDefs {
 
     @LocalServerPort
     String port;
 
-    ResponseEntity<GenericResponse> lastResponse;
+    ResponseEntity<GenericResponse> apiResponse;
 
-    @Given("user makes API request {string} with params {string}")
-    public void userMakesAPIRequestWithParams(String arg0, String arg1) {
+    @Given("User triggers {string} with following {string}")
+    public void user_triggers_with_following(String string, String string2) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth("suhas", "suhas");
         HttpEntity<?> httpEntity = new HttpEntity<>(headers);
-        System.out.println(arg1);
-        String url = "http://localhost:" + port + arg0 + "?fileName=" + arg1;
+        String url = "http://localhost:" + port + string + "?stringPath=" + string2;
         System.out.println(url);
-        lastResponse = new RestTemplate().exchange(url,
+        apiResponse = new RestTemplate().exchange(url,
                 HttpMethod.GET, httpEntity,
                 GenericResponse.class);
     }
 
-    @And("response code is {int}")
-    public void response_code_is(Integer int1) {
-        assertThat(lastResponse.getStatusCodeValue()).isEqualTo(int1);
+    @Then("Content is not empty")
+    public void content_is_not_empty() {
+        assertNotNull(apiResponse.getBody().getData());
     }
 
-    @Then("data produced is not null")
-    public void data_produced_is_not_null() {
-        assertNotNull(lastResponse.getBody().getData());
-    }
+
 }
