@@ -1,18 +1,17 @@
 package com.shared.algo.handler;
 
-import static com.shared.algo.utils.SharedAlgosResponseBuilder.wrapWithErrorResponse;
-
+import com.shared.algo.exception.BadRequestException;
+import com.shared.algo.utils.GenericResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.shared.algo.exception.BadRequestException;
-import com.shared.algo.utils.GenericResponse;
+import static com.shared.algo.utils.SharedAlgosResponseBuilder.wrapWithErrorResponse;
 
 @RestControllerAdvice
-public class SharedAlgoExceptionHandler {
+public final class SharedAlgoExceptionHandler {
 
-	@ExceptionHandler(BadRequestException.class)
-	public GenericResponse<?> handleBadRequestException(BadRequestException badRequestException) {
-		return wrapWithErrorResponse(badRequestException);
-	}
+    @ExceptionHandler(BadRequestException.class)
+    public GenericResponse<?> handleBadRequestException(BadRequestException badRequestException) {
+        return wrapWithErrorResponse(badRequestException);
+    }
 }

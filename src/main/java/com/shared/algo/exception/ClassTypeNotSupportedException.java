@@ -1,6 +1,6 @@
 package com.shared.algo.exception;
 
-public final class BadRequestException extends RuntimeException {
+public final class ClassTypeNotSupportedException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
     String message;
@@ -10,11 +10,7 @@ public final class BadRequestException extends RuntimeException {
         return this.message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public BadRequestException(String message) {
+    public ClassTypeNotSupportedException(String message) {
         super();
         this.message = message;
     }

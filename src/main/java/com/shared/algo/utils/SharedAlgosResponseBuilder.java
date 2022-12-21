@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.UUID;
 
-public class SharedAlgosResponseBuilder {
+public final class SharedAlgosResponseBuilder {
 
 	public static GenericResponse<?> wrapWithGenericResponse(Object data) {
 		GenericResponse<?> response = new GenericResponse<>();

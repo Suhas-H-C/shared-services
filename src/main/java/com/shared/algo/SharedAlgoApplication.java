@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 import com.shared.algo.config.SharedAlgoApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 public class SharedAlgoApplication implements CommandLineRunner {
@@ -27,6 +29,11 @@ public class SharedAlgoApplication implements CommandLineRunner {
 		SharedAlgoApplicationContext sharedAlgoApplicationConfig = applicationContext
 				.getBean(SharedAlgoApplicationContext.class);
 		LOGGER.info("{}", sharedAlgoApplicationConfig.getApplicationId());
+	}
+
+	@Bean
+	public RestTemplate restTemplate(){
+		return new RestTemplate();
 	}
 
 }
