@@ -116,7 +116,7 @@ class FileControllerTest {
         ResponseEntity<GenericResponse<?>> response = fileController.readCSV(multipartFile("MOCK_DATA_TEST.csv"), "ipdata");
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertFalse(response.getBody().getMetaData().isSuccess());
+        assertFalse(requireNonNull(response.getBody()).getMetaData().isSuccess());
         reset(csvService);
     }
 
@@ -179,7 +179,7 @@ class FileControllerTest {
         ResponseEntity<?> response = fileController.getExcel("sample");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        reset(jsonContentService);
+        reset(xlsxService);
     }
 
     @Test
