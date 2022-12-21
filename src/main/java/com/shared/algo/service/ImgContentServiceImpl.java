@@ -17,7 +17,10 @@ import java.io.IOException;
 public class ImgContentServiceImpl implements ImgContentService {
 
     @Override
-    public String processImage(MultipartFile multipartFile) throws Exception {
+    public String processImage(MultipartFile multipartFile, String lang) throws Exception {
+        if (!lang.equalsIgnoreCase("eng") || !lang.equalsIgnoreCase("kan")) {
+            return "Language group not supported";
+        }
         ITesseract instance = new Tesseract();
         try {
             BufferedImage in = ImageIO.read(convert(multipartFile));
@@ -28,7 +31,7 @@ public class ImgContentServiceImpl implements ImgContentService {
             g.drawImage(in, 0, 0, null);
             g.dispose();
 
-            instance.setLanguage("eng");
+            instance.setLanguage(lang);
             instance.setDatapath("src/main/resources/tess4j/");
 
             return instance.doOCR(newImage);

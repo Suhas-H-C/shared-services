@@ -28,9 +28,10 @@ public class ImgContentController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")})
     @PostMapping(value = "/process", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public String processImage(@RequestParam(name = "image") MultipartFile image) throws Exception {
-        String response = imgContentService.processImage(image);
-        LOG.info("ocr response : {}",response);
+    public String processImage(@RequestParam(name = "image") MultipartFile image,
+                               @RequestParam(name = "lang") String lang) throws Exception {
+        String response = imgContentService.processImage(image, lang);
+        LOG.info("ocr response : {}", response);
         return response;
     }
 

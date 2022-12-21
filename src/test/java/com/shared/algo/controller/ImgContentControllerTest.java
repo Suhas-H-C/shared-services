@@ -30,10 +30,10 @@ class ImgContentControllerTest {
     @Test
     @DisplayName("Test tesseract4j OCR")
     void testOcr() throws Exception {
-        when(imgContentService.processImage(any()))
+        when(imgContentService.processImage(any(), anyString()))
                 .thenReturn("Image processing successful");
 
-        String response = imgContentController.processImage(multipartFile());
+        String response = imgContentController.processImage(multipartFile(), "eng");
 
         assertEquals("Image processing successful", response);
         assertNotNull(response);
