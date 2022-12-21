@@ -4,6 +4,8 @@ import com.shared.algo.utils.GenericResponse;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -15,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HealCheckStepDefs {
+
     @LocalServerPort
     String port;
 
@@ -22,7 +25,10 @@ public class HealCheckStepDefs {
 
     @When("Health check API is triggered {string}")
     public void health_check_api_is_triggered(String url) {
-        lastResponse = new RestTemplate().exchange("http://localhost:" + port + url, HttpMethod.GET, null,
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBasicAuth("suhas", "suhas");
+        HttpEntity<?> httpEntity = new HttpEntity<>(headers);
+        lastResponse = new RestTemplate().exchange("http://localhost:" + port + url, HttpMethod.GET, httpEntity,
                 GenericResponse.class);
     }
 

@@ -1,4 +1,4 @@
-@tag
+@health
 Feature: Health check API Triggered
 
   Scenario: Check status and body of health-check API
