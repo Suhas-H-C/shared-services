@@ -29,7 +29,7 @@ public class ImgContentServiceImpl implements ImgContentService {
             g.dispose();
 
             instance.setLanguage("eng");
-            instance.setDatapath("src/main/resources/datapaths/");
+            instance.setDatapath("src/main/resources/tess4j/");
 
             return instance.doOCR(newImage);
         } catch (TesseractException | IOException e) {
