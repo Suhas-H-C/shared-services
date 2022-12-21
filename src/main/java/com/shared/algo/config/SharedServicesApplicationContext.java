@@ -6,14 +6,14 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 @Component
-public final class SharedAlgoApplicationContext implements ApplicationContextAware {
+public final class SharedServicesApplicationContext implements ApplicationContextAware {
 
     static ApplicationContext applicationContext;
     String applicationId;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        SharedAlgoApplicationContext.applicationContext = applicationContext;
+        SharedServicesApplicationContext.applicationContext = applicationContext;
         applicationId = applicationContext.getId();
     }
 

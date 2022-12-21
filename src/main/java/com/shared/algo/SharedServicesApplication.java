@@ -8,7 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-import com.shared.algo.config.SharedAlgoApplicationContext;
+import com.shared.algo.config.SharedServicesApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,8 +26,8 @@ public class SharedServicesApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		SharedAlgoApplicationContext sharedAlgoApplicationConfig = applicationContext
-				.getBean(SharedAlgoApplicationContext.class);
+		SharedServicesApplicationContext sharedAlgoApplicationConfig = applicationContext
+				.getBean(SharedServicesApplicationContext.class);
 		LOGGER.info("{}", sharedAlgoApplicationConfig.getApplicationId());
 	}
 
