@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.shared.algo</groupId>
-    <artifactId>shared-algo</artifactId>
+    <artifactId>shared-services</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>shared-algo</name>
     <description>Shared Algorithms for Java</description>
