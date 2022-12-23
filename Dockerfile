@@ -1,5 +1,5 @@
 FROM openjdk:latest
-WORKDIR /home/app
+RUN mkdir /home/app
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 COPY src ./src
