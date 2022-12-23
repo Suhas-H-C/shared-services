@@ -1,9 +1,10 @@
 FROM openjdk:latest
-RUN mkdir /home/app
+WORKDIR /home/app
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 COPY src ./src
-COPY target ./target
 RUN ./mvnw dependency:resolve
+RUN ./mvnw clean install
 EXPOSE 8443
-CMD ["java","-jar","/target/shared-services.jar"]
+RUN echo "Jar file built successfully at /home/app"
+CMD ["java","-jar","/home/app/shared-services.jar"]
