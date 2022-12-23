@@ -1,5 +1,8 @@
 FROM openjdk:latest
 RUN mkdir /home/app
-COPY ./src /home/app
-ADD target/shared-algo.jar shared-algo.jar
-ENTRYPOINT ["java","-jar","shared-algo.jar"]
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+RUN ./mvnw dependency:resolve
+COPY src ./src
+ADD target/shared-services.jar shared-services.jar
+ENTRYPOINT ["java","-jar","shared-services.jar"]

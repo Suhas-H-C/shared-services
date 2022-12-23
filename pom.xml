@@ -114,6 +114,10 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.8</version>
@@ -133,6 +137,6 @@
                 </executions>
             </plugin>
         </plugins>
-        <finalName>shared-algo</finalName>
+        <finalName>shared-services</finalName>
     </build>
 </project>
