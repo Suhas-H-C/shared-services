@@ -99,7 +99,6 @@ public final class XlsxServiceImpl implements XlsxService {
                 } else {
                     throw new ClassTypeNotSupportedException(Messages.TYPE_NOT_FOUND.getMessage());
                 }
-
                 workBook.write(byteArrayOutputStream);
                 workBook.close();
                 return new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
