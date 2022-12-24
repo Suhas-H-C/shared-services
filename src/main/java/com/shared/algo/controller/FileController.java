@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,15 +25,16 @@ import java.util.List;
 import static com.shared.algo.enums.ContentStatus.DISPOSITION;
 import static com.shared.algo.utils.ResponseBuilder.wrapWithGenericResponse;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/file")
-public final class FileController {
+public class FileController {
 
     @Autowired
     private StringContentUtilsService stringContentUtils;
     @Autowired
     private JsonContentService jsonContentService;
+    @Autowired
+    private FileUtilsService fileUtilsService;
     @Autowired
     private CsvService csvService;
     @Autowired
@@ -184,5 +186,18 @@ public final class FileController {
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
+    }
+
+
+    @Operation(method = "GET", description = "Retrieve local file path", tags = "xlsx-file")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "Success"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error")})
+    @GetMapping(value = "/local-paths")
+    @Cacheable(value = "localFile")
+    public String getLocalFilePath() {
+            return fileUtilsService.localFilePath();
     }
 }

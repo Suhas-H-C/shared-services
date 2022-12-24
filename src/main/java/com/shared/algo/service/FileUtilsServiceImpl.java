@@ -3,6 +3,8 @@ package com.shared.algo.service;
 import com.shared.algo.enums.Messages;
 import com.shared.algo.exception.BadRequestException;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -15,6 +17,8 @@ import java.util.zip.ZipOutputStream;
 
 @Service
 public class FileUtilsServiceImpl implements FileUtilsService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(FileUtilsServiceImpl.class);
 
     @Override
     public byte[] zipFiles(Collection<File> files) throws Exception {
@@ -35,5 +39,11 @@ public class FileUtilsServiceImpl implements FileUtilsService {
         } else {
             throw new BadRequestException(Messages.NULL_DATA.getMessage());
         }
+    }
+
+    @Override
+    public String localFilePath() {
+        LOG.info("local file path requested");
+        return "src/main/resources/data/files/";
     }
 }
