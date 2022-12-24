@@ -22,7 +22,7 @@ import java.io.ByteArrayInputStream;
 import java.util.List;
 
 import static com.shared.algo.enums.ContentStatus.DISPOSITION;
-import static com.shared.algo.utils.SharedAlgosResponseBuilder.wrapWithGenericResponse;
+import static com.shared.algo.utils.ResponseBuilder.wrapWithGenericResponse;
 
 @CrossOrigin("*")
 @RestController

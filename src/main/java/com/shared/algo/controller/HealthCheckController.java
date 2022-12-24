@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.shared.algo.utils.SharedAlgosResponseBuilder.wrapWithGenericResponse;
+import static com.shared.algo.utils.ResponseBuilder.wrapWithGenericResponse;
 
 @RestController
 @RequestMapping(value = "/health")

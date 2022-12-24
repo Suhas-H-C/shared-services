@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class MetaData {
 
 	private boolean success;
-	private String repsonseId;
+	private String responseId;
 	private LocalDateTime time;
 
 	public boolean isSuccess() {
@@ -16,12 +16,12 @@ public class MetaData {
 		this.success = success;
 	}
 
-	public String getRepsonseId() {
-		return repsonseId;
+	public String getResponseId() {
+		return responseId;
 	}
 
-	public void setRepsonseId(String repsonseId) {
-		this.repsonseId = repsonseId;
+	public void setResponseId(String responseId) {
+		this.responseId = responseId;
 	}
 
 	public LocalDateTime getTime() {
@@ -32,10 +32,10 @@ public class MetaData {
 		this.time = time;
 	}
 
-	public MetaData(boolean success, String repsonseId, LocalDateTime time) {
+	public MetaData(boolean success, String responseId, LocalDateTime time) {
 		super();
 		this.success = success;
-		this.repsonseId = repsonseId;
+		this.responseId = responseId;
 		this.time = time;
 	}
 
@@ -44,6 +44,6 @@ public class MetaData {
 
 	@Override
 	public String toString() {
-		return "MetaData [success=" + success + ", repsonseId=" + repsonseId + ", time=" + time + "]";
+		return "MetaData [success=" + success + ", responseId=" + responseId + ", time=" + time + "]";
 	}
 }

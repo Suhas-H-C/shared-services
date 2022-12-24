@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.UUID;
 
-public final class SharedAlgosResponseBuilder {
+public final class ResponseBuilder {
 
 	public static GenericResponse<?> wrapWithGenericResponse(Object data) {
 		GenericResponse<?> response = new GenericResponse<>();
@@ -36,22 +36,22 @@ public final class SharedAlgosResponseBuilder {
 			if (Objects.nonNull(data) && !((Collection<?>) data).isEmpty()) {
 				metaData.setTime(LocalDateTime.now());
 				metaData.setSuccess(true);
-				metaData.setRepsonseId(UUID.randomUUID().toString());
+				metaData.setResponseId(UUID.randomUUID().toString());
 			} else {
 				metaData.setTime(LocalDateTime.now());
 				metaData.setSuccess(false);
-				metaData.setRepsonseId(UUID.randomUUID().toString());
+				metaData.setResponseId(UUID.randomUUID().toString());
 			}
 
 		} else {
 			if (Objects.nonNull(data)) {
 				metaData.setTime(LocalDateTime.now());
 				metaData.setSuccess(true);
-				metaData.setRepsonseId(UUID.randomUUID().toString());
+				metaData.setResponseId(UUID.randomUUID().toString());
 			} else {
 				metaData.setTime(LocalDateTime.now());
 				metaData.setSuccess(false);
-				metaData.setRepsonseId(UUID.randomUUID().toString());
+				metaData.setResponseId(UUID.randomUUID().toString());
 			}
 		}
 

@@ -5,7 +5,7 @@ import com.shared.algo.utils.GenericResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static com.shared.algo.utils.SharedAlgosResponseBuilder.wrapWithErrorResponse;
+import static com.shared.algo.utils.ResponseBuilder.wrapWithErrorResponse;
 
 @RestControllerAdvice
 public final class SharedAlgoExceptionHandler {
