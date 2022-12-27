@@ -1,0 +1,15 @@
+com\shared\cucumber\ContentCheckStepDefs.class
+com\shared\cucumber\HealCheckStepDefs.class
+com\shared\cucumber\JsonContentCheckStepDefs.class
+com\shared\algo\controller\StringUtilControllerTest.class
+com\shared\algo\SharedServicesApplicationTests.class
+com\shared\algo\controller\HealthCheckControllerTest.class
+com\shared\algo\service\JsonContentServiceImplTest.class
+com\shared\cucumber\FieldsCheckStepDefs.class
+com\shared\algo\controller\FileControllerIT.class
+com\shared\cucumber\CucumberSpringBootConfigs.class
+com\shared\cucumber\CucumberIntegration.class
+com\shared\algo\service\StringContentUtilsServiceImplTest.class
+com\shared\algo\controller\FileControllerTest.class
+com\shared\algo\service\CsvServiceImplTest.class
+com\shared\algo\controller\ImgContentControllerTest.class

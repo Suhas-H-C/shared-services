@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StringContentUtilsServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">shared-algo</a> &gt; <a href="index.source.html" class="el_package">com.shared.algo.service</a> &gt; <span class="el_source">StringContentUtilsServiceImpl.java</span></div><h1>StringContentUtilsServiceImpl.java</h1><pre class="source lang-java linenums">package com.shared.algo.service;
+
+import com.shared.algo.annotations.FiledHeaderConfig;
+import com.shared.algo.exception.BadRequestException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+
+import static com.shared.algo.enums.Messages.FILE_READING_FAILED;
+import static com.shared.algo.enums.Messages.INVALID_FILE_NAME;
+import static java.util.Objects.nonNull;
+
+@Service
+<span class="fc" id="L25">public final class StringContentUtilsServiceImpl implements StringContentUtilsService {</span>
+
+<span class="fc" id="L27">    private static final Logger LOGGER = LoggerFactory.getLogger(StringContentUtilsServiceImpl.class);</span>
+
+    @Override
+    public String getContent(String fileName) throws Exception {
+<span class="fc" id="L31">        LOGGER.info(&quot;fileName : {}&quot;, fileName);</span>
+<span class="fc" id="L32">        InputStream in = getClass().getClassLoader().getResourceAsStream(&quot;data/files/&quot;.concat(fileName));</span>
+
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if (nonNull(in)) {</span>
+<span class="nc" id="L35">            StringBuilder sb = new StringBuilder();</span>
+
+<span class="nc" id="L37">            try (BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(in),</span>
+<span class="nc" id="L38">                    Charset.forName(StandardCharsets.UTF_8.name())))) {</span>
+                int c;
+<span class="nc bnc" id="L40" title="All 2 branches missed.">                while ((c = reader.read()) != -1) {</span>
+<span class="nc" id="L41">                    sb.append((char) c);</span>
+                }
+<span class="nc" id="L43">                return sb.toString();</span>
+<span class="nc" id="L44">            } catch (Exception e) {</span>
+<span class="nc" id="L45">                throw new BadRequestException(FILE_READING_FAILED.getMessage());</span>
+            }
+        } else {
+<span class="fc" id="L48">            throw new NullPointerException(INVALID_FILE_NAME.getMessage());</span>
+        }
+    }
+
+    @Override
+    public Collection&lt;?&gt; getFields(Class&lt;?&gt; clazz) {
+<span class="fc" id="L54">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (clazz.toString().contains(&quot;IpData&quot;)) {</span>
+<span class="fc" id="L56">            Field[] fields = clazz.getDeclaredFields();</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            for (Field field : fields) {</span>
+<span class="fc" id="L58">                FiledHeaderConfig config = field.getAnnotation(FiledHeaderConfig.class);</span>
+<span class="fc" id="L59">                System.out.println(config.header());</span>
+<span class="fc" id="L60">                list.add(config.header());</span>
+            }
+<span class="fc" id="L62">            return list;</span>
+        } else {
+<span class="nc" id="L64">            return list;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

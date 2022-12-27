@@ -74,7 +74,8 @@ public final class XlsxServiceImpl implements XlsxService {
             if (Objects.nonNull(data) && !data.isEmpty()) {
                 List<String> fileHeaders = new ArrayList<>();
 
-                if (data.get(0) instanceof IpData ipDataInstance) {
+                if (data.get(0) instanceof IpData) {
+                    IpData ipDataInstance = (IpData) data.get(0);
                     Field[] fields = ipDataInstance.getClass().getDeclaredFields();
                     for (Field field : fields) {
                         FiledHeaderConfig headers = field.getAnnotation(FiledHeaderConfig.class);

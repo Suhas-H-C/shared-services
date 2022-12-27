@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SharedAlgosResponseBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">shared-algo</a> &gt; <a href="index.source.html" class="el_package">com.shared.algo.utils</a> &gt; <span class="el_source">SharedAlgosResponseBuilder.java</span></div><h1>SharedAlgosResponseBuilder.java</h1><pre class="source lang-java linenums">package com.shared.algo.utils;
+
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singleton;
+import static java.util.Collections.singletonList;
+
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Objects;
+import java.util.UUID;
+
+<span class="nc" id="L12">public final class SharedAlgosResponseBuilder {</span>
+
+	public static GenericResponse&lt;?&gt; wrapWithGenericResponse(Object data) {
+<span class="fc" id="L15">		GenericResponse&lt;?&gt; response = new GenericResponse&lt;&gt;();</span>
+<span class="fc" id="L16">		response.setMetaData(metaData(data));</span>
+<span class="fc" id="L17">		response.setErrors(errors(data));</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">		response.setData(Objects.nonNull(data) ? singleton(data) : emptyList());</span>
+
+<span class="fc" id="L20">		return response;</span>
+	}
+
+	public static GenericResponse&lt;?&gt; wrapWithErrorResponse(Object data) {
+<span class="nc" id="L24">		GenericResponse&lt;?&gt; response = new GenericResponse&lt;&gt;();</span>
+<span class="nc" id="L25">		response.setMetaData(metaData(null));</span>
+<span class="nc" id="L26">		response.setErrors(errors(null));</span>
+<span class="nc" id="L27">		response.setData(singletonList(data.toString()));</span>
+
+<span class="nc" id="L29">		return response;</span>
+	}
+
+	private static MetaData metaData(Object data) {
+<span class="fc" id="L33">		MetaData metaData = new MetaData();</span>
+
+<span class="fc bfc" id="L35" title="All 2 branches covered.">		if (data instanceof Collection&lt;?&gt;) {</span>
+<span class="pc bpc" id="L36" title="2 of 4 branches missed.">			if (Objects.nonNull(data) &amp;&amp; !((Collection&lt;?&gt;) data).isEmpty()) {</span>
+<span class="nc" id="L37">				metaData.setTime(LocalDateTime.now());</span>
+<span class="nc" id="L38">				metaData.setSuccess(true);</span>
+<span class="nc" id="L39">				metaData.setRepsonseId(UUID.randomUUID().toString());</span>
+			} else {
+<span class="fc" id="L41">				metaData.setTime(LocalDateTime.now());</span>
+<span class="fc" id="L42">				metaData.setSuccess(false);</span>
+<span class="fc" id="L43">				metaData.setRepsonseId(UUID.randomUUID().toString());</span>
+			}
+
+		} else {
+<span class="fc bfc" id="L47" title="All 2 branches covered.">			if (Objects.nonNull(data)) {</span>
+<span class="fc" id="L48">				metaData.setTime(LocalDateTime.now());</span>
+<span class="fc" id="L49">				metaData.setSuccess(true);</span>
+<span class="fc" id="L50">				metaData.setRepsonseId(UUID.randomUUID().toString());</span>
+			} else {
+<span class="fc" id="L52">				metaData.setTime(LocalDateTime.now());</span>
+<span class="fc" id="L53">				metaData.setSuccess(false);</span>
+<span class="fc" id="L54">				metaData.setRepsonseId(UUID.randomUUID().toString());</span>
+			}
+		}
+
+<span class="fc" id="L58">		return metaData;</span>
+	}
+
+	private static Errors errors(Object data) {
+<span class="fc" id="L62">		Errors errors = new Errors();</span>
+
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (data instanceof Collection&lt;?&gt;) {</span>
+<span class="pc bpc" id="L65" title="2 of 4 branches missed.">			if (Objects.nonNull(data) &amp;&amp; !((Collection&lt;?&gt;) data).isEmpty()) {</span>
+<span class="nc" id="L66">				errors.setSuccess(true);</span>
+			} else {
+<span class="fc" id="L68">				errors.setSuccess(false);</span>
+			}
+		} else {
+<span class="fc bfc" id="L71" title="All 2 branches covered.">			if (Objects.nonNull(data)) {</span>
+<span class="fc" id="L72">				errors.setSuccess(true);</span>
+			} else {
+<span class="fc" id="L74">				errors.setSuccess(false);</span>
+			}
+		}
+<span class="fc" id="L77">		return errors;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
