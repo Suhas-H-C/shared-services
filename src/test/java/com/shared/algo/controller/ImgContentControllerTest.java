@@ -33,7 +33,7 @@ class ImgContentControllerTest {
         when(imgContentService.processImage(any(), anyString()))
                 .thenReturn("Image processing successful");
 
-        String response = imgContentController.processImage(multipartFile(), "en");
+        String response = imgContentController.processImage(multipartFile(), "eng");
 
         assertEquals("Image processing successful", response);
         assertNotNull(response);

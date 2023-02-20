@@ -133,6 +133,6 @@
                 </executions>
             </plugin>
         </plugins>
-        <finalName>shared-algo</finalName>
+        <finalName>shared-services</finalName>
     </build>
 </project>
