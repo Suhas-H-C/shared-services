@@ -3,6 +3,8 @@ package com.shared.algo.service;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +17,8 @@ import java.io.IOException;
 
 @Service
 public class ImgContentServiceImpl implements ImgContentService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ImgContentServiceImpl.class);
 
     @Override
     public String processImage(MultipartFile multipartFile, String lang) throws Exception {
@@ -36,7 +40,7 @@ public class ImgContentServiceImpl implements ImgContentService {
 
             return instance.doOCR(newImage);
         } catch (TesseractException | IOException e) {
-            System.err.println(e.getMessage());
+            LOG.error("{}", e.getMessage());
             return "Error while reading image";
         }
     }
