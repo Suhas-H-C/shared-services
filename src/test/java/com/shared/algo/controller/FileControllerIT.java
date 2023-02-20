@@ -1,6 +1,7 @@
 package com.shared.algo.controller;
 
 import com.shared.algo.utils.GenericResponse;
+import com.shared.vo.TestUtils;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,30 +23,34 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class FileControllerIT {
+class FileControllerIT {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileControllerIT.class);
 
     @LocalServerPort
     String port;
 
-    @Autowired
-    private FileController fileController;
+    private final FileController fileController;
+    private final RestTemplate restTemplate;
 
     @Autowired
-    private RestTemplate restTemplate;
+    public FileControllerIT(FileController fileController, RestTemplate restTemplate) {
+        this.fileController = fileController;
+        this.restTemplate = restTemplate;
+    }
+
+    private final TestUtils testUtils = new TestUtils();
 
     @Test
     void getContentIT() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE));
-        headers.setBasicAuth("suhas", "suhas");
+        HttpHeaders headers = testUtils
+                .httpHeaders(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE));
         HttpEntity<?> httpEntity = new HttpEntity<>(headers);
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(buildUrl("/file/fetch-content"));
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(testUtils.buildUrl(port, "/file/fetch-content"));
         builder.queryParam("fileName", "PDFContent.txt");
 
-        ResponseEntity<GenericResponse> response =
+        ResponseEntity<?> response =
                 restTemplate.exchange(builder.toUriString(),
                         HttpMethod.GET, httpEntity, GenericResponse.class);
 
@@ -55,15 +60,14 @@ public class FileControllerIT {
 
     @Test
     void getJsonIT() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE));
-        headers.setBasicAuth("suhas", "suhas");
+        HttpHeaders headers = testUtils
+                .httpHeaders(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE));
         HttpEntity<?> httpEntity = new HttpEntity<>(headers);
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(buildUrl("/file/fetch-json"));
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(testUtils.buildUrl(port, "/file/fetch-json"));
         builder.queryParam("stringPath", "ipData");
 
-        ResponseEntity<GenericResponse> response =
+        ResponseEntity<?> response =
                 restTemplate.exchange(builder.toUriString(),
                         HttpMethod.GET, httpEntity, GenericResponse.class);
 
@@ -72,19 +76,14 @@ public class FileControllerIT {
 
     @Test
     void readCsvIT() throws IOException {
-        ResponseEntity<GenericResponse<?>> response = fileController.readCSV(multipartFile("MOCK_DATA_TEST.csv"), "ipdata");
+        ResponseEntity<GenericResponse<?>> response = fileController
+                .readCSV(multipartFile("MOCK_DATA_TEST.csv"), "ipdata");
+
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(requireNonNull(response.getBody()).getData());
     }
 
-
-    private String buildUrl(String contextPath) {
-        String url = "http://localhost:" + port + contextPath;
-        LOG.info("URL : {}", url);
-        return url;
-    }
-
-    private MultipartFile multipartFile(String path) throws IOException {
+    private static MultipartFile multipartFile(String path) throws IOException {
         File file = new File("src/main/resources/data/files/" + path);
         FileInputStream fileInputStream = new FileInputStream(file);
 

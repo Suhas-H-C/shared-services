@@ -17,15 +17,6 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${profile.username}")
-    String username;
-
-    @Value("${profile.password")
-    String password;
-
-    @Value("${profile.role}")
-    String role;
-
     @Autowired
     private PasswordEncoder encoder;
 
@@ -38,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     protected UserDetailsService userDetailsService() {
-        UserDetails user = User.builder().username(username).password(encoder.encode(password)).roles(role).build();
+        UserDetails user = User.builder().username("suhas").password(encoder.encode("suhas")).roles("ADMIN").build();
 
         return new InMemoryUserDetailsManager(user);
     }
