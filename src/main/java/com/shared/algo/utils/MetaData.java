@@ -2,7 +2,7 @@ package com.shared.algo.utils;
 
 import java.time.LocalDateTime;
 
-public class MetaData {
+public final class MetaData {
 
 	private boolean success;
 	private String repsonseId;

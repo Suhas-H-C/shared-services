@@ -2,7 +2,7 @@ package com.shared.algo.utils;
 
 import java.util.Collection;
 
-public class GenericResponse<T> {
+public final class GenericResponse<T> {
 
 	private MetaData metaData;
 	private Collection<?> data;

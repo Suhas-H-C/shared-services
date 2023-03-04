@@ -1,6 +1,6 @@
 package com.shared.algo.model;
 
-public class JwtRequest {
+public final class JwtRequest {
 
     private String username;
     private String password;

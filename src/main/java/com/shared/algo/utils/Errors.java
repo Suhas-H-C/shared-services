@@ -1,6 +1,6 @@
 package com.shared.algo.utils;
 
-public class Errors {
+public final class Errors {
 
 	private boolean isSuccess;
 
