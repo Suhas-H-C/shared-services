@@ -4,7 +4,7 @@ import com.shared.algo.annotations.FiledHeaderConfig;
 
 import java.io.Serializable;
 
-public class IpData implements Serializable {
+public final class IpData implements Serializable {
 
     @FiledHeaderConfig(header = "Id")
     public int id;

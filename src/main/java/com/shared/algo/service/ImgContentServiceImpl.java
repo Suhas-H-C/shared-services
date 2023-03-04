@@ -16,7 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 @Service
-public class ImgContentServiceImpl implements ImgContentService {
+public final class ImgContentServiceImpl implements ImgContentService {
 
     private static final Logger LOG = LoggerFactory.getLogger(ImgContentServiceImpl.class);
 

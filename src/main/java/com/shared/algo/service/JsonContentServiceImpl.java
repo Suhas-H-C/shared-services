@@ -16,7 +16,7 @@ import java.util.Objects;
 import static com.shared.algo.enums.Messages.TYPE_NOT_FOUND;
 
 @Service
-public class JsonContentServiceImpl implements JsonContentService {
+public final class JsonContentServiceImpl implements JsonContentService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonContentServiceImpl.class);
 

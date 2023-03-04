@@ -1,6 +1,6 @@
 package com.shared.algo.model;
 
-public class JwtResponse {
+public final class JwtResponse {
 
     private String jwtToken;
 

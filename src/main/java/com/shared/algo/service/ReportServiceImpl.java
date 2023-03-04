@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ReportServiceImpl implements ReportService {
+public final class ReportServiceImpl implements ReportService {
 
     private static final Logger log = LoggerFactory.getLogger(ReportServiceImpl.class);
 

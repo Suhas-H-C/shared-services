@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
-public class JWTUtils implements Serializable {
+public final class JWTUtils implements Serializable {
 
     private static final long serialVersionUID = 234234523523L;
 

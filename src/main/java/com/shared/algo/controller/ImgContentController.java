@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping(value = "/img")
-public class ImgContentController {
+public final class ImgContentController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ImgContentController.class);
 

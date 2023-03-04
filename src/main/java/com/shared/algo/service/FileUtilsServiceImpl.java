@@ -14,7 +14,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @Service
-public class FileUtilsServiceImpl implements FileUtilsService {
+public final class FileUtilsServiceImpl implements FileUtilsService {
 
     @Override
     public byte[] zipFiles(Collection<File> files) throws Exception {
