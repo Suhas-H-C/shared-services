@@ -1,7 +1,7 @@
 package com.shared.algo.controller;
 
 import com.shared.algo.exception.BadRequestException;
-import com.shared.algo.model.IpData;
+import com.shared.algo.model.InternetProtocol;
 import com.shared.algo.service.*;
 import com.shared.algo.utils.GenericResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -67,10 +67,10 @@ public final class FileController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")})
     @GetMapping(value = "/fetch-json")
     public ResponseEntity<GenericResponse<?>> getJson(
-            @RequestParam(name = "stringPath", required = true) String stringPath) {
+            @RequestParam(name = "stringPath") String stringPath) {
         try {
             return new ResponseEntity<>(
-                    wrapWithGenericResponse(jsonContentService.fetchJsonData(IpData.class, stringPath)), HttpStatus.OK);
+                    wrapWithGenericResponse(jsonContentService.fetchJsonData(InternetProtocol.class, stringPath)), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
@@ -107,7 +107,7 @@ public final class FileController {
             return ResponseEntity.ok()
                     .header(DISPOSITION.getKey(), DISPOSITION.getContent().concat(fileName).concat(".csv"))
                     .body(new InputStreamResource(
-                            csvService.getCSV(jsonContentService.fetchJsonData(IpData.class, "ipData"), IpData.class)));
+                            csvService.getCSV(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"), InternetProtocol.class)));
         } catch (Exception e) {
             return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
@@ -122,7 +122,7 @@ public final class FileController {
     @PostMapping(value = "/read-xlsx", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> readExcel(@RequestParam(value = "file", required = true) MultipartFile multipartFile) {
         try {
-            return new ResponseEntity<>(wrapWithGenericResponse(xlsxService.read(multipartFile, IpData.class)),
+            return new ResponseEntity<>(wrapWithGenericResponse(xlsxService.read(multipartFile, InternetProtocol.class)),
                     HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
@@ -141,7 +141,7 @@ public final class FileController {
             return ResponseEntity.ok()
                     .header(DISPOSITION.getKey(), DISPOSITION.getContent().concat(fileName).concat(".xlsx"))
                     .body(new InputStreamResource(
-                            xlsxService.write((List<?>) jsonContentService.fetchJsonData(IpData.class, "ipData"))));
+                            xlsxService.write((List<?>) jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"))));
         } catch (Exception e) {
             return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
@@ -176,7 +176,7 @@ public final class FileController {
             @RequestParam(value = "title", required = true, defaultValue = "IpData Report") String title) {
         try {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
-                    reportService.generatePdfReport((List<?>) jsonContentService.fetchJsonData(IpData.class, "ipData").get(0), title));
+                    reportService.generatePdfReport((List<?>) jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol").get(0), title));
             HttpHeaders headers = new HttpHeaders();
             headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=report.pdf");
             return ResponseEntity.status(HttpStatus.OK).headers(headers)

@@ -18,7 +18,7 @@ public final class ReportServiceImpl implements ReportService {
 
     @Override
     public byte[] generatePdfReport(List<?> data, String reportTitle) throws Exception {
-        File file = new File("src/main/resources/report_utils/ip_report.jrxml");
+        File file = new File("src/main/resources/report_utils/protocol.jrxml");
 
         JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(data);
