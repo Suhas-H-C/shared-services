@@ -4,7 +4,7 @@ import com.shared.algo.annotations.FiledHeaderConfig;
 import com.shared.algo.enums.Messages;
 import com.shared.algo.exception.BadRequestException;
 import com.shared.algo.exception.ClassTypeNotSupportedException;
-import com.shared.algo.model.IpData;
+import com.shared.algo.model.InternetProtocol;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -41,8 +41,8 @@ public final class XlsxServiceImpl implements XlsxService {
                         continue;
                     } else {
 
-                        if (clazz.isInstance(new IpData())) {
-                            IpData data = BeanUtils.instantiateClass(IpData.class);
+                        if (clazz.isInstance(new InternetProtocol())) {
+                            InternetProtocol data = BeanUtils.instantiateClass(InternetProtocol.class);
 
                             data.setId((int) row.getCell(0).getNumericCellValue());
                             data.setFirst_name(row.getCell(1).getStringCellValue());
@@ -74,8 +74,8 @@ public final class XlsxServiceImpl implements XlsxService {
             if (Objects.nonNull(data) && !data.isEmpty()) {
                 List<String> fileHeaders = new ArrayList<>();
 
-                if (data.get(0) instanceof IpData ipDataInstance) {
-                    Field[] fields = ipDataInstance.getClass().getDeclaredFields();
+                if (data.get(0) instanceof InternetProtocol internetProtocolInstance) {
+                    Field[] fields = internetProtocolInstance.getClass().getDeclaredFields();
                     for (Field field : fields) {
                         FiledHeaderConfig headers = field.getAnnotation(FiledHeaderConfig.class);
                         fileHeaders.add(headers.header());
@@ -87,14 +87,14 @@ public final class XlsxServiceImpl implements XlsxService {
                     int flag = 1;
 
                     for (Object obj : data) {
-                        IpData ipData = (IpData) obj;
+                        InternetProtocol internetProtocol = (InternetProtocol) obj;
                         Row valueRow = sheet.createRow(flag++);
-                        valueRow.createCell(0).setCellValue(ipData.getId());
-                        valueRow.createCell(1).setCellValue(ipData.getFirst_name());
-                        valueRow.createCell(2).setCellValue(ipData.getLast_name());
-                        valueRow.createCell(3).setCellValue(ipData.getEmail());
-                        valueRow.createCell(4).setCellValue(ipData.getGender());
-                        valueRow.createCell(5).setCellValue(ipData.getIp_address());
+                        valueRow.createCell(0).setCellValue(internetProtocol.getId());
+                        valueRow.createCell(1).setCellValue(internetProtocol.getFirst_name());
+                        valueRow.createCell(2).setCellValue(internetProtocol.getLast_name());
+                        valueRow.createCell(3).setCellValue(internetProtocol.getEmail());
+                        valueRow.createCell(4).setCellValue(internetProtocol.getGender());
+                        valueRow.createCell(5).setCellValue(internetProtocol.getIp_address());
                     }
                 } else {
                     throw new ClassTypeNotSupportedException(Messages.TYPE_NOT_FOUND.getMessage());

@@ -12,7 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shared.algo.model.IpData;
+import com.shared.algo.model.InternetProtocol;
 
 @ExtendWith(MockitoExtension.class)
 class JsonContentServiceImplTest {
@@ -26,7 +26,7 @@ class JsonContentServiceImplTest {
 	@Test
 	@DisplayName("readJsonContent")
 	void readJsonContent() throws Exception {
-		Collection<?> data = jsonContentServiceImpl.fetchJsonData(IpData.class, "ipData");
+		Collection<?> data = jsonContentServiceImpl.fetchJsonData(InternetProtocol.class, "ipData");
 		assertFalse(data.isEmpty());
 	}
 

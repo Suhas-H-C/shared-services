@@ -10,7 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.shared.algo.model.IpData;
+import com.shared.algo.model.InternetProtocol;
 
 @ExtendWith(MockitoExtension.class)
 class StringContentUtilsServiceImplTest {
@@ -29,7 +29,7 @@ class StringContentUtilsServiceImplTest {
 	@Test
 	@DisplayName("testGetFields_False")
 	void testGetFields() {
-		Collection<?> feildData = stringContentUtilsImpl.getFields(new IpData().getClass());
+		Collection<?> feildData = stringContentUtilsImpl.getFields(new InternetProtocol().getClass());
 		assertFalse(feildData.isEmpty());
 	}
 
