@@ -1,6 +1,6 @@
 package com.shared.algo.controller;
 
-import com.shared.algo.model.IpData;
+import com.shared.algo.model.InternetProtocol;
 import com.shared.algo.service.StringContentUtilsService;
 import com.shared.algo.utils.GenericResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,7 +31,7 @@ public final class StringUtilController {
     @GetMapping(value = "/fetch-fields")
     public ResponseEntity<GenericResponse<?>> getFields() {
         try {
-            return new ResponseEntity<>(wrapWithGenericResponse(stringContentUtils.getFields(IpData.class)), HttpStatus.OK);
+            return new ResponseEntity<>(wrapWithGenericResponse(stringContentUtils.getFields(InternetProtocol.class)), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(wrapWithGenericResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }

@@ -4,7 +4,7 @@ import com.shared.algo.annotations.FiledHeaderConfig;
 
 import java.io.Serializable;
 
-public final class IpData implements Serializable {
+public final class InternetProtocol implements Serializable {
 
     @FiledHeaderConfig(header = "Id")
     public int id;
@@ -67,7 +67,7 @@ public final class IpData implements Serializable {
         this.ip_address = ip_address;
     }
 
-    public IpData(int id, String first_name, String last_name, String email, String gender, String ip_address) {
+    public InternetProtocol(int id, String first_name, String last_name, String email, String gender, String ip_address) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -76,7 +76,7 @@ public final class IpData implements Serializable {
         this.ip_address = ip_address;
     }
 
-    public IpData() {
+    public InternetProtocol() {
     }
 
     @Override

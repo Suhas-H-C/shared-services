@@ -3,7 +3,7 @@ package com.shared.algo.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shared.algo.exception.BadRequestException;
-import com.shared.algo.model.IpData;
+import com.shared.algo.model.InternetProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -23,8 +23,8 @@ public final class JsonContentServiceImpl implements JsonContentService {
     @Override
     public List<?> fetchJsonData(Class<?> clazz, String path) throws Exception {
 
-        if (clazz.isInstance(new IpData()) && Objects.nonNull(path)) {
-            TypeReference<List<IpData>> data = new TypeReference<>() {
+        if (clazz.isInstance(new InternetProtocol()) && Objects.nonNull(path)) {
+            TypeReference<List<InternetProtocol>> data = new TypeReference<>() {
             };
             Object jsonResponse = processJsonRequest(data, path);
             LOGGER.info("Processing completed");

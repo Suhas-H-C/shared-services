@@ -4,7 +4,7 @@ import com.csvreader.CsvWriter;
 import com.shared.algo.annotations.FiledHeaderConfig;
 import com.shared.algo.exception.BadRequestException;
 import com.shared.algo.exception.ClassTypeNotSupportedException;
-import com.shared.algo.model.IpData;
+import com.shared.algo.model.InternetProtocol;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -40,8 +40,8 @@ public final class CsvServiceImpl implements CsvService {
                 if (csvRecord.getRecordNumber() == 1) {
                     continue;
                 } else {
-                    if (checkContentType(contentType) instanceof IpData) {
-                        IpData data = BeanUtils.instantiateClass(IpData.class);
+                    if (checkContentType(contentType) instanceof InternetProtocol) {
+                        InternetProtocol data = BeanUtils.instantiateClass(InternetProtocol.class);
 
                         data.setId(Integer.parseInt(nullChecker(csvRecord, 0)));
                         data.setFirst_name((String) nullChecker(csvRecord, 1));
@@ -106,7 +106,7 @@ public final class CsvServiceImpl implements CsvService {
             throw new BadRequestException(NULL_DATA.getMessage());
         } else {
             if (CONTENT_TYPE.getValue().equalsIgnoreCase(value)) {
-                return new IpData();
+                return new InternetProtocol();
             } else {
                 throw new ClassTypeNotSupportedException(TYPE_NOT_FOUND.getMessage());
             }
