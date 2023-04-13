@@ -20,7 +20,7 @@ class ArrayManipulationsTest {
     ArrayManipulations arrayManipulations;
 
     @Test
-    @DisplayName("ArrayCheckTarget")
+    @DisplayName("ArrayCheck2Target")
     void sumOfTwoIsTargetArray() {
         int[] inputArray = {2, 4, 3, 1, 6};
         int target = 7;
@@ -31,13 +31,31 @@ class ArrayManipulationsTest {
     }
 
     @Test
-    @DisplayName("ListCheckTarget")
-    void sumOfTwoIsTargetList() {
-        List<Integer> inputArray = Arrays.asList(2, 4, 3, 1, 6);
+    @DisplayName("ArrayCheck3Target")
+    void sumOfThreeIsTargetArray() {
+        int[] inputArray = {2, 4, 1, 3, 1, 2, 4, 1, 1, 3, 2};
         int target = 7;
-        List<Integer> expectedResult = Arrays.asList(1, 2);
+        List<Integer> expectedResult = Arrays.asList(2, 4, 1);
 
-        List<Integer> response = arrayManipulations.sumOfTwoIsTarget(inputArray, target);
-        assertEquals(expectedResult, response);
+        List<List<Integer>> response = arrayManipulations.sumOfThreeIsTarget(inputArray, target);
+        assertEquals(expectedResult, response.get(0));
+    }
+
+    @Test
+    @DisplayName("SmallestNumberThatProductsActualNumber")
+    void smallestNumberForProduct() {
+        int number = 1000;
+        Integer response = arrayManipulations.smallestNumberForActualProduct(number);
+        assertEquals(5558, response);
+    }
+
+    @Test
+    @DisplayName("SpericalPriting")
+    void printMatrixSperically() {
+        int[][] inputArray = {{2, 4, 1, 3},
+                {3, 1, 2, 7},
+                {4, 1, 1, 3},
+                {5, 9, 8, 0}};
+        arrayManipulations.printSperical(inputArray);
     }
 }
