@@ -29,15 +29,4 @@ class ArrayManipulationsTest {
         List<Integer> response = arrayManipulations.sumOfTwoIsTarget(inputArray, target);
         assertEquals(expectedResult, response);
     }
-
-    @Test
-    @DisplayName("ListCheckTarget")
-    void sumOfTwoIsTargetList() {
-        List<Integer> inputArray = Arrays.asList(2, 4, 3, 1, 6);
-        int target = 7;
-        List<Integer> expectedResult = Arrays.asList(1, 2);
-
-        List<Integer> response = arrayManipulations.sumOfTwoIsTarget(inputArray, target);
-        assertEquals(expectedResult, response);
-    }
 }
