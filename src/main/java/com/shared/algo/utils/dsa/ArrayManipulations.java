@@ -3,10 +3,7 @@ package com.shared.algo.utils.dsa;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 @Scope("singleton")
@@ -70,6 +67,51 @@ public class ArrayManipulations {
         } else {
             return Integer.parseInt(answer);
         }
+    }
+
+    public int[] separateEvenAndOdd(int[] a) {
+        int i = 0;
+        int j = a.length - 1;
+
+        while (i < j) {
+            while (i < j && a[j] % 2 != 0)
+                j--;
+            while (i < j && a[i] % 2 == 0)
+                i++;
+
+            if (i < j) {
+                int temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+                i++;
+                j--;
+            }
+        }
+
+        return a;
+    }
+
+    public List<Integer> extractArrayElementsSpecifically(int[] a) {
+        List<Integer> response = new ArrayList<>();
+
+        for (int number : a) {
+            if (String.valueOf(number).startsWith("2"))
+                response.add(number);
+        }
+        return response;
+    }
+
+    public Map<Integer, Integer> checkOccurrences(int[] a){
+        Map<Integer, Integer> response = new LinkedHashMap<>();
+        for (int number : a) {
+            if(response.containsKey(number)){
+                response.put(number, response.get(number) + 1);
+            }else{
+                response.put(number, 1);
+            }
+        }
+
+        return response;
     }
 
     public void printSperical(int[][] a) {
