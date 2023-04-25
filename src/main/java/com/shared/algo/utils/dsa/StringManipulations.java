@@ -249,62 +249,60 @@ public class StringManipulations {
         List<Character> list = new ArrayList<>();
 
         for (char c : charArray) {
-            if (c >= 48 && c <= 57) {
-            } else {
+            if (!(c >= 48 && c <= 57))
                 list.add(c);
+        }
+            charArray = new char[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                charArray[i] = list.get(i);
             }
-        }
-        charArray = new char[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            charArray[i] = list.get(i);
+
+            return String.valueOf(charArray);
         }
 
-        return String.valueOf(charArray);
-    }
 
+        public String checkLongestWord (String content){
+            List<String> list = Arrays.stream(content.split(" ")).toList();
+            int longestWord = list.get(0).length();
+            String actualWord = list.get(0);
 
-    public String checkLongestWord(String content) {
-        List<String> list = Arrays.stream(content.split(" ")).toList();
-        int longestWord = list.get(0).length();
-        String actualWord = list.get(0);
-
-        for (int i = 1; i < list.size(); i++) {
-            if (list.get(i).length() > longestWord) {
-                longestWord = list.get(i).length();
-                actualWord = list.get(i);
+            for (int i = 1; i < list.size(); i++) {
+                if (list.get(i).length() > longestWord) {
+                    longestWord = list.get(i).length();
+                    actualWord = list.get(i);
+                }
             }
+
+            return actualWord;
         }
 
-        return actualWord;
-    }
+        public String checkShortestWord (String content){
+            List<String> list = Arrays.stream(content.split(" ")).toList();
+            int shortestWord = list.get(0).length();
+            String actualWord = list.get(0);
 
-    public String checkShortestWord(String content) {
-        List<String> list = Arrays.stream(content.split(" ")).toList();
-        int shortestWord = list.get(0).length();
-        String actualWord = list.get(0);
-
-        for (int i = 1; i < list.size(); i++) {
-            if (list.get(i).length() < shortestWord) {
-                shortestWord = list.get(i).length();
-                actualWord = list.get(i);
+            for (int i = 1; i < list.size(); i++) {
+                if (list.get(i).length() < shortestWord) {
+                    shortestWord = list.get(i).length();
+                    actualWord = list.get(i);
+                }
             }
+
+            return actualWord;
         }
 
-        return actualWord;
-    }
+        public Integer frequencyOfCharacters (String content,char character){
+            char[] charArray = content.toCharArray();
+            Map<Character, Integer> map = new LinkedHashMap<>();
 
-    public Integer frequencyOfCharacters(String content, char character) {
-        char[] charArray = content.toCharArray();
-        Map<Character, Integer> map = new LinkedHashMap<>();
-
-        for (char c : charArray) {
-            if (map.containsKey(c)) {
-                map.put(c, map.get(c) + 1);
-            } else {
-                map.put(c, 1);
+            for (char c : charArray) {
+                if (map.containsKey(c)) {
+                    map.put(c, map.get(c) + 1);
+                } else {
+                    map.put(c, 1);
+                }
             }
-        }
 
-        return map.get(character);
+            return map.get(character);
+        }
     }
-}

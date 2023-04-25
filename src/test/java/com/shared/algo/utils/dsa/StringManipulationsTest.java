@@ -156,5 +156,4 @@ class StringManipulationsTest {
         Integer response = stringManipulations.frequencyOfCharacters("Hi there!", 'e');
         assertEquals(2, response);
     }
-
 }
