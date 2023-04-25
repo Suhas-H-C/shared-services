@@ -26,7 +26,7 @@ class JsonContentServiceImplTest {
 	@Test
 	@DisplayName("readJsonContent")
 	void readJsonContent() throws Exception {
-		Collection<?> data = jsonContentServiceImpl.fetchJsonData(InternetProtocol.class, "ipData");
+		Collection<?> data = jsonContentServiceImpl.fetchJsonData(InternetProtocol.class, "InternetProtocol");
 		assertFalse(data.isEmpty());
 	}
 

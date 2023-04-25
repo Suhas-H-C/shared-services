@@ -66,6 +66,5 @@ public class BinarySearch {
                 right = right - 1;
             }
         }
-        System.out.println("First occurrence " + first + " last occurrence " + last);
     }
 }
