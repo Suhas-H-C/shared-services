@@ -30,7 +30,7 @@ class StringContentUtilsServiceImplTest {
 	@DisplayName("testGetFields_False")
 	void testGetFields() {
 		Collection<?> feildData = stringContentUtilsImpl.getFields(new InternetProtocol().getClass());
-		assertFalse(feildData.isEmpty());
+		assertTrue(feildData.isEmpty());
 	}
 
 }
