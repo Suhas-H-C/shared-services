@@ -30,6 +30,21 @@ class StringManipulationsTest {
     }
 
     @Test
+    @DisplayName("Calculates total vowels inside a string")
+    void totalVowels() {
+        int response = stringManipulations.vowels("mindset");
+        assertEquals(2, response);
+    }
+
+    @Test
+    @DisplayName("Calculates total consonants inside a string")
+    void totalConsonants() {
+        int response = stringManipulations.consonants("mindset");
+        assertEquals(5, response);
+    }
+
+
+    @Test
     @DisplayName("Total uppercase case characters in a string")
     void upperCaseCount() {
         int response = stringManipulations.upperCaseCount("Engineering");
@@ -116,9 +131,9 @@ class StringManipulationsTest {
     }
 
     @Test
-    @DisplayName("Removes consonents from string")
-    void removeConsonents() {
-        String response = stringManipulations.removeConsonents("boat is floating");
+    @DisplayName("Removes consonants from string")
+    void removeConsonants() {
+        String response = stringManipulations.removeConsonants("boat is floating");
         assertEquals("oa i oai", response);
     }
 
