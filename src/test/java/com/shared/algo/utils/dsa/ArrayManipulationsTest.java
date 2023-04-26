@@ -7,6 +7,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -56,12 +58,19 @@ class ArrayManipulationsTest {
 
     @Test
     @DisplayName("Print a 2D matrix spherically")
-    void printMatrixSperically() {
+    void printMatrixSpherically() {
         int[][] inputArray = {{2, 4, 1, 3},
                 {3, 1, 2, 7},
                 {4, 1, 1, 3},
                 {5, 9, 8, 0}};
-        arrayManipulations.printSperical(inputArray);
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        arrayManipulations.printSpherically(inputArray);
+
+        String expectedOutput = "2 4 1 3 7 3 0 8 9 5 4 3 1 2 1 1";
+        String actualOutput = outContent.toString().replaceAll("\\r\\n|\\r|\\n", " ").trim();
+        assertEquals(expectedOutput, actualOutput);
     }
 
     @Test
@@ -76,7 +85,7 @@ class ArrayManipulationsTest {
     @DisplayName("Extracting digits starting with 2 from the array")
     void extractNumberFromArray() {
         List<Integer> response = arrayManipulations.extractArrayElementsSpecifically(array());
-
+        assertEquals(2, response.get(0));
     }
 
     @Test
@@ -93,7 +102,6 @@ class ArrayManipulationsTest {
 
         assertEquals(4, response);
     }
-
 
     @Test
     @DisplayName("Second largest array element")
