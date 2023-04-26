@@ -17,7 +17,6 @@ public class StringManipulations {
         return count;
     }
 
-
     public int totalWords(String content) {
         int wordCount = 1;
         char[] charArray = content.toCharArray();
@@ -37,7 +36,6 @@ public class StringManipulations {
         return vowels;
     }
 
-
     public int consonants(String content) {
         int consonants = 0;
         char[] charArray = content.toCharArray();
@@ -48,7 +46,6 @@ public class StringManipulations {
 
         return consonants;
     }
-
 
     public int upperCaseCount(String content) {
         int upperCaseCount = 0;
@@ -72,7 +69,6 @@ public class StringManipulations {
 
     public String reverse(String content) {
         char[] charArray = content.toCharArray();
-
         int i = 0;
         int j = charArray.length - 1;
 
