@@ -30,6 +30,7 @@ public class ArrayManipulations {
             }
             checker.put(arr[i], i);
         }
+
         return res;
     }
 
@@ -59,6 +60,7 @@ public class ArrayManipulations {
                 }
             }
         }
+
         return res;
     }
 
@@ -107,6 +109,7 @@ public class ArrayManipulations {
             if (String.valueOf(number).startsWith("2"))
                 response.add(number);
         }
+
         return response;
     }
 
@@ -123,7 +126,7 @@ public class ArrayManipulations {
         return response;
     }
 
-    public void printSperical(int[][] a) {
+    public void printSpherically(int[][] a) {
         int rowMin = 0, rowMax = a[0].length - 1, colMin = 0, colMax = a.length - 1, n = a.length, m = a[0].length, count = 0;
 
         while (count < (n * m)) {
@@ -165,14 +168,12 @@ public class ArrayManipulations {
 
     public int secondLargestElementInArray(int[] a) {
         int[] selectionSortedArray = sorting.selectionSort(a);
-
         return selectionSortedArray[selectionSortedArray.length - 2];
     }
 
 
     public int secondSmallestElementInArray(int[] a) {
         int[] bubbleSortedArray = sorting.bubbleSort(a);
-
         return bubbleSortedArray[1];
     }
 
@@ -210,6 +211,7 @@ public class ArrayManipulations {
             i++;
             j--;
         }
+
         return a;
     }
 
@@ -231,6 +233,7 @@ public class ArrayManipulations {
                 res.put(number, 1);
             }
         }
+
         return res;
     }
 
@@ -258,7 +261,6 @@ public class ArrayManipulations {
         for (int i = 0; i < a.length - 1; i++) {
             a[i] = a[i + 1];
         }
-
         a[a.length - 1] = firstElement;
 
         return a;

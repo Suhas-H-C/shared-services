@@ -7,14 +7,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class BinarySearchTest {
 
     @InjectMocks
     private BinarySearch binarySearch;
-
 
     @Test
     void searchForTargetFirstOcc() {
@@ -33,9 +32,8 @@ class BinarySearchTest {
         binarySearch.searchForTargetFirstAndLastOcc(array(), 5);
     }
 
-
-    private int[] array(){
-        int[] array = {3,4,5,2,1,2,4};
+    private int[] array() {
+        int[] array = {3, 4, 5, 2, 1, 2, 4};
         Arrays.sort(array);
         return array;
     }

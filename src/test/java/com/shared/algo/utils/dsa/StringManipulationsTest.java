@@ -43,7 +43,6 @@ class StringManipulationsTest {
         assertEquals(5, response);
     }
 
-
     @Test
     @DisplayName("Total uppercase case characters in a string")
     void upperCaseCount() {
@@ -51,14 +50,12 @@ class StringManipulationsTest {
         assertEquals(1, response);
     }
 
-
     @Test
     @DisplayName("Total lowercase case characters in a string")
     void lowerCaseCount() {
         int response = stringManipulations.lowerCaseCount("Engineering");
         assertEquals(10, response);
     }
-
 
     @Test
     @DisplayName("Reverse a string")
