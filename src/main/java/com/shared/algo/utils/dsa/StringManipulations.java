@@ -38,15 +38,15 @@ public class StringManipulations {
     }
 
 
-    public int consonents(String content) {
-        int consonents = 0;
+    public int consonants(String content) {
+        int consonants = 0;
         char[] charArray = content.toCharArray();
 
         for (char c : charArray)
             if ((c != 'a' && c != 'e' && c != 'i' && c != 'o' && c != 'u') &&
-                    (c != 'A' && c != 'E' && c != 'I' && c != 'O' && c != 'U')) consonents++;
+                    (c != 'A' && c != 'E' && c != 'I' && c != 'O' && c != 'U')) consonants++;
 
-        return consonents;
+        return consonants;
     }
 
 
@@ -209,7 +209,7 @@ public class StringManipulations {
         return String.valueOf(charArray);
     }
 
-    public String removeConsonents(String content) {
+    public String removeConsonants(String content) {
         char[] charArray = content.toCharArray();
         List<Character> list = new ArrayList<>();
 
@@ -252,57 +252,57 @@ public class StringManipulations {
             if (!(c >= 48 && c <= 57))
                 list.add(c);
         }
-            charArray = new char[list.size()];
-            for (int i = 0; i < list.size(); i++) {
-                charArray[i] = list.get(i);
-            }
-
-            return String.valueOf(charArray);
+        charArray = new char[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            charArray[i] = list.get(i);
         }
 
-
-        public String checkLongestWord (String content){
-            List<String> list = Arrays.stream(content.split(" ")).toList();
-            int longestWord = list.get(0).length();
-            String actualWord = list.get(0);
-
-            for (int i = 1; i < list.size(); i++) {
-                if (list.get(i).length() > longestWord) {
-                    longestWord = list.get(i).length();
-                    actualWord = list.get(i);
-                }
-            }
-
-            return actualWord;
-        }
-
-        public String checkShortestWord (String content){
-            List<String> list = Arrays.stream(content.split(" ")).toList();
-            int shortestWord = list.get(0).length();
-            String actualWord = list.get(0);
-
-            for (int i = 1; i < list.size(); i++) {
-                if (list.get(i).length() < shortestWord) {
-                    shortestWord = list.get(i).length();
-                    actualWord = list.get(i);
-                }
-            }
-
-            return actualWord;
-        }
-
-        public Integer frequencyOfCharacters (String content,char character){
-            char[] charArray = content.toCharArray();
-            Map<Character, Integer> map = new LinkedHashMap<>();
-
-            for (char c : charArray) {
-                if (map.containsKey(c)) {
-                    map.put(c, map.get(c) + 1);
-                } else {
-                    map.put(c, 1);
-                }
-            }
-
-            return map.get(character);
-        }
+        return String.valueOf(charArray);
     }
+
+
+    public String checkLongestWord(String content) {
+        List<String> list = Arrays.stream(content.split(" ")).toList();
+        int longestWord = list.get(0).length();
+        String actualWord = list.get(0);
+
+        for (int i = 1; i < list.size(); i++) {
+            if (list.get(i).length() > longestWord) {
+                longestWord = list.get(i).length();
+                actualWord = list.get(i);
+            }
+        }
+
+        return actualWord;
+    }
+
+    public String checkShortestWord(String content) {
+        List<String> list = Arrays.stream(content.split(" ")).toList();
+        int shortestWord = list.get(0).length();
+        String actualWord = list.get(0);
+
+        for (int i = 1; i < list.size(); i++) {
+            if (list.get(i).length() < shortestWord) {
+                shortestWord = list.get(i).length();
+                actualWord = list.get(i);
+            }
+        }
+
+        return actualWord;
+    }
+
+    public Integer frequencyOfCharacters(String content, char character) {
+        char[] charArray = content.toCharArray();
+        Map<Character, Integer> map = new LinkedHashMap<>();
+
+        for (char c : charArray) {
+            if (map.containsKey(c)) {
+                map.put(c, map.get(c) + 1);
+            } else {
+                map.put(c, 1);
+            }
+        }
+
+        return map.get(character);
+    }
+}
