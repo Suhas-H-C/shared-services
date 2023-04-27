@@ -6,6 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -46,14 +48,14 @@ class StringManipulationsTest {
     @Test
     @DisplayName("Total uppercase case characters in a string")
     void upperCaseCount() {
-        int response = stringManipulations.upperCaseCount("Engineering");
+        int response = stringManipulations.upperCaseCharacterCount("Engineering");
         assertEquals(1, response);
     }
 
     @Test
     @DisplayName("Total lowercase case characters in a string")
     void lowerCaseCount() {
-        int response = stringManipulations.lowerCaseCount("Engineering");
+        int response = stringManipulations.lowerCaseCharacterCount("Engineering");
         assertEquals(10, response);
     }
 
@@ -67,14 +69,14 @@ class StringManipulationsTest {
     @Test
     @DisplayName("Convert String to Upper case")
     void upperCaseConversion() {
-        String response = stringManipulations.upperCaseConversion("mindSet");
+        String response = stringManipulations.upperCaseStringConversion("mindSet");
         assertEquals("MINDSET", response);
     }
 
     @Test
     @DisplayName("Convert String to Lower case")
     void lowerCaseConversion() {
-        String response = stringManipulations.lowerCaseConversion("MIndSET");
+        String response = stringManipulations.lowerCaseStringConversion("MIndSET");
         assertEquals("mindset", response);
     }
 
@@ -167,5 +169,26 @@ class StringManipulationsTest {
     void checkFrequencyOfCharacter() {
         Integer response = stringManipulations.frequencyOfCharacters("Hi there!", 'e');
         assertEquals(2, response);
+    }
+
+    @Test
+    @DisplayName("Split the given string at whitespace")
+    void splitString() {
+        List<String> response = stringManipulations.splitString("Hi there!");
+        assertEquals("Hithere!", response.get(0).concat(response.get(1)));
+    }
+
+    @Test
+    @DisplayName("Remove given character from a string")
+    void removeCharacter() {
+        String response = stringManipulations.removeGivenCharacter("Hi there!", 'e');
+        assertEquals("hi thr!", response);
+    }
+
+    @Test
+    @DisplayName("Remove given word from a string")
+    void removeWord() {
+        String response = stringManipulations.removeGivenWord("Hi there!", "there!");
+        assertEquals("Hi", response.trim());
     }
 }

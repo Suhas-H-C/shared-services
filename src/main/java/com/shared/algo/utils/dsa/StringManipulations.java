@@ -47,7 +47,7 @@ public class StringManipulations {
         return consonants;
     }
 
-    public int upperCaseCount(String content) {
+    public int upperCaseCharacterCount(String content) {
         int upperCaseCount = 0;
         char[] charArray = content.toCharArray();
 
@@ -57,7 +57,7 @@ public class StringManipulations {
         return upperCaseCount;
     }
 
-    public int lowerCaseCount(String content) {
+    public int lowerCaseCharacterCount(String content) {
         int lowerCaseCount = 0;
         char[] charArray = content.toCharArray();
 
@@ -84,7 +84,7 @@ public class StringManipulations {
         return String.valueOf(charArray);
     }
 
-    public String upperCaseConversion(String content) {
+    public String upperCaseStringConversion(String content) {
         char[] charArray = content.toCharArray();
 
         for (int i = 0; i < charArray.length; i++)
@@ -94,7 +94,7 @@ public class StringManipulations {
         return String.valueOf(charArray);
     }
 
-    public String lowerCaseConversion(String content) {
+    public String lowerCaseStringConversion(String content) {
         char[] charArray = content.toCharArray();
 
         for (int i = 0; i < charArray.length; i++)
@@ -105,8 +105,8 @@ public class StringManipulations {
     }
 
     public boolean checkStringEquality(String a, String b) {
-        char[] arrayA = lowerCaseConversion(a).toCharArray();
-        char[] arrayB = lowerCaseConversion(b).toCharArray();
+        char[] arrayA = lowerCaseStringConversion(a).toCharArray();
+        char[] arrayB = lowerCaseStringConversion(b).toCharArray();
 
         if (stringLength(a) != stringLength(b)) return false;
 
@@ -120,7 +120,7 @@ public class StringManipulations {
     }
 
     public int searchIndexOfCharacter(String content, char character) {
-        char[] charArray = lowerCaseConversion(content).toCharArray();
+        char[] charArray = lowerCaseStringConversion(content).toCharArray();
         //Sorting necessary for binary search
         Arrays.sort(charArray);
 
@@ -160,7 +160,7 @@ public class StringManipulations {
     }
 
     public String replaceCharacter(String content, char givenCharacter, char replaceWith) {
-        char[] charArray = lowerCaseConversion(content).toCharArray();
+        char[] charArray = lowerCaseStringConversion(content).toCharArray();
 
         for (int i = 0; i < charArray.length; i++)
             if (caseConversionLower(charArray[i]) == caseConversionLower(givenCharacter)) {
@@ -300,5 +300,38 @@ public class StringManipulations {
         }
 
         return map.get(character);
+    }
+
+    public List<String> splitString(String content) {
+        return Arrays.stream(content.split(" ")).toList();
+    }
+
+    public String removeGivenCharacter(String content, char character) {
+        char[] charArray = lowerCaseStringConversion(content).toCharArray();
+        List<Character> resArray = new ArrayList<>();
+        for (char i : charArray) {
+            if (i != character) resArray.add(i);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (Character c : resArray) {
+            sb.append(c);
+        }
+
+        return sb.toString();
+    }
+
+    public String removeGivenWord(String content, String word) {
+        List<String> stringsSplit = Arrays.stream(content.split(" ")).toList();
+        List<String> response = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+
+        for (String item : stringsSplit)
+            if (!item.equalsIgnoreCase(word))
+                response.add(item);
+
+        response.forEach(w -> sb.append(w).append(" "));
+
+        return sb.toString();
     }
 }
