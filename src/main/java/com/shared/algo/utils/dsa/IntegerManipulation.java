@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class IntegerManipulation {
 
@@ -22,4 +23,13 @@ public class IntegerManipulation {
         return res;
     }
 
+    public boolean isOdd(int number) {
+        return number % 2 != 0;
+    }
+
+    public boolean isEmpty(String word){
+        if(Objects.isNull(word))
+            return true;
+        return word.isEmpty();
+    }
 }
