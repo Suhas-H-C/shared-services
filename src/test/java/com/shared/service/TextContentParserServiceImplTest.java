@@ -1,4 +1,4 @@
-package com.shared.algo.service;
+package com.shared.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.shared.algo.model.InternetProtocol;
 
 @ExtendWith(MockitoExtension.class)
-class StringContentUtilsServiceImplTest {
+class TextContentParserServiceImplTest {
 
 	@InjectMocks
 	private TextContentParserServiceImpl stringContentUtilsImpl;

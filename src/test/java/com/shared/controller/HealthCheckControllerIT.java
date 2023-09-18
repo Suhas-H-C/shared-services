@@ -1,4 +1,4 @@
-package com.shared.algo.controller;
+package com.shared.controller;
 
 import com.shared.algo.SharedServicesApplication;
 import com.shared.algo.utils.GenericResponse;

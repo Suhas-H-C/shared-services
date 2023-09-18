@@ -1,7 +1,9 @@
-package com.shared.algo.controller;
+package com.shared.controller;
 
+import com.shared.algo.controller.FileController;
 import com.shared.algo.utils.GenericResponse;
 import com.shared.vo.TestUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +24,9 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class FileControllerIT {
-
-    private static final Logger LOG = LoggerFactory.getLogger(FileControllerIT.class);
 
     @LocalServerPort
     String port;
@@ -43,44 +44,36 @@ class FileControllerIT {
 
     @Test
     void getContentIT() {
-        HttpHeaders headers = testUtils
-                .httpHeaders(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE));
+        HttpHeaders headers = testUtils.httpHeaders(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE));
         HttpEntity<?> httpEntity = new HttpEntity<>(headers);
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(testUtils.buildUrl(port, "/file/fetch-content"));
         builder.queryParam("fileName", "PDFContent.txt");
 
-        ResponseEntity<?> response =
-                restTemplate.exchange(builder.toUriString(),
-                        HttpMethod.GET, httpEntity, GenericResponse.class);
+        ResponseEntity<?> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, httpEntity, GenericResponse.class);
 
-        LOG.info("{}", response.getBody());
+        log.info("{}", response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     void getJsonIT() {
-        HttpHeaders headers = testUtils
-                .httpHeaders(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE));
+        HttpHeaders headers = testUtils.httpHeaders(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE));
         HttpEntity<?> httpEntity = new HttpEntity<>(headers);
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(testUtils.buildUrl(port, "/file/fetch-json"));
         builder.queryParam("stringPath", "ipData");
 
-        ResponseEntity<?> response =
-                restTemplate.exchange(builder.toUriString(),
-                        HttpMethod.GET, httpEntity, GenericResponse.class);
-
+        ResponseEntity<?> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, httpEntity, GenericResponse.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     void readCsvIT() throws IOException {
-        ResponseEntity<GenericResponse<?>> response = fileController
-                .readCSV(multipartFile("MOCK_DATA_TEST.csv"), "ipdata");
+        ResponseEntity<GenericResponse<?>> response = fileController.readCSV(multipartFile("MOCK_DATA_TEST.csv"), "ipdata");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(requireNonNull(response.getBody()).getData());
+        assertNotNull(requireNonNull(response.getBody()).data());
     }
 
     private static MultipartFile multipartFile(String path) throws IOException {

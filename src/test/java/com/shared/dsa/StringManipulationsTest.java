@@ -1,5 +1,6 @@
-package com.shared.algo.utils.dsa;
+package com.shared.dsa;
 
+import com.shared.algo.utils.dsa.StringManipulations;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

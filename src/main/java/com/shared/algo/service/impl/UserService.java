@@ -19,11 +19,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public final class UserService implements UserDetailsService {
 
-    public final static String AWT = "AWT";
-    public final static String WWT = "WWT";
-    public final static String RWT = "RWT";
-    public final static String INVALID_WT = "INVALID";
-
     private final ClientService clientService;
 
     @Override
@@ -32,13 +27,11 @@ public final class UserService implements UserDetailsService {
         return new User("suhas", "$2a$10$wdrTYak5lHz9uf9UrrY3WO7KXf9b.NUThyY1Bv3aoawyj7fb59VXm", new ArrayList<>());
     }
 
-
     public String getSigmaCode(String referenceNumber) {
         ClientDetails clientDetails = clientService.getClientDetails(referenceNumber);
         List<Map.Entry<String, ClientDetails>> entries = processCombination(clientDetails);
-
         if (entries.isEmpty()) {
-            return INVALID_WT;
+            return "INVALID";
         }
         return entries.get(0).getKey();
     }
@@ -52,8 +45,8 @@ public final class UserService implements UserDetailsService {
     }
 
     private Map<String, ClientDetails> dataForProcessing() {
-        return Map.of(AWT, new ClientDetails("A1", "A2"),
-                WWT, new ClientDetails("W1", "W2"),
-                RWT, new ClientDetails("R1", "R2"));
+        return Map.of("AWT", new ClientDetails("A1", "A2"),
+                "WWT", new ClientDetails("W1", "W2"),
+                "RWT", new ClientDetails("R1", "R2"));
     }
 }

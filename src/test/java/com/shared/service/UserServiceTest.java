@@ -1,6 +1,8 @@
-package com.shared.algo.service;
+package com.shared.service;
 
 import com.shared.algo.model.ClientDetails;
+import com.shared.algo.service.ClientService;
+import com.shared.algo.service.impl.UserService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -25,9 +27,9 @@ class UserServiceTest {
 
     public static Stream<Arguments> inputArgs() {
         return Stream.of(
-                Arguments.of(new ClientDetails("A1", "A2"), UserService.AWT),
-                Arguments.of(new ClientDetails("W1", "W2"), UserService.WWT),
-                Arguments.of(new ClientDetails("R1", "R2"), UserService.RWT)
+                Arguments.of(new ClientDetails("A1", "A2"), "AWT"),
+                Arguments.of(new ClientDetails("W1", "W2"), "WWT"),
+                Arguments.of(new ClientDetails("R1", "R2"), "RWT")
         );
     }
 

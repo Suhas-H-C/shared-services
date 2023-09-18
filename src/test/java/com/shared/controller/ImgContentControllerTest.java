@@ -1,5 +1,6 @@
-package com.shared.algo.controller;
+package com.shared.controller;
 
+import com.shared.algo.controller.ImageContentController;
 import com.shared.algo.service.ImageContentService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

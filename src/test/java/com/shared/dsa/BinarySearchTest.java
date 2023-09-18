@@ -1,5 +1,6 @@
-package com.shared.algo.utils.dsa;
+package com.shared.dsa;
 
+import com.shared.algo.utils.dsa.BinarySearch;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

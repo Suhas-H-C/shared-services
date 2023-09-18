@@ -1,5 +1,7 @@
-package com.shared.algo.utils.dsa;
+package com.shared.dsa;
 
+import com.shared.algo.utils.dsa.ArrayManipulations;
+import com.shared.algo.utils.dsa.Sorting;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
