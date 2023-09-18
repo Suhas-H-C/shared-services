@@ -15,18 +15,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = SharedServicesApplication.class)
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 class HealthCheckControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    void healthCheck() throws Exception {
-        MvcResult actualResponse = mockMvc.perform(MockMvcRequestBuilders
-                .get("/health/health-check")).andDo(print()).andExpect(status().isOk()).andReturn();
-
+    void should_trigger_health_check_api_and_return_valid_response() throws Exception {
+        MvcResult actualResponse = mockMvc.perform(MockMvcRequestBuilders.get("/health/health-check")).andDo(print()).andExpect(status().isOk()).andReturn();
         assertEquals(HttpStatus.OK.value(), actualResponse.getResponse().getStatus());
     }
-
 }
