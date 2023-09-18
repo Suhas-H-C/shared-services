@@ -110,7 +110,7 @@ public final class FileController implements FileControllerDocumentation {
     public ResponseEntity<InputStreamResource> generatePDFReport(@RequestParam(value = "title", defaultValue = "IpData Report") String title) {
         try {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
-                    reportService.generatePdfReport((List<?>) jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol").get(0), title));
+                    reportService.generatePdfReport((List<?>) jsonContentService.fetchJsonData(InternetProtocol.class, INTERNET_PROTOCOL).get(0), title));
             HttpHeaders headers = new HttpHeaders();
             headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=report.pdf");
             return ResponseEntity.status(HttpStatus.OK).headers(headers).body(new InputStreamResource(byteArrayInputStream));
