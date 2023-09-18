@@ -1,11 +1,11 @@
 package com.shared.info.controller;
 
+import com.shared.info.controller.documentation.FileControllerDocumentation;
 import com.shared.info.dto.InternetProtocol;
 import com.shared.info.exception.BadRequestException;
-import com.shared.info.controller.documentation.FileControllerDocumentation;
-import com.shared.info.utils.SharedServiceResponseBuilder;
-import com.shared.info.utils.GenericResponse;
 import com.shared.info.service.*;
+import com.shared.info.utils.GenericResponse;
+import com.shared.info.utils.SharedServiceResponseBuilder;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;

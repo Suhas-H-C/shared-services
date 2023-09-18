@@ -53,9 +53,18 @@ class FileControllerIT {
         assertEquals(HttpStatus.OK.value(), actualResponse.getResponse().getStatus());
     }
 
+
+    @Test
+    void should_generate_csv_file_and_return_valid_response_when_file_name_is_passed() throws Exception {
+        MvcResult actualResponse = mockMvc.perform(get("/file/produce-csv").param("fileName", "test")).andDo(print()).andExpect(status().isOk()).andReturn();
+        log.info("{}", actualResponse.getResponse().getBufferSize());
+        assertEquals(HttpStatus.OK.value(), actualResponse.getResponse().getStatus());
+    }
+
     private static MockMultipartFile multipartFile(String path) throws IOException {
         File file = new File("src/main/resources/data/files/" + path);
         FileInputStream inputStream = new FileInputStream(file);
         return new MockMultipartFile("file", path, MediaType.MULTIPART_FORM_DATA_VALUE, inputStream);
     }
+
 }
