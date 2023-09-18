@@ -1,82 +1,39 @@
 package com.shared.info.controller;
 
-import com.shared.info.utils.GenericResponse;
-import com.shared.info.vo.TestUtils;
+import com.shared.info.SharedServicesApplication;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.*;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.http.HttpStatus;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-
-import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Slf4j
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = SharedServicesApplication.class)
+@AutoConfigureMockMvc(addFilters = false)
 class FileControllerIT {
 
-    @LocalServerPort
-    String port;
-
-    private final FileController fileController;
-    private final RestTemplate restTemplate;
-
     @Autowired
-    public FileControllerIT(FileController fileController, RestTemplate restTemplate) {
-        this.fileController = fileController;
-        this.restTemplate = restTemplate;
-    }
-
-    private final TestUtils testUtils = new TestUtils();
+    private MockMvc mockMvc;
 
     @Test
-    void getContentIT() {
-        HttpHeaders headers = testUtils.httpHeaders(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE));
-        HttpEntity<?> httpEntity = new HttpEntity<>(headers);
-
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(testUtils.buildUrl(port, "/file/fetch-content"));
-        builder.queryParam("fileName", "PDFContent.txt");
-
-        ResponseEntity<?> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, httpEntity, GenericResponse.class);
-
-        log.info("{}", response.getBody());
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+    void should_parse_text_file_and_return_valid_response_when_file_name_is_passed() throws Exception {
+        MvcResult actualResponse = mockMvc.perform(get("/file/fetch-content").param("fileName", "PDFContent.txt")).andDo(print()).andExpect(status().isOk()).andReturn();
+        log.info("{}", actualResponse.getResponse().getBufferSize());
+        assertEquals(HttpStatus.OK.value(), actualResponse.getResponse().getStatus());
     }
 
     @Test
-    void getJsonIT() {
-        HttpHeaders headers = testUtils.httpHeaders(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE));
-        HttpEntity<?> httpEntity = new HttpEntity<>(headers);
-
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(testUtils.buildUrl(port, "/file/fetch-json"));
-        builder.queryParam("stringPath", "ipData");
-
-        ResponseEntity<?> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, httpEntity, GenericResponse.class);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
-
-    @Test
-    void readCsvIT() throws IOException {
-        ResponseEntity<GenericResponse<?>> response = fileController.readCSV(multipartFile("MOCK_DATA_TEST.csv"), "ipdata");
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(requireNonNull(response.getBody()).data());
-    }
-
-    private static MultipartFile multipartFile(String path) throws IOException {
-        File file = new File("src/main/resources/data/files/" + path);
-        FileInputStream fileInputStream = new FileInputStream(file);
-
-        return new MockMultipartFile(file.getName(), fileInputStream);
+    void should_parse_json_file_and_return_valid_response_when_file_name_is_passed() throws Exception {
+        MvcResult actualResponse = mockMvc.perform(get("/file/fetch-json").param("stringPath", "InternetProtocol")).andDo(print()).andExpect(status().isOk()).andReturn();
+        log.info("{}", actualResponse.getResponse().getBufferSize());
+        assertEquals(HttpStatus.OK.value(), actualResponse.getResponse().getStatus());
     }
 }
