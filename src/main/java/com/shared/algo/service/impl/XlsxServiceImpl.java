@@ -4,7 +4,7 @@ import com.shared.algo.annotations.FiledHeader;
 import com.shared.algo.enums.Messages;
 import com.shared.algo.exception.BadRequestException;
 import com.shared.algo.exception.ClassTypeNotSupportedException;
-import com.shared.algo.model.InternetProtocol;
+import com.shared.algo.dto.InternetProtocol;
 import com.shared.algo.service.XlsxService;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;

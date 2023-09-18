@@ -1,6 +1,6 @@
 package com.shared.algo.service.impl;
 
-import com.shared.algo.model.ClientDetails;
+import com.shared.algo.dto.ClientDetails;
 import com.shared.algo.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.User;

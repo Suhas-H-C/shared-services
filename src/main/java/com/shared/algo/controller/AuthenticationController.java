@@ -1,7 +1,7 @@
 package com.shared.algo.controller;
 
-import com.shared.algo.model.JwtRequest;
-import com.shared.algo.model.JwtResponse;
+import com.shared.algo.dto.JwtRequest;
+import com.shared.algo.dto.JwtResponse;
 import com.shared.algo.service.impl.UserService;
 import com.shared.algo.utils.JWTUtils;
 import lombok.AllArgsConstructor;

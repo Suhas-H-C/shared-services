@@ -1,4 +1,4 @@
-package com.shared.algo.model;
+package com.shared.algo.dto;
 
 import lombok.Builder;
 

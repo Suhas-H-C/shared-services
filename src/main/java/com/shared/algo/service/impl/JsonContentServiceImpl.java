@@ -3,8 +3,9 @@ package com.shared.algo.service.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shared.algo.exception.BadRequestException;
-import com.shared.algo.model.InternetProtocol;
+import com.shared.algo.dto.InternetProtocol;
 import com.shared.algo.service.JsonContentService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -16,10 +17,9 @@ import java.util.Objects;
 
 import static com.shared.algo.enums.Messages.TYPE_NOT_FOUND;
 
+@Slf4j
 @Service
 public final class JsonContentServiceImpl implements JsonContentService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(JsonContentServiceImpl.class);
 
     @Override
     public List<?> fetchJsonData(Class<?> clazz, String path) throws Exception {
@@ -28,7 +28,7 @@ public final class JsonContentServiceImpl implements JsonContentService {
             TypeReference<List<InternetProtocol>> data = new TypeReference<>() {
             };
             Object jsonResponse = processJsonRequest(data, path);
-            LOGGER.info("Processing completed");
+            log.info("Processing completed");
             return List.of(jsonResponse);
         }
         throw new BadRequestException(TYPE_NOT_FOUND.getMessage());

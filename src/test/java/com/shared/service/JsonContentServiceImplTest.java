@@ -1,34 +1,21 @@
 package com.shared.service;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import com.shared.algo.dto.InternetProtocol;
+import com.shared.algo.service.impl.JsonContentServiceImpl;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 
-import com.shared.algo.service.impl.JsonContentServiceImpl;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shared.algo.model.InternetProtocol;
-
-@ExtendWith(MockitoExtension.class)
 class JsonContentServiceImplTest {
 
-	@InjectMocks
-	private JsonContentServiceImpl jsonContentServiceImpl;
+    private final JsonContentServiceImpl service = new JsonContentServiceImpl();
 
-	@Mock
-	private ObjectMapper objectMapper;
-
-	@Test
-	@DisplayName("readJsonContent")
-	void readJsonContent() throws Exception {
-		Collection<?> data = jsonContentServiceImpl.fetchJsonData(InternetProtocol.class, "InternetProtocol");
-		assertFalse(data.isEmpty());
-	}
+    @Test
+    void should_parse_json_file_and_return_the_date_when_file_name_is_passed() throws Exception {
+        Collection<?> actualResponse = service.fetchJsonData(InternetProtocol.class, "InternetProtocol");
+        assertFalse(actualResponse.isEmpty());
+    }
 
 }

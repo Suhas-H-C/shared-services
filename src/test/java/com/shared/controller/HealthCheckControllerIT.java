@@ -1,35 +1,34 @@
 package com.shared.controller;
 
 import com.shared.algo.SharedServicesApplication;
-import com.shared.algo.utils.GenericResponse;
-import com.shared.vo.TestUtils;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.*;
-
-import java.util.Map;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(classes = SharedServicesApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = SharedServicesApplication.class)
+@AutoConfigureMockMvc
 class HealthCheckControllerIT {
 
-    @LocalServerPort
-    String port;
-
-    private final TestRestTemplate testRestTemplate = new TestRestTemplate();
-    private final TestUtils testUtils = new TestUtils();
+    @Autowired
+    private MockMvc mockMvc;
 
     @Test
-    void healthCheck() {
-        HttpHeaders httpHeaders = testUtils.httpHeaders(MediaType.APPLICATION_JSON);
-        HttpEntity<Map<String, Object>> httpEntity = new HttpEntity<>(httpHeaders);
+    void healthCheck() throws Exception {
+        MvcResult actualResponse = mockMvc.perform(MockMvcRequestBuilders
+                        .get("/health/health-check")).andDo(print()).andExpect(status().isOk()).andReturn();
 
-        ResponseEntity<?> response = testRestTemplate
-                .exchange(testUtils.buildUrl(port, "/health/health-check"), HttpMethod.GET, httpEntity, GenericResponse.class);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(HttpStatus.OK.value(), actualResponse.getResponse().getStatus());
     }
 
 }

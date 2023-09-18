@@ -1,37 +1,27 @@
 package com.shared.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.shared.algo.dto.InternetProtocol;
+import com.shared.algo.service.impl.TextContentParserServiceImpl;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 
-import com.shared.algo.service.impl.TextContentParserServiceImpl;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.shared.algo.model.InternetProtocol;
-
-@ExtendWith(MockitoExtension.class)
 class TextContentParserServiceImplTest {
 
-	@InjectMocks
-	private TextContentParserServiceImpl stringContentUtilsImpl;
+    private final TextContentParserServiceImpl service = new TextContentParserServiceImpl();
 
-	@Test
-	@DisplayName("testGetContent_IllegalArgumentException")
-	void testGetContent() {
-		assertThrows(NullPointerException.class, () -> {
-			stringContentUtilsImpl.parseTextContent("demo");
-		});
-	}
+    @Test
+    void should_throw_null_pointer_when_illegal_argument_is_passed() {
+        assertThrows(NullPointerException.class, () -> service.parseTextContent("demo"));
+    }
 
-	@Test
-	@DisplayName("testGetFields_False")
-	void testGetFields() {
-		Collection<?> feildData = stringContentUtilsImpl.getClassFieldsAsString(new InternetProtocol().getClass());
-		assertTrue(feildData.isEmpty());
-	}
+    @Test
+    void should_return_class_fields_when_class_name_is_passed() {
+        Collection<?> actualResponse = service.getClassFieldsAsString(InternetProtocol.class);
+        assertFalse(actualResponse.isEmpty());
+    }
 
 }

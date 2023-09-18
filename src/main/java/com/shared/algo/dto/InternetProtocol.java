@@ -1,4 +1,4 @@
-package com.shared.algo.model;
+package com.shared.algo.dto;
 
 import com.shared.algo.annotations.FiledHeader;
 import lombok.*;

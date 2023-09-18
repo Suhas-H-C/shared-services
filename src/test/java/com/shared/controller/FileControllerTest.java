@@ -1,7 +1,7 @@
 package com.shared.controller;
 
 import com.shared.algo.controller.FileController;
-import com.shared.algo.model.InternetProtocol;
+import com.shared.algo.dto.InternetProtocol;
 import com.shared.algo.service.*;
 import com.shared.algo.utils.GenericResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -31,42 +31,70 @@ class FileControllerTest {
     private final FileController controller = new FileController(textContentParserService, jsonContentService, csvService, xlsxService, null, reportService);
 
     @Test
-    void should_parse_the_file_and_return_string_when_file_name_is_provided() {
+    void should_parse_the_file_and_return_string_when_file_name_is_provided() throws Exception {
         when(textContentParserService.parseTextContent("test")).thenReturn("Content parsed successfully");
-        ResponseEntity<GenericResponse<?>> response = controller.getFileContentAsString("test");
+        ResponseEntity<GenericResponse<?>> actualResponse = controller.getFileContentAsString("test");
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(requireNonNull(response.getBody()).data());
-        assertTrue(response.getBody().metaData().success());
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        assertNotNull(requireNonNull(actualResponse.getBody()).data());
+        assertTrue(actualResponse.getBody().metaData().success());
+        verify(textContentParserService).parseTextContent("test");
+        verify(jsonContentService, never()).fetchJsonData(InternetProtocol.class, "test");
+        verify(csvService, never()).readCSVFileContent(multipartFile("MOCK_DATA_TEST.csv"), "ipdata");
+        verify(jsonContentService, never()).fetchJsonData(InternetProtocol.class, "InternetProtocol");
+        verify(csvService, never()).generateCSV(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"), InternetProtocol.class);
+        verify(xlsxService, never()).read(multipartFile("IpData_mock.xlsx"), InternetProtocol.class);
+        verify(xlsxService, never()).write(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"));
     }
 
     @Test
-    void should_throw_null_pointer_when_incorrect_file_name_is_provided() {
+    void should_throw_null_pointer_when_incorrect_file_name_is_provided() throws Exception {
         when(textContentParserService.parseTextContent("test")).thenThrow(NullPointerException.class);
-        ResponseEntity<GenericResponse<?>> response = controller.getFileContentAsString("test");
+        ResponseEntity<GenericResponse<?>> actualResponse = controller.getFileContentAsString("test");
 
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertFalse(requireNonNull(response.getBody()).metaData().success());
+        assertEquals(HttpStatus.BAD_REQUEST, actualResponse.getStatusCode());
+        assertFalse(requireNonNull(actualResponse.getBody()).metaData().success());
+        verify(textContentParserService).parseTextContent("test");
+        verify(jsonContentService, never()).fetchJsonData(InternetProtocol.class, "test");
+        verify(csvService, never()).readCSVFileContent(multipartFile("MOCK_DATA_TEST.csv"), "ipdata");
+        verify(jsonContentService, never()).fetchJsonData(InternetProtocol.class, "InternetProtocol");
+        verify(csvService, never()).generateCSV(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"), InternetProtocol.class);
+        verify(xlsxService, never()).read(multipartFile("IpData_mock.xlsx"), InternetProtocol.class);
+        verify(xlsxService, never()).write(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"));
     }
 
     @Test
     void should_fetch_json_date_when_file_name_is_provided() throws Exception {
         when(jsonContentService.fetchJsonData(InternetProtocol.class, "test")).thenReturn(Collections.emptyList());
 
-        ResponseEntity<GenericResponse<?>> response = controller.getJsonFromFile("test");
-        log.info("API status : {}", requireNonNull(response.getBody()).metaData().success());
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertFalse(requireNonNull(response.getBody()).errors().isSuccess());
+        ResponseEntity<GenericResponse<?>> actualResponse = controller.getJsonFromFile("test");
+        log.info("API status : {}", requireNonNull(actualResponse.getBody()).metaData().success());
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        assertFalse(requireNonNull(actualResponse.getBody()).errors().isSuccess());
+        verify(textContentParserService, never()).parseTextContent("test");
+        verify(jsonContentService).fetchJsonData(InternetProtocol.class, "test");
+        verify(csvService, never()).readCSVFileContent(multipartFile("MOCK_DATA_TEST.csv"), "ipdata");
+        verify(jsonContentService, never()).fetchJsonData(InternetProtocol.class, "InternetProtocol");
+        verify(csvService, never()).generateCSV(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"), InternetProtocol.class);
+        verify(xlsxService, never()).read(multipartFile("IpData_mock.xlsx"), InternetProtocol.class);
+        verify(xlsxService, never()).write(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"));
     }
 
     @Test
     void should_fetch_csv_date_when_file_name_is_provided() throws Exception {
-        when(csvService.readCSVFileContent(multipartFile("MOCK_DATA_TEST.csv"), "ipdata")).thenReturn(Collections.emptyList());
-        ResponseEntity<GenericResponse<?>> response = controller.readCSV(multipartFile("MOCK_DATA_TEST.csv"), "ipdata");
+        when(csvService.readCSVFileContent(null, "ipdata")).thenReturn(Collections.emptyList());
+        ResponseEntity<GenericResponse<?>> actualResponse = controller.readCSV(null, "ipdata");
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(requireNonNull(response.getBody()).data());
-        assertFalse(response.getBody().metaData().success());
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        assertNotNull(requireNonNull(actualResponse.getBody()).data());
+        assertFalse(actualResponse.getBody().metaData().success());
+        verify(textContentParserService, never()).parseTextContent("test");
+        verify(jsonContentService, never()).fetchJsonData(InternetProtocol.class, "test");
+        verify(csvService).readCSVFileContent(null, "ipdata");
+        verify(jsonContentService, never()).fetchJsonData(InternetProtocol.class, "InternetProtocol");
+        verify(csvService, never()).generateCSV(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"), InternetProtocol.class);
+        verify(xlsxService, never()).read(multipartFile("IpData_mock.xlsx"), InternetProtocol.class);
+        verify(xlsxService, never()).write(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"));
     }
 
     @Test
@@ -75,17 +103,35 @@ class FileControllerTest {
         when(csvService.generateCSV(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"), InternetProtocol.class))
                 .thenReturn(new ByteArrayInputStream(new ByteArrayOutputStream().toByteArray()));
 
-        ResponseEntity<?> response = controller.generateCSV("Sample File");
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        ResponseEntity<?> actualResponse = controller.generateCSV("Sample File");
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        verify(textContentParserService, never()).parseTextContent("test");
+        verify(jsonContentService, never()).fetchJsonData(InternetProtocol.class, "test");
+        verify(csvService, never()).readCSVFileContent(multipartFile("MOCK_DATA_TEST.csv"), "ipdata");
+        verify(jsonContentService, times(2)).fetchJsonData(InternetProtocol.class, "InternetProtocol");
+        verify(csvService).generateCSV(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"), InternetProtocol.class);
+        verify(xlsxService, never()).read(multipartFile("IpData_mock.xlsx"), InternetProtocol.class);
+        verify(xlsxService, never()).write(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"));
     }
 
     @Test
     void should_read_xlsx_file_when_file_name_is_provided() throws Exception {
-        when(xlsxService.read(multipartFile("IpData_mock.xlsx"), InternetProtocol.class)).thenReturn(Collections.emptyList());
-        ResponseEntity<?> response = controller.readExcel(multipartFile("IpData_mock.xlsx"));
+        File file = new File("src/main/resources/data/files/IpData_mock.xlsx");
+        FileInputStream fileInputStream = new FileInputStream(file);
+        MultipartFile multipartFile = new MockMultipartFile(file.getName(), fileInputStream);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertTrue(response.hasBody());
+        when(xlsxService.read(multipartFile, InternetProtocol.class)).thenReturn(Collections.emptyList());
+        ResponseEntity<?> actualResponse = controller.readExcel(multipartFile);
+
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        assertTrue(actualResponse.hasBody());
+        verify(textContentParserService, never()).parseTextContent("test");
+        verify(jsonContentService, never()).fetchJsonData(InternetProtocol.class, "test");
+        verify(csvService, never()).readCSVFileContent(multipartFile("MOCK_DATA_TEST.csv"), "ipdata");
+        verify(jsonContentService, never()).fetchJsonData(InternetProtocol.class, "InternetProtocol");
+        verify(csvService, never()).generateCSV(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"), InternetProtocol.class);
+        verify(xlsxService).read(multipartFile, InternetProtocol.class);
+        verify(xlsxService, never()).write(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"));
     }
 
     @Test
@@ -94,8 +140,14 @@ class FileControllerTest {
         when(xlsxService.write(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol")))
                 .thenReturn(new ByteArrayInputStream(new ByteArrayOutputStream().toByteArray()));
 
-        ResponseEntity<?> response = controller.generateExcel("sample");
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        ResponseEntity<?> actualResponse = controller.generateExcel("sample");
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        verify(textContentParserService, never()).parseTextContent("test");
+        verify(csvService, never()).readCSVFileContent(multipartFile("MOCK_DATA_TEST.csv"), "ipdata");
+        verify(csvService, never()).generateCSV(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"), InternetProtocol.class);
+        verify(xlsxService, never()).read(multipartFile("IpData_mock.xlsx"), InternetProtocol.class);
+        verify(jsonContentService, times(3)).fetchJsonData(InternetProtocol.class, "InternetProtocol");
+        verify(xlsxService).write(jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol"));
     }
 
     private MultipartFile multipartFile(String fileName) throws IOException {

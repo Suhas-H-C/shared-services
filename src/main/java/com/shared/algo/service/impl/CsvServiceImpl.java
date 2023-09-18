@@ -4,7 +4,7 @@ import com.csvreader.CsvWriter;
 import com.shared.algo.annotations.FiledHeader;
 import com.shared.algo.exception.BadRequestException;
 import com.shared.algo.exception.ClassTypeNotSupportedException;
-import com.shared.algo.model.InternetProtocol;
+import com.shared.algo.dto.InternetProtocol;
 import com.shared.algo.service.CsvService;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
