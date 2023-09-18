@@ -43,7 +43,7 @@ class FileControllerIT {
 
     @Test
     void should_parse_csv_file_and_return_valid_response_when_file_name_is_passed() throws Exception {
-        MvcResult actualResponse = mockMvc.perform(multipart("/file/read-csv").file(csvFile("MOCK_DATA_TEST.csv")).param("type", "ipdata")).andDo(print()).andExpect(status().isOk()).andReturn();
+        MvcResult actualResponse = mockMvc.perform(multipart("/file/read-csv").file(csvFile()).param("type", "ipdata")).andDo(print()).andExpect(status().isOk()).andReturn();
         assertEquals(HttpStatus.OK.value(), actualResponse.getResponse().getStatus());
     }
 
@@ -56,18 +56,29 @@ class FileControllerIT {
 
     @Test
     void should_parse_xlsx_file_and_return_valid_response_when_file_name_is_passed() throws Exception {
-        MvcResult actualResponse = mockMvc.perform(multipart("/file/read-xlsx").file(xlsxFile("IpData_mock.xlsx"))).andDo(print()).andExpect(status().isOk()).andReturn();
+        MvcResult actualResponse = mockMvc.perform(multipart("/file/read-xlsx").file(xlsxFile())).andDo(print()).andExpect(status().isOk()).andReturn();
         assertEquals(HttpStatus.OK.value(), actualResponse.getResponse().getStatus());
     }
 
-    private static MockMultipartFile csvFile(String fileName) throws IOException {
-        FileInputStream inputStream = new FileInputStream("src/main/resources/data/files/" + fileName);
-        return new MockMultipartFile("file", fileName, MULTIPART_FORM_DATA_VALUE, inputStream);
+    @Test
+    void should_generate_xlsx_file_and_return_valid_response_when_file_name_is_passed() throws Exception {
+        MvcResult actualResponse = mockMvc.perform(get("/file/produce-xlsx").param("fileName", "test")).andDo(print()).andExpect(status().isOk()).andReturn();
+        assertEquals(HttpStatus.OK.value(), actualResponse.getResponse().getStatus());
     }
 
-    private static MockMultipartFile xlsxFile(String fileName) throws IOException {
-        FileInputStream inputStream = new FileInputStream("src/main/resources/data/files/" + fileName);
-        return new MockMultipartFile("file", fileName, MULTIPART_FORM_DATA_VALUE, inputStream);
+    @Test
+    void should_generate_pdf_file_and_return_valid_response_when_file_name_is_passed() throws Exception {
+        MvcResult actualResponse = mockMvc.perform(get("/file/produce-pdf").param("fileName", "test")).andDo(print()).andExpect(status().isOk()).andReturn();
+        assertEquals(HttpStatus.OK.value(), actualResponse.getResponse().getStatus());
     }
 
+    private static MockMultipartFile csvFile() throws IOException {
+        FileInputStream inputStream = new FileInputStream("src/main/resources/data/files/MOCK_DATA_TEST.csv");
+        return new MockMultipartFile("file", "MOCK_DATA_TEST.csv", MULTIPART_FORM_DATA_VALUE, inputStream);
+    }
+
+    private static MockMultipartFile xlsxFile() throws IOException {
+        FileInputStream inputStream = new FileInputStream("src/main/resources/data/files/IpData_mock.xlsx");
+        return new MockMultipartFile("file", "IpData_mock.xlsx", MULTIPART_FORM_DATA_VALUE, inputStream);
+    }
 }
