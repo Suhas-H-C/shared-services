@@ -1,26 +1,7 @@
 package com.shared.algo.utils;
 
-public final class Errors {
+import lombok.Builder;
 
-	private boolean isSuccess;
-
-	public boolean isSuccess() {
-		return isSuccess;
-	}
-
-	public void setSuccess(boolean isSuccess) {
-		this.isSuccess = isSuccess;
-	}
-
-	public Errors(boolean isSuccess) {
-		this.isSuccess = isSuccess;
-	}
-
-	public Errors() {
-	}
-
-	@Override
-	public String toString() {
-		return "Errors [isSuccess=" + isSuccess + "]";
-	}
+@Builder
+public record Errors(boolean isSuccess) {
 }

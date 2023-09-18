@@ -7,8 +7,6 @@ import java.util.Collection;
 import java.util.List;
 
 public interface XlsxService {
-
     Collection<?> read(MultipartFile multipartFile, Class<?> clazz) throws Exception;
-
     ByteArrayInputStream write(List<?> data) throws Exception;
 }

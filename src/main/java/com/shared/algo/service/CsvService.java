@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface CsvService {
 
-    Collection<?> retrieveData(MultipartFile multipartFile, String contentType) throws Exception;
-
-    ByteArrayInputStream getCSV(List<?> data, Class<?> clazz);
+    Collection<?> readCSVFileContent(MultipartFile multipartFile, String contentType) throws Exception;
+    ByteArrayInputStream generateCSV(List<?> data, Class<?> clazz);
 }

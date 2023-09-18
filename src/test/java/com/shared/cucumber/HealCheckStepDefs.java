@@ -39,7 +39,7 @@ public class HealCheckStepDefs {
 
     @Then("response is {string}")
     public void response_is(String string) {
-        List<String> data = new ArrayList<>(lastResponse.getBody().getData());
+        List<String> data = new ArrayList<>(lastResponse.getBody().data());
         assertEquals(string, data.get(0));
     }
 

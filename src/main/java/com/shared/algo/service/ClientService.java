@@ -1,6 +1,6 @@
 package com.shared.algo.service;
 
-import com.shared.algo.model.ClientDetails;
+import com.shared.algo.dto.ClientDetails;
 
 public interface ClientService {
 
