@@ -9,16 +9,24 @@
         <version>2.6.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>com.shared.algo</groupId>
     <artifactId>shared-services</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>shared-algo</name>
-    <description>Shared Algorithms for Java</description>
+    <name>shared-services</name>
+    <description>Shared Services for Java</description>
+
     <properties>
         <java.version>17</java.version>
         <cucumber.version>7.10.0</cucumber.version>
         <springdoc-open-api-ui.version>1.7.0</springdoc-open-api-ui.version>
+        <net.sf.jasperreports.version>6.20.6</net.sf.jasperreports.version>
+        <org.apache.commons.version>1.10.0</org.apache.commons.version>
+        <io.jsonwebtoken.version>0.11.5</io.jsonwebtoken.version>
+        <net.sourceforge.tess4j.version>5.8.0</net.sourceforge.tess4j.version>
+        <com.github.librepdf.version>1.3.30</com.github.librepdf.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -38,12 +46,12 @@
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
-            <version>6.20.0</version>
+            <version>${net.sf.jasperreports.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
-            <version>1.9.0</version>
+            <version>${org.apache.commons.version}</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.javacsv</groupId>
@@ -58,12 +66,12 @@
         <dependency>
             <groupId>com.github.librepdf</groupId>
             <artifactId>openpdf</artifactId>
-            <version>1.3.30</version>
+            <version>${com.github.librepdf.version}</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.tess4j</groupId>
             <artifactId>tess4j</artifactId>
-            <version>5.4.0</version>
+            <version>${net.sourceforge.tess4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -79,9 +87,10 @@
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
+            <artifactId>jjwt-api</artifactId>
+            <version>${io.jsonwebtoken.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -115,6 +124,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
