@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Collection;
 
+import com.shared.algo.service.impl.TextContentParserServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,20 +17,20 @@ import com.shared.algo.model.InternetProtocol;
 class StringContentUtilsServiceImplTest {
 
 	@InjectMocks
-	private StringContentUtilsServiceImpl stringContentUtilsImpl;
+	private TextContentParserServiceImpl stringContentUtilsImpl;
 
 	@Test
 	@DisplayName("testGetContent_IllegalArgumentException")
 	void testGetContent() {
 		assertThrows(NullPointerException.class, () -> {
-			stringContentUtilsImpl.getContent("demo");
+			stringContentUtilsImpl.parseTextContent("demo");
 		});
 	}
 
 	@Test
 	@DisplayName("testGetFields_False")
 	void testGetFields() {
-		Collection<?> feildData = stringContentUtilsImpl.getFields(new InternetProtocol().getClass());
+		Collection<?> feildData = stringContentUtilsImpl.getClassFieldsAsString(new InternetProtocol().getClass());
 		assertTrue(feildData.isEmpty());
 	}
 

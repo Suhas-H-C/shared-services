@@ -5,10 +5,10 @@ import com.shared.algo.utils.GenericResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static com.shared.algo.utils.SharedAlgosResponseBuilder.wrapWithErrorResponse;
+import static com.shared.algo.utils.SharedServiceResponseBuilder.wrapWithErrorResponse;
 
 @RestControllerAdvice
-public final class SharedAlgoExceptionHandler {
+public final class SharedServiceExceptionHandler {
 
     @ExceptionHandler(BadRequestException.class)
     public GenericResponse<?> handleBadRequestException(BadRequestException badRequestException) {

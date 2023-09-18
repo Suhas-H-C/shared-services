@@ -1,7 +1,8 @@
-package com.shared.algo.service;
+package com.shared.algo.service.impl;
 
 import com.shared.algo.model.ClientDetails;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.shared.algo.service.ClientService;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,13 +10,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public final class UserService implements UserDetailsService {
 
     public final static String AWT = "AWT";
@@ -23,8 +24,7 @@ public final class UserService implements UserDetailsService {
     public final static String RWT = "RWT";
     public final static String INVALID_WT = "INVALID";
 
-    @Autowired
-    private ClientService clientService;
+    private final ClientService clientService;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -52,11 +52,8 @@ public final class UserService implements UserDetailsService {
     }
 
     private Map<String, ClientDetails> dataForProcessing() {
-        Map<String, ClientDetails> data = new LinkedHashMap<>();
-        data.put(AWT, new ClientDetails("A1", "A2"));
-        data.put(WWT, new ClientDetails("W1", "W2"));
-        data.put(RWT, new ClientDetails("R1", "R2"));
-        return data;
+        return Map.of(AWT, new ClientDetails("A1", "A2"),
+                WWT, new ClientDetails("W1", "W2"),
+                RWT, new ClientDetails("R1", "R2"));
     }
-
 }

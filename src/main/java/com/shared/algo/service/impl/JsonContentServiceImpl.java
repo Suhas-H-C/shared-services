@@ -1,9 +1,10 @@
-package com.shared.algo.service;
+package com.shared.algo.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shared.algo.exception.BadRequestException;
 import com.shared.algo.model.InternetProtocol;
+import com.shared.algo.service.JsonContentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;

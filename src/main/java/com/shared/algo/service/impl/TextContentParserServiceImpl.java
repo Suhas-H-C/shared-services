@@ -1,16 +1,15 @@
-package com.shared.algo.service;
+package com.shared.algo.service.impl;
 
-import com.shared.algo.annotations.FiledHeaderConfig;
+import com.shared.algo.annotations.FiledHeader;
 import com.shared.algo.exception.BadRequestException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.shared.algo.service.TextContentParserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,21 +20,18 @@ import static com.shared.algo.enums.Messages.FILE_READING_FAILED;
 import static com.shared.algo.enums.Messages.INVALID_FILE_NAME;
 import static java.util.Objects.nonNull;
 
+@Slf4j
 @Service
-public final class StringContentUtilsServiceImpl implements StringContentUtilsService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(StringContentUtilsServiceImpl.class);
+public final class TextContentParserServiceImpl implements TextContentParserService {
 
     @Override
-    public String getContent(String fileName) throws Exception {
-        LOGGER.info("fileName : {}", fileName);
+    public String parseTextContent(String fileName) throws RuntimeException {
+        log.info("fileName : {}", fileName);
         InputStream in = getClass().getClassLoader().getResourceAsStream("data/files/".concat(fileName));
 
         if (nonNull(in)) {
             StringBuilder sb = new StringBuilder();
-
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(in),
-                    Charset.forName(StandardCharsets.UTF_8.name())))) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(in), StandardCharsets.UTF_8))) {
                 int c;
                 while ((c = reader.read()) != -1) {
                     sb.append((char) c);
@@ -50,18 +46,16 @@ public final class StringContentUtilsServiceImpl implements StringContentUtilsSe
     }
 
     @Override
-    public Collection<?> getFields(Class<?> clazz) {
+    public Collection<?> getClassFieldsAsString(Class<?> clazz) {
         List<String> list = new ArrayList<>();
-        if (clazz.toString().contains("IpData")) {
+        if (clazz.toString().contains("InternetProtocol")) {
             Field[] fields = clazz.getDeclaredFields();
             for (Field field : fields) {
-                FiledHeaderConfig config = field.getAnnotation(FiledHeaderConfig.class);
-                System.out.println(config.header());
+                FiledHeader config = field.getAnnotation(FiledHeader.class);
+                log.info(config.header());
                 list.add(config.header());
             }
-            return list;
-        } else {
-            return list;
         }
+        return list;
     }
 }

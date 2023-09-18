@@ -1,10 +1,11 @@
-package com.shared.algo.service;
+package com.shared.algo.service.impl;
 
-import com.shared.algo.annotations.FiledHeaderConfig;
+import com.shared.algo.annotations.FiledHeader;
 import com.shared.algo.enums.Messages;
 import com.shared.algo.exception.BadRequestException;
 import com.shared.algo.exception.ClassTypeNotSupportedException;
 import com.shared.algo.model.InternetProtocol;
+import com.shared.algo.service.XlsxService;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.shared.algo.enums.FileConstants.SHEET_NAME;
-import static com.shared.algo.enums.Messages.INVLAID_SHEET;
+import static com.shared.algo.enums.Messages.INVALID_SHEET;
 
 @Service
 public final class XlsxServiceImpl implements XlsxService {
@@ -34,23 +35,18 @@ public final class XlsxServiceImpl implements XlsxService {
         try (Workbook workbook = new XSSFWorkbook(multipartFile.getInputStream())) {
             Sheet sheet = workbook.getSheet(SHEET_NAME.getValue());
             if (Objects.isNull(sheet)) {
-                throw new BadRequestException(INVLAID_SHEET.getMessage());
+                throw new BadRequestException(INVALID_SHEET.getMessage());
             } else {
                 for (Row row : sheet) {
-                    if (row.getRowNum() == 0) {
-                        continue;
-                    } else {
-
+                    if (row.getRowNum() != 0) {
                         if (clazz.isInstance(new InternetProtocol())) {
                             InternetProtocol data = BeanUtils.instantiateClass(InternetProtocol.class);
-
                             data.setId((int) row.getCell(0).getNumericCellValue());
                             data.setFirst_name(row.getCell(1).getStringCellValue());
                             data.setLast_name(row.getCell(2).getStringCellValue());
                             data.setEmail(row.getCell(3).getStringCellValue());
                             data.setGender(row.getCell(4).getStringCellValue());
                             data.setIp_address(row.getCell(5).getStringCellValue());
-
                             response.add(data);
                         } else {
                             break;
@@ -58,7 +54,6 @@ public final class XlsxServiceImpl implements XlsxService {
                     }
                 }
             }
-
             return response;
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
@@ -70,14 +65,13 @@ public final class XlsxServiceImpl implements XlsxService {
         try (Workbook workBook = new XSSFWorkbook();
              ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
             Sheet sheet = workBook.createSheet(SHEET_NAME.getValue());
-
             if (Objects.nonNull(data) && !data.isEmpty()) {
                 List<String> fileHeaders = new ArrayList<>();
 
                 if (data.get(0) instanceof InternetProtocol internetProtocolInstance) {
                     Field[] fields = internetProtocolInstance.getClass().getDeclaredFields();
                     for (Field field : fields) {
-                        FiledHeaderConfig headers = field.getAnnotation(FiledHeaderConfig.class);
+                        FiledHeader headers = field.getAnnotation(FiledHeader.class);
                         fileHeaders.add(headers.header());
                     }
                     Row headerRow = sheet.createRow(0);
@@ -85,7 +79,6 @@ public final class XlsxServiceImpl implements XlsxService {
                         headerRow.createCell(i).setCellValue(fileHeaders.get(i));
                     }
                     int flag = 1;
-
                     for (Object obj : data) {
                         InternetProtocol internetProtocol = (InternetProtocol) obj;
                         Row valueRow = sheet.createRow(flag++);
@@ -103,7 +96,6 @@ public final class XlsxServiceImpl implements XlsxService {
                 workBook.close();
                 return new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
             }
-
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import java.io.InputStream;
 import java.util.Collection;
 
+import com.shared.algo.service.impl.CsvServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +28,7 @@ class CsvServiceImplTest {
         InputStream in = TypeReference.class.getResourceAsStream("/data/files/MOCK_DATA_TEST.csv");
 
         MockMultipartFile multipartFile = new MockMultipartFile("test", in);
-        Collection<?> data = csvServiceImpl.retrieveData(multipartFile, "ipdata");
+        Collection<?> data = csvServiceImpl.readCSVFileContent(multipartFile, "ipdata");
 
         assertFalse(data.isEmpty());
         assertEquals(10, data.size());

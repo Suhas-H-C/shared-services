@@ -1,5 +1,6 @@
 package com.shared.algo.utils.dsa;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -8,15 +9,10 @@ import java.util.*;
 
 @Component
 @Scope("singleton")
+@AllArgsConstructor
 public class ArrayManipulations {
 
     private final Sorting sorting;
-
-    @Autowired
-    public ArrayManipulations(Sorting sorting) {
-        this.sorting = sorting;
-    }
-
 
     public List<Integer> sumOfTwoIsTarget(int[] arr, int target) {
         Map<Integer, Integer> checker = new HashMap<>();

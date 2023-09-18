@@ -1,5 +1,6 @@
-package com.shared.algo.service;
+package com.shared.algo.service.impl;
 
+import com.shared.algo.service.ReportService;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.slf4j.Logger;

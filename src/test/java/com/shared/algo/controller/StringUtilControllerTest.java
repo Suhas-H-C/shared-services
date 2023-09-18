@@ -15,7 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.shared.algo.service.StringContentUtilsService;
+import com.shared.algo.service.TextContentParserService;
 import com.shared.algo.utils.GenericResponse;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,12 +24,12 @@ class StringUtilControllerTest {
 	@InjectMocks
 	private StringUtilController stringUtilController;
 	@Mock
-	private StringContentUtilsService stringContentUtils;
+	private TextContentParserService stringContentUtils;
 	
 	@Test
 	@DisplayName("Test field response")
 	void testFieldsResponse() {
-		when(stringContentUtils.getFields(any()))
+		when(stringContentUtils.getClassFieldsAsString(any()))
 		.thenReturn(null);
 		
 		ResponseEntity<GenericResponse<?>> response = stringUtilController.getFields();
@@ -42,7 +42,7 @@ class StringUtilControllerTest {
 	@Test
 	@DisplayName("Field Response BAD_REQUEST")
 	void fieldResponseBadRequest() throws Exception {
-		when(stringContentUtils.getFields(any()))
+		when(stringContentUtils.getClassFieldsAsString(any()))
 		.thenThrow(NullPointerException.class);
 		
 		ResponseEntity<GenericResponse<?>> response = stringUtilController.getFields();

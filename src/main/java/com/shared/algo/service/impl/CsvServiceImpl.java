@@ -1,10 +1,11 @@
-package com.shared.algo.service;
+package com.shared.algo.service.impl;
 
 import com.csvreader.CsvWriter;
-import com.shared.algo.annotations.FiledHeaderConfig;
+import com.shared.algo.annotations.FiledHeader;
 import com.shared.algo.exception.BadRequestException;
 import com.shared.algo.exception.ClassTypeNotSupportedException;
 import com.shared.algo.model.InternetProtocol;
+import com.shared.algo.service.CsvService;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -28,7 +29,7 @@ import static java.util.Objects.nonNull;
 public final class CsvServiceImpl implements CsvService {
 
     @Override
-    public Collection<?> retrieveData(MultipartFile multipartFile, String contentType) throws Exception {
+    public Collection<?> readCSVFileContent(MultipartFile multipartFile, String contentType) throws Exception {
         List<Object> response = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(multipartFile.getInputStream()))) {
@@ -37,26 +38,21 @@ public final class CsvServiceImpl implements CsvService {
 
             csvParser.close();
             for (CSVRecord csvRecord : list) {
-                if (csvRecord.getRecordNumber() == 1) {
-                    continue;
-                } else {
+                if (csvRecord.getRecordNumber() != 1) {
                     if (checkContentType(contentType) instanceof InternetProtocol) {
                         InternetProtocol data = BeanUtils.instantiateClass(InternetProtocol.class);
-
                         data.setId(Integer.parseInt(nullChecker(csvRecord, 0)));
-                        data.setFirst_name((String) nullChecker(csvRecord, 1));
-                        data.setLast_name((String) nullChecker(csvRecord, 2));
-                        data.setEmail((String) nullChecker(csvRecord, 3));
-                        data.setGender((String) nullChecker(csvRecord, 4));
-                        data.setIp_address((String) nullChecker(csvRecord, 5));
+                        data.setFirst_name(nullChecker(csvRecord, 1));
+                        data.setLast_name(nullChecker(csvRecord, 2));
+                        data.setEmail(nullChecker(csvRecord, 3));
+                        data.setGender(nullChecker(csvRecord, 4));
+                        data.setIp_address(nullChecker(csvRecord, 5));
                         response.add(data);
                     } else {
                         throw new ClassTypeNotSupportedException(TYPE_NOT_FOUND.getMessage());
                     }
-
                 }
             }
-
             reader.close();
             return response;
         } catch (Exception e) {
@@ -65,7 +61,7 @@ public final class CsvServiceImpl implements CsvService {
     }
 
     @Override
-    public ByteArrayInputStream getCSV(List<?> data, Class<?> clazz) {
+    public ByteArrayInputStream generateCSV(List<?> data, Class<?> clazz) {
         ByteArrayInputStream byteArrayInputStream;
         try (ByteArrayOutputStream outPutStream = new ByteArrayOutputStream();) {
             CsvWriter csvWriter = new CsvWriter(new BufferedOutputStream(outPutStream), ',', StandardCharsets.UTF_8);
@@ -73,10 +69,9 @@ public final class CsvServiceImpl implements CsvService {
                 if (data.get(0).getClass().equals(clazz)) {
                     Field[] templateHeaders = clazz.getDeclaredFields();
                     for (Field field : templateHeaders) {
-                        FiledHeaderConfig filedHeaderConfig = field.getAnnotation(FiledHeaderConfig.class);
+                        FiledHeader filedHeaderConfig = field.getAnnotation(FiledHeader.class);
                         csvWriter.write(filedHeaderConfig.header());
                     }
-
                     csvWriter.endRecord();
                     for (Object obj : data) {
                         for (Field field : obj.getClass().getDeclaredFields()) {

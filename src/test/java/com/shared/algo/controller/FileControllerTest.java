@@ -31,7 +31,7 @@ class FileControllerTest {
     private FileController fileController;
 
     @Mock
-    private StringContentUtilsService stringContentUtils;
+    private TextContentParserService stringContentUtils;
     @Mock
     private JsonContentService jsonContentService;
     @Mock
@@ -44,10 +44,10 @@ class FileControllerTest {
     @Test
     @DisplayName("Get content success")
     void testGetContents() throws Exception {
-        when(stringContentUtils.getContent(anyString()))
+        when(stringContentUtils.parseTextContent(anyString()))
                 .thenReturn("Content parsed successfully");
 
-        ResponseEntity<GenericResponse<?>> response = fileController.getContent("test");
+        ResponseEntity<GenericResponse<?>> response = fileController.getFileContentAsString("test");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(requireNonNull(response.getBody()).getData());
@@ -58,10 +58,10 @@ class FileControllerTest {
     @Test
     @DisplayName("Get content failure")
     void testGetContentsBadRequest() throws Exception {
-        when(stringContentUtils.getContent(anyString()))
+        when(stringContentUtils.parseTextContent(anyString()))
                 .thenThrow(NullPointerException.class);
 
-        ResponseEntity<GenericResponse<?>> response = fileController.getContent("test");
+        ResponseEntity<GenericResponse<?>> response = fileController.getFileContentAsString("test");
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertFalse(requireNonNull(response.getBody()).getMetaData().isSuccess());
@@ -74,7 +74,7 @@ class FileControllerTest {
         when(jsonContentService.fetchJsonData(any(), anyString()))
                 .thenReturn(Collections.emptyList());
 
-        ResponseEntity<GenericResponse<?>> response = fileController.getJson("test");
+        ResponseEntity<GenericResponse<?>> response = fileController.getJsonFromFile("test");
         LOG.info("API status : {}", requireNonNull(response.getBody()).getMetaData().isSuccess());
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertFalse(requireNonNull(response.getBody()).getErrors().isSuccess());
@@ -87,7 +87,7 @@ class FileControllerTest {
         when(jsonContentService.fetchJsonData(any(), anyString()))
                 .thenThrow(NullPointerException.class);
 
-        ResponseEntity<GenericResponse<?>> response = fileController.getJson("test");
+        ResponseEntity<GenericResponse<?>> response = fileController.getJsonFromFile("test");
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
         reset(jsonContentService);
@@ -96,7 +96,7 @@ class FileControllerTest {
     @Test
     @DisplayName("Read CSV")
     void testReadCsv() throws Exception {
-        when(csvService.retrieveData(any(), anyString()))
+        when(csvService.readCSVFileContent(any(), anyString()))
                 .thenReturn(Collections.emptyList());
 
         ResponseEntity<GenericResponse<?>> response = fileController.readCSV(multipartFile("MOCK_DATA_TEST.csv"), "ipdata");
@@ -110,7 +110,7 @@ class FileControllerTest {
     @Test
     @DisplayName("Read CSV BAD REQUEST")
     void testReadCsvBadRequest() throws Exception {
-        when(csvService.retrieveData(any(), anyString()))
+        when(csvService.readCSVFileContent(any(), anyString()))
                 .thenThrow(NullPointerException.class);
 
         ResponseEntity<GenericResponse<?>> response = fileController.readCSV(multipartFile("MOCK_DATA_TEST.csv"), "ipdata");
@@ -123,10 +123,10 @@ class FileControllerTest {
     @Test
     @DisplayName("Get CSV Success")
     void testGetCSV() {
-        when(csvService.getCSV(any(), any()))
+        when(csvService.generateCSV(any(), any()))
                 .thenReturn(new ByteArrayInputStream(new ByteArrayOutputStream().toByteArray()));
 
-        ResponseEntity<?> response = fileController.getCSV("Sample File");
+        ResponseEntity<?> response = fileController.generateCSV("Sample File");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         reset(csvService);
@@ -135,10 +135,10 @@ class FileControllerTest {
     @Test
     @DisplayName("Get CSV BAD REQUEST")
     void testGetCSVBadRequest() throws Exception {
-        when(csvService.retrieveData(any(), anyString()))
+        when(csvService.readCSVFileContent(any(), anyString()))
                 .thenThrow(NullPointerException.class);
 
-        ResponseEntity<?> response = fileController.getCSV("Sample File");
+        ResponseEntity<?> response = fileController.generateCSV("Sample File");
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         reset(csvService);
@@ -176,7 +176,7 @@ class FileControllerTest {
         when(xlsxService.write(any()))
                 .thenReturn(new ByteArrayInputStream(new ByteArrayOutputStream().toByteArray()));
 
-        ResponseEntity<?> response = fileController.getExcel("sample");
+        ResponseEntity<?> response = fileController.generateExcel("sample");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         reset(xlsxService);
@@ -189,7 +189,7 @@ class FileControllerTest {
                 .thenThrow(NullPointerException.class);
 
         assertThrows(Exception.class, () -> {
-            fileController.getPDFReport("tester sample");
+            fileController.generatePDFReport("tester sample");
         });
         reset(reportService);
     }

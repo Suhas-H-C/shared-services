@@ -1,6 +1,6 @@
 package com.shared.algo.controller;
 
-import com.shared.algo.service.ImgContentService;
+import com.shared.algo.service.ImageContentService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,10 +22,10 @@ import static org.mockito.Mockito.*;
 class ImgContentControllerTest {
 
     @InjectMocks
-    private ImgContentController imgContentController;
+    private ImageContentController imgContentController;
 
     @Mock
-    private ImgContentService imgContentService;
+    private ImageContentService imgContentService;
 
     @Test
     @DisplayName("Test tesseract4j OCR")
