@@ -1,22 +1,14 @@
 package com.shared.algo.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum ContentStatus {
 
     DISPOSITION("Content-Disposition", "attachment; filename=");
 
-    String key;
-    String content;
-
-    private ContentStatus(String key, String content) {
-        this.key = key;
-        this.content = content;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public String getContent() {
-        return content;
-    }
+    final String key;
+    final String content;
 }

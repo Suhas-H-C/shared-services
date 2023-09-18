@@ -35,7 +35,7 @@ public class JsonContentCheckStepDefs {
 
     @Then("Content is not empty")
     public void content_is_not_empty() {
-        assertNotNull(apiResponse.getBody().getData());
+        assertNotNull(apiResponse.getBody().data());
     }
 
 

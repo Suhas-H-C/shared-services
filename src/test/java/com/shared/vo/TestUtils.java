@@ -1,17 +1,15 @@
 package com.shared.vo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
+@Slf4j
 public final class TestUtils {
-
-    private static final Logger LOG = LoggerFactory.getLogger(TestUtils.class);
 
     public String buildUrl(String port, String contextPath) {
         String url = "http://localhost:" + port + contextPath;
-        LOG.info("URL : {}", url);
+        log.info("URL : {}", url);
         return url;
     }
 

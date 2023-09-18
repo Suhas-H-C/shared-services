@@ -1,6 +1,6 @@
 package com.shared.algo.utils;
 
-import com.shared.algo.service.UserService;
+import com.shared.algo.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

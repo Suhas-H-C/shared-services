@@ -41,6 +41,6 @@ public class ContentCheckStepDefs {
 
     @Then("data produced is not null")
     public void data_produced_is_not_null() {
-        assertNotNull(lastResponse.getBody().getData());
+        assertNotNull(lastResponse.getBody().data());
     }
 }
