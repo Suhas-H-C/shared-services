@@ -1,11 +1,11 @@
 package com.shared.info.controller;
 
+import com.shared.info.controller.documentation.FileControllerDocumentation;
 import com.shared.info.dto.InternetProtocol;
 import com.shared.info.exception.BadRequestException;
-import com.shared.info.controller.documentation.FileControllerDocumentation;
-import com.shared.info.utils.SharedServiceResponseBuilder;
-import com.shared.info.utils.GenericResponse;
 import com.shared.info.service.*;
+import com.shared.info.utils.GenericResponse;
+import com.shared.info.utils.SharedServiceResponseBuilder;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -110,7 +110,7 @@ public final class FileController implements FileControllerDocumentation {
     public ResponseEntity<InputStreamResource> generatePDFReport(@RequestParam(value = "title", defaultValue = "IpData Report") String title) {
         try {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
-                    reportService.generatePdfReport((List<?>) jsonContentService.fetchJsonData(InternetProtocol.class, "InternetProtocol").get(0), title));
+                    reportService.generatePdfReport((List<?>) jsonContentService.fetchJsonData(InternetProtocol.class, INTERNET_PROTOCOL).get(0), title));
             HttpHeaders headers = new HttpHeaders();
             headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=report.pdf");
             return ResponseEntity.status(HttpStatus.OK).headers(headers).body(new InputStreamResource(byteArrayInputStream));
