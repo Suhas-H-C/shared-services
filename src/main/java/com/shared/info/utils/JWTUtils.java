@@ -19,7 +19,7 @@ public final class JWTUtils implements Serializable {
 
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
-    private final String secretKey = "secret";
+    private final String secretKey = "sharedservicessecretkeyforhashingandupdatingapplicationssecurityajsdgjhsadjhsavdjhasvdjhsavdjhsavdjasvdnbwvbmavfadhgfyierfunvjlhgskfjnvzbvadshfksdygiuwghjdkshgkjsdghkjsytuewgkjsdghkjsdbgjdsbgkjdsbgkjdsbgkjdsbfkjaehfk";
 
     /**
      * for retrieving username from token
