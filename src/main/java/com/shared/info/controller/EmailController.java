@@ -1,0 +1,27 @@
+package com.shared.info.controller;
+
+import com.shared.info.controller.documentation.EmailControllerDocumentation;
+import com.shared.info.dto.Mail;
+import com.shared.info.service.EmailService;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
+
+@RestController
+@RequestMapping(value = "/email")
+@AllArgsConstructor
+public class EmailController implements EmailControllerDocumentation {
+
+    private final EmailService service;
+
+    @PostMapping(value = "/send")
+    public void sendEmail(@RequestBody Mail mail) {
+        service.sendEmail(mail);
+    }
+
+    @PostMapping(value = "/send-email-with-attachment")
+    public void sendEmailWithAttachment(@ModelAttribute Mail mail) throws MessagingException {
+        service.sendEmailWithAttachment(mail);
+    }
+}
