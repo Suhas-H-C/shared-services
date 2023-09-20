@@ -16,8 +16,8 @@ public class EmailController implements EmailControllerDocumentation {
     private final EmailService service;
 
     @PostMapping(value = "/send")
-    public void sendEmail(@RequestBody Mail mail) {
-        service.sendEmail(mail);
+    public void sendEmailWithoutAttachment(@RequestBody Mail mail) {
+        service.sendEmailWithoutAttachment(mail);
     }
 
     @PostMapping(value = "/send-email-with-attachment")

@@ -16,9 +16,9 @@ class EmailControllerTest {
 
     @Test
     void should_send_email_and_print_log_when_invoked() {
-        doNothing().when(service).sendEmail(mail());
-        controller.sendEmail(mail());
-        verify(service).sendEmail(mail());
+        doNothing().when(service).sendEmailWithoutAttachment(mail());
+        controller.sendEmailWithoutAttachment(mail());
+        verify(service).sendEmailWithoutAttachment(mail());
     }
 
     @Test
