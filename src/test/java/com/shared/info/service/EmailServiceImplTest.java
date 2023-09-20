@@ -24,7 +24,7 @@ class EmailServiceImplTest {
     @Test
     void sendEmail() throws IOException {
         doNothing().when(mailSender).send(any(SimpleMailMessage.class));
-        service.sendEmail(mail());
+        service.sendEmailWithoutAttachment(mail());
         verify(mailSender).send(any(SimpleMailMessage.class));
     }
 

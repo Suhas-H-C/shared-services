@@ -21,7 +21,7 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender mailSender;
 
     @Override
-    public void sendEmail(Mail mail) {
+    public void sendEmailWithoutAttachment(Mail mail) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(mail.from());
         mailMessage.setSubject(mail.subject());

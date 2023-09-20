@@ -16,7 +16,7 @@ public interface EmailControllerDocumentation {
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "403", description = "Forbidden"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")})
-    void sendEmail(@Parameter(description = "request payload") Mail mail);
+    void sendEmailWithoutAttachment(@Parameter(description = "request payload") Mail mail);
 
     @Operation(method = "POST", description = "Send email with attachment", tags = "email")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Success"),
