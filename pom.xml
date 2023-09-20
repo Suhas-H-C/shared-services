@@ -28,6 +28,7 @@
         <net.sourceforge.javacsv.version>2.0</net.sourceforge.javacsv.version>
         <org.apache.poi.version>5.2.3</org.apache.poi.version>
         <org.jacoco.verison>0.8.10</org.jacoco.verison>
+        <spring-cloud-dependencies.version>2022.0.4</spring-cloud-dependencies.version>
     </properties>
 
     <dependencies>
@@ -141,6 +142,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>4.0.4</version>
         </dependency>
     </dependencies>
 
