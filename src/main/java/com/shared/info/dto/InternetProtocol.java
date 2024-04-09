@@ -1,6 +1,6 @@
 package com.shared.info.dto;
 
-import com.shared.info.annotations.FiledHeader;
+import com.shared.info.annotations.Header;
 import lombok.*;
 
 import java.io.Serializable;
@@ -12,16 +12,16 @@ import java.io.Serializable;
 @AllArgsConstructor
 public final class InternetProtocol implements Serializable {
 
-    @FiledHeader(header = "Id")
+    @Header(header = "Id")
     public int id;
-    @FiledHeader(header = "First Name")
+    @Header(header = "First Name")
     public String first_name;
-    @FiledHeader(header = "Last Name")
+    @Header(header = "Last Name")
     public String last_name;
-    @FiledHeader(header = "Email Id")
+    @Header(header = "Email Id")
     public String email;
-    @FiledHeader(header = "Gender")
+    @Header(header = "Gender")
     public String gender;
-    @FiledHeader(header = "Ip Address")
+    @Header(header = "Ip Address")
     public String ip_address;
 }

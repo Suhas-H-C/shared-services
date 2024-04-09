@@ -2,7 +2,7 @@ package com.shared.info.service.impl;
 
 import com.shared.info.enums.Messages;
 import com.shared.info.exception.BadRequestException;
-import com.shared.info.annotations.FiledHeader;
+import com.shared.info.annotations.Header;
 import com.shared.info.service.TextContentParserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -50,7 +50,7 @@ public final class TextContentParserServiceImpl implements TextContentParserServ
         if (clazz.toString().contains("InternetProtocol")) {
             Field[] fields = clazz.getDeclaredFields();
             for (Field field : fields) {
-                FiledHeader config = field.getAnnotation(FiledHeader.class);
+                Header config = field.getAnnotation(Header.class);
                 log.info(config.header());
                 list.add(config.header());
             }

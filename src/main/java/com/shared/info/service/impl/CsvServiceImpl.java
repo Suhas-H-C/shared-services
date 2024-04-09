@@ -1,7 +1,7 @@
 package com.shared.info.service.impl;
 
 import com.csvreader.CsvWriter;
-import com.shared.info.annotations.FiledHeader;
+import com.shared.info.annotations.Header;
 import com.shared.info.exception.BadRequestException;
 import com.shared.info.exception.ClassTypeNotSupportedException;
 import com.shared.info.dto.InternetProtocol;
@@ -69,7 +69,7 @@ public final class CsvServiceImpl implements CsvService {
                 if (data.get(0).getClass().equals(clazz)) {
                     Field[] templateHeaders = clazz.getDeclaredFields();
                     for (Field field : templateHeaders) {
-                        FiledHeader filedHeaderConfig = field.getAnnotation(FiledHeader.class);
+                        Header filedHeaderConfig = field.getAnnotation(Header.class);
                         csvWriter.write(filedHeaderConfig.header());
                     }
                     csvWriter.endRecord();

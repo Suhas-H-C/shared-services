@@ -1,6 +1,6 @@
 package com.shared.info.service.impl;
 
-import com.shared.info.annotations.FiledHeader;
+import com.shared.info.annotations.Header;
 import com.shared.info.dto.InternetProtocol;
 import com.shared.info.enums.FileConstants;
 import com.shared.info.enums.Messages;
@@ -69,7 +69,7 @@ public final class XlsxServiceImpl implements XlsxService {
                 if (data.get(0) instanceof InternetProtocol internetProtocolInstance) {
                     Field[] fields = internetProtocolInstance.getClass().getDeclaredFields();
                     for (Field field : fields) {
-                        FiledHeader headers = field.getAnnotation(FiledHeader.class);
+                        Header headers = field.getAnnotation(Header.class);
                         fileHeaders.add(headers.header());
                     }
                     Row headerRow = sheet.createRow(0);
