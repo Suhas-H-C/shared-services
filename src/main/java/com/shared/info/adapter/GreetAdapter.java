@@ -6,6 +6,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.graphql.client.GraphQlClient;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+import java.util.Objects;
+
+import static java.util.Objects.nonNull;
+
 @Component
 public class GreetAdapter implements GreetPort {
 
@@ -15,9 +20,9 @@ public class GreetAdapter implements GreetPort {
 
     @Override
     public String greet(String name) {
-        return graphQlClient.documentName("greet-user")
-                .variable("name",name)
-                .retrieve("response")
-                .toEntity(String.class).block();
+        Map<String, String> response = Objects.requireNonNull(graphQlClient.documentName("greet-user")
+                .variable("name", name)
+                .execute().block()).getData();
+        return nonNull(response.get("greet")) ? response.get("greet") : null;
     }
 }

@@ -1,5 +1,3 @@
-query greet($name: String) {
-    response: greet(name: $name){
-        greet
- }
+query greet($name: String!) {
+    greet(name: $name)
 }
