@@ -1,0 +1,28 @@
+server:
+  port: 8443
+  servlet:
+    context-path: /shared-services
+spring:
+  application:
+    name: shared-services
+  cache:
+    redis:
+      time-to-live: 20s
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: suhashc193@gmail.com
+    password: vlfv ajhi inqx mdqe
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+logging:
+  level:
+    root: INFO
+profile:
+  username: suhas
+  password: suhas
+  role: ADMIN

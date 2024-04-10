@@ -27,7 +27,7 @@ public interface FileControllerDocumentation {
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "403", description = "Forbidden"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")})
-    ResponseEntity<GenericResponse<?>> getJsonFromFile(String stringPath);
+    ResponseEntity<GenericResponse<?>> getJsonFromFile(@Parameter(description = "path") String stringPath);
 
     @Operation(method = "POST", description = "Retrieves the data from CSV file", tags = "csv-file")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Success"),
@@ -35,8 +35,7 @@ public interface FileControllerDocumentation {
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "403", description = "Forbidden"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")})
-    ResponseEntity<GenericResponse<?>> readCSV(MultipartFile multipartFile,
-                                               String contentType);
+    ResponseEntity<GenericResponse<?>> readCSV(@Parameter(description = "file") MultipartFile multipartFile, @Parameter(description = "class type") String contentType);
 
     @Operation(method = "GET", description = "Produces CSV file", tags = "csv-file")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Success"),
@@ -44,7 +43,7 @@ public interface FileControllerDocumentation {
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "403", description = "Forbidden"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")})
-    ResponseEntity<?> generateCSV(String fileName);
+    ResponseEntity<?> generateCSV(@Parameter(description = "filename") String fileName);
 
     @Operation(method = "POST", description = "Reads Excel file", tags = "xlsx-file")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Success"),
@@ -52,7 +51,7 @@ public interface FileControllerDocumentation {
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "403", description = "Forbidden"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")})
-    ResponseEntity<?> readExcel(MultipartFile multipartFile);
+    ResponseEntity<?> readExcel(@Parameter(description = "file") MultipartFile multipartFile);
 
     @Operation(method = "GET", description = "Produces Excel file", tags = "xlsx-file")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Success"),
@@ -60,7 +59,7 @@ public interface FileControllerDocumentation {
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "403", description = "Forbidden"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")})
-    ResponseEntity<?> generateExcel(String fileName);
+    ResponseEntity<?> generateExcel(@Parameter(description = "filename") String fileName);
 
     @Operation(method = "GET", description = "Produces PDF file", tags = "pdf-file")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Success"),
@@ -68,7 +67,7 @@ public interface FileControllerDocumentation {
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "403", description = "Forbidden"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")})
-    void generatePDF(String fileName, HttpServletResponse response);
+    void generatePDF(@Parameter(description = "filename") String fileName, HttpServletResponse response);
 
     @Operation(method = "GET", description = "Produces PDF file", tags = "pdf-file")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Success"),
@@ -76,5 +75,5 @@ public interface FileControllerDocumentation {
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "403", description = "Forbidden"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")})
-    ResponseEntity<InputStreamResource> generatePDFReport(String title);
+    ResponseEntity<InputStreamResource> generatePDFReport(@Parameter(description = "filename") String title);
 }
