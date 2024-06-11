@@ -30,6 +30,7 @@
         <org.jacoco.verison>0.8.10</org.jacoco.verison>
         <org.mapstruct.version>1.6.0.Beta2</org.mapstruct.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <org.projectlombok.version>1.18.24</org.projectlombok.version>
     </properties>
 
     <dependencies>
@@ -90,6 +91,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${org.projectlombok.version}</version>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -189,11 +191,18 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${org.mapstruct.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${org.projectlombok.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>

@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class PojoMapperServiceImpl implements PojoMapperService {
 
-
     private final ClientCustomerMapper mapper;
-
 
     @Override
     public ClientEntitlement customerEntitlementToClientEntitlement(CustomerEntitlements customerEntitlements) {
