@@ -20,6 +20,6 @@ public class SubStringEqualsToK {
         }
         return matchingStrings.stream()
                 .min(Comparator.comparing(String::length))
-                .get();
+                .orElse(null);
     }
 }
