@@ -14,7 +14,7 @@ class SubStringEqualsToKTest {
 
     @Test
     void should_return_smallest_substring_that_matches_k_when_valid_list_is_passed() {
-        var input = List.of("1101", "011011", "111", "011");
+        var input = List.of("1101", "010011", "111", "011");
         var response = service.smallestSubStringEqualsK(input, 3);
 
         assertNotNull(response);
