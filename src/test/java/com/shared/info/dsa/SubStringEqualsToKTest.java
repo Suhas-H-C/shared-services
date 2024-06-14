@@ -1,4 +1,4 @@
-package com.shared.info.utils.dsa;
+package com.shared.info.dsa;
 
 import com.shared.info.utils.dsa.theoritical.SubStringEqualsToK;
 import org.junit.jupiter.api.Test;
