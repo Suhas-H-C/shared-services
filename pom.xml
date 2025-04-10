@@ -26,7 +26,7 @@
         <net.sourceforge.tess4j.version>5.8.0</net.sourceforge.tess4j.version>
         <com.github.librepdf.version>1.3.30</com.github.librepdf.version>
         <net.sourceforge.javacsv.version>2.0</net.sourceforge.javacsv.version>
-        <org.apache.poi.version>5.2.3</org.apache.poi.version>
+        <org.apache.poi.version>5.4.0</org.apache.poi.version>
         <org.jacoco.verison>0.8.10</org.jacoco.verison>
         <org.mapstruct.version>1.6.0.Beta2</org.mapstruct.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
