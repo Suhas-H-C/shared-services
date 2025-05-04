@@ -95,7 +95,6 @@ class StudentControllerIT {
                         .stdRollNumber("103")
                         .additionalProperties(Map.of("computerSkills", "Y",
                                 "sports", "Y"))
-                        .build())
-        );
+                        .build()));
     }
 }

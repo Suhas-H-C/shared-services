@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.6</version>
+        <version>3.4.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -19,14 +19,14 @@
     <properties>
         <java.version>17</java.version>
         <cucumber.version>7.18.1</cucumber.version>
-        <springdoc-openapi-starter-webmvc-ui.version>2.6.0</springdoc-openapi-starter-webmvc-ui.version>
+        <springdoc-openapi-starter-webmvc-ui.version>2.8.6</springdoc-openapi-starter-webmvc-ui.version>
         <net.sf.jasperreports.version>7.0.0</net.sf.jasperreports.version>
         <org.apache.commons.version>1.11.0</org.apache.commons.version>
         <io.jsonwebtoken.version>0.11.1</io.jsonwebtoken.version>
         <net.sourceforge.tess4j.version>5.12.0</net.sourceforge.tess4j.version>
         <com.github.librepdf.version>2.0.2</com.github.librepdf.version>
         <net.sourceforge.javacsv.version>2.0</net.sourceforge.javacsv.version>
-        <org.apache.poi.version>5.3.0</org.apache.poi.version>
+        <org.apache.poi.version>5.4.1</org.apache.poi.version>
         <org.jacoco.verison>0.8.12</org.jacoco.verison>
         <org.mapstruct.version>1.6.0.RC1</org.mapstruct.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
@@ -34,9 +34,9 @@
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.mail.version>1.6.2</javax.mail.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
-        <spring-cloud-starter-openfeign.version>4.1.3</spring-cloud-starter-openfeign.version>
+        <spring-cloud-starter-openfeign.version>4.2.1</spring-cloud-starter-openfeign.version>
         <maven-failsafe-plugin.version>3.3.1</maven-failsafe-plugin.version>
-        <spring-cloud-starter-contract-stub-runner.version>4.1.4</spring-cloud-starter-contract-stub-runner.version>
+        <spring-cloud-starter-contract-stub-runner.version>4.2.1</spring-cloud-starter-contract-stub-runner.version>
     </properties>
 
     <dependencies>
@@ -54,6 +54,10 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
@@ -132,6 +136,11 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
             <version>${io.jsonwebtoken.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
